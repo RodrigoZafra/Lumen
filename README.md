@@ -1,5 +1,5 @@
-##Lumen
-###La aplicación para entender el sistema eléctrico español
+## Lumen
+### La aplicación para entender el sistema eléctrico español
 
 Nuestra aplicación trata de informar a los usuarios interesados en el funcionamiento y los problemas de nuestro actual modelo de generación y consumo eléctrico. Para ello vamos a desarrollar dos funcionalidades básicas. Por un lado, una serie de artículos divulgativos vinculados entre ellos y, por otro, el verdadero reto en términos técnicos para nosotros, una muestra gráfica de los datos que obtendremos de la API de la <a href="https://www.ree.es/es/apidatos">Red Eléctrica Española<a>.
 
