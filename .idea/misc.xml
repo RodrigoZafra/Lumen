@@ -8,7 +8,15 @@
         <entry key="..\:/Rodrigo y Mario/Lumen/app/src/main/res/drawable/ic_lumen_fuera.xml" value="0.22135416666666666" />
         <entry key="..\:/Rodrigo y Mario/Lumen/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Rodrigo y Mario/Lumen/app/src/main/res/layout/activity_splash_screen.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_info_slides.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_info_slide1.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_info_slide2.xml" value="0.17708333333333334" />
+        <entry key="app/src/main/res/layout/fragment_info_slide3.xml" value="0.17708333333333334" />
+        <entry key="app/src/main/res/layout/fragment_info_slide4.xml" value="0.17708333333333334" />
+        <entry key="app/src/main/res/layout/fragment_info_slide5.xml" value="0.17708333333333334" />
+        <entry key="app/src/main/res/layout/fragment_info_slides.xml" value="0.17708333333333334" />
       </map>
     </option>
   </component>

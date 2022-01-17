@@ -15,4 +15,13 @@
         <item name="android:radius">20dp</item>
         <item name="fontFamily">@font/cocogoose</item>
     </style>
+
+    <style name="Theme.Lumen.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Lumen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Lumen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
