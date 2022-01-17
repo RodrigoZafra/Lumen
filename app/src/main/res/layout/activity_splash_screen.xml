@@ -14,33 +14,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/avd_lumen_icon_animation" />
 
-    <!--<ImageView
-        android:id="@+id/dentro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_lumen_fuera"/>
-
-    <ImageView
-        android:id="@+id/fuera"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="40dp"
-        android:layout_marginEnd="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_lumen_centro"/>
-
     <TextView
         android:id="@+id/appTittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lumen"
         android:textSize="50sp"
-        app:layout_constraintBottom_toBottomOf="@+id/fuera"
+        app:layout_constraintTop_toBottomOf="@id/IVicon_animation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dentro"/>-->
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

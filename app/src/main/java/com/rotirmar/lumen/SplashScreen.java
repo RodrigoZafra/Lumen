@@ -28,13 +28,9 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        /*ImageView fuera = findViewById(R.id.fuera);
-        Animation myanim = AnimationUtils.loadAnimation(this, R.anim.rotate);
-        fuera.startAnimation(myanim);*/
-
         animation = findViewById(R.id.IVicon_animation);
-
         Drawable drawable = animation.getDrawable();
+
         if (drawable instanceof AnimatedStateListDrawableCompat) {
             avdC = (AnimatedVectorDrawableCompat) drawable;
             avdC.start();
