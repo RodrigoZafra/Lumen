@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
- <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +7,14 @@
     tools:context=".SplashScreen">
 
     <ImageView
+        android:id="@+id/IVicon_animation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/avd_lumen_icon_animation" />
+
+    <!--<ImageView
         android:id="@+id/dentro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,5 +42,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/fuera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dentro"/>
+        app:layout_constraintTop_toBottomOf="@+id/dentro"/>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
