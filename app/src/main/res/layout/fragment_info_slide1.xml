@@ -12,26 +12,27 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="20dp"
+            android:textColor="@color/azul_oscuro"
             android:text="¿Sabes como funciona el sistema eléctrico español?"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="30sp"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:text="¡Desliza!"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="@id/h1"
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_arrow_right"
+            app:layout_constraintBottom_toTopOf="@+id/h1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/h1"
@@ -44,10 +45,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/skip"
+            android:background="@drawable/rounded_corner"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/h1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
