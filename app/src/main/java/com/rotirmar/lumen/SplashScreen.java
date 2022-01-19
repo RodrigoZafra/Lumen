@@ -15,11 +15,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 //Eliminar archivos residuales de la animacion anterior rotate
 public class SplashScreen extends AppCompatActivity {
 
-    ImageView animation;
+    ImageView appIcon;
+    TextView appName;
+    Animation nameAnimation;
     AnimatedVectorDrawableCompat avdC;
     AnimatedVectorDrawable avd;
 
@@ -28,8 +31,8 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        animation = findViewById(R.id.IVicon_animation);
-        Drawable drawable = animation.getDrawable();
+        appIcon = findViewById(R.id.IVicon_animation);
+        Drawable drawable = appIcon.getDrawable();
 
         if (drawable instanceof AnimatedStateListDrawableCompat) {
             avdC = (AnimatedVectorDrawableCompat) drawable;
@@ -38,6 +41,10 @@ public class SplashScreen extends AppCompatActivity {
             avd = (AnimatedVectorDrawable) drawable;
             avd.start();
         }
+
+        appName = findViewById(R.id.appTittle);
+        nameAnimation = AnimationUtils.loadAnimation(this, R.anim.lumen_animation);
+        appName.startAnimation(nameAnimation);
 
         openApp(true);
 
