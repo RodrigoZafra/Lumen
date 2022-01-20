@@ -1,4 +1,4 @@
-package com.rotirmar.lumen;
+package com.rotirmar.lumen.infoSlidesFragments;
 
 import android.os.Bundle;
 
@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.rotirmar.lumen.R;
 
 public class InfoSlide1 extends Fragment {
 
