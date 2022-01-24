@@ -10,6 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <!--https://cojdev.github.io/lowpoly/-->
+        <!--https://colordesigner.io/convert/hextohsl-->
+        <ImageView
+            android:background="@drawable/slideback0"
+            android:alpha="0.6"
+            android:id="@+id/backgroundSlide1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
         <ImageView
             android:id="@+id/bulb1"
             android:src="@drawable/light0"

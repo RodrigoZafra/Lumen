@@ -11,6 +11,15 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:background="@drawable/slideback0"
+            android:alpha="0.6"
+            android:id="@+id/backgroundSlide3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+
+        <ImageView
             android:id="@+id/bulb3"
             android:src="@drawable/light2"
             android:layout_width="100dp"
@@ -26,7 +35,7 @@
             android:layout_height="wrap_content"
             android:padding="20dp"
             android:textColor="@color/azul_oscuro"
-            android:text="¿Sabes como funciona el sistema eléctrico español?"
+            android:text="Las empresas que producen nuestra energía conforman un oligopolio."
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

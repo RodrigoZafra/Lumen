@@ -10,6 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <ImageView
+            android:background="@drawable/slideback1"
+            android:alpha="0.6"
+            android:id="@+id/backgroundSlide4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+
         <ImageView
             android:id="@+id/bulb5"
             android:src="@drawable/light5"
@@ -25,8 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:textColor="@color/azul_oscuro"
-            android:text="¿Sabes como funciona el sistema eléctrico español?"
+            android:textColor="@color/naranja_muy_oscuro"
+            android:text="Más de cuarenta políticos españoles han pasado a formar parte de consejos de gestión de eléctricas al abandonar sus cargos."
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

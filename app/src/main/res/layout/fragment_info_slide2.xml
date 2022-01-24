@@ -11,6 +11,15 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:background="@drawable/slideback1"
+            android:alpha="0.6"
+            android:id="@+id/backgroundSlide2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+
+        <ImageView
             android:id="@+id/bulb2"
             android:src="@drawable/light1"
             android:layout_width="100dp"
@@ -20,13 +29,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+
+
         <TextView
             android:id="@+id/textSlide1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:textColor="@color/azul_oscuro"
-            android:text="¿Sabes como funciona el sistema eléctrico español?"
+            android:textColor="@color/naranja_muy_oscuro"
+            android:text="Más de la mitad de la energía producida el año pasado fue no renovable, costosa y contaminante."
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
