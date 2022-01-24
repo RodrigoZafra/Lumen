@@ -16,7 +16,9 @@
     <color name="amarillo_claro">#FFBE3C</color>
     <color name="amarillo_dorado">#FFBD39</color>
     <color name="dorado">#FAA804</color>
-    <color name="naranja">#FF9139</color>
+    <color name="naranja">#FF6F00</color>
+    <color name="naranja_oscuro">#E65100</color>
+
 
 
 </resources>
