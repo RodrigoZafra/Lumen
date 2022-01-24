@@ -14,6 +14,7 @@ import com.rotirmar.lumen.infoSlidesFragments.InfoSlide2;
 import com.rotirmar.lumen.infoSlidesFragments.InfoSlide3;
 import com.rotirmar.lumen.infoSlidesFragments.InfoSlide4;
 import com.rotirmar.lumen.infoSlidesFragments.InfoSlide5;
+import com.rotirmar.lumen.infoSlidesFragments.InfoSlide6;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -41,6 +42,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return new InfoSlide4();
             case 4:
                 return new InfoSlide5();
+            case 5:
+                return new InfoSlide6();
             default:
                 return null;
         }
@@ -48,6 +51,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 6;
     }
 }
