@@ -12,7 +12,7 @@
 
         <ImageView
             android:id="@+id/bulb1"
-            android:src="@drawable/light1"
+            android:src="@drawable/light0"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="20dp"

@@ -41,6 +41,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return new InfoSlide4();
             case 4:
                 return new InfoSlide5();
+            case 5:
+                return new InfoSlide6();
             default:
                 return null;
         }
