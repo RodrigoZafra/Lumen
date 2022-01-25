@@ -8,9 +8,9 @@
 
     <ImageView
         android:id="@+id/IVicon_animation"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:layout_marginTop="120dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,11 +20,11 @@
         android:id="@+id/appTittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="150dp"
         android:text="Lumen"
         android:textColor="@color/black"
-        android:textSize="45sp"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/IVicon_animation" />
+        app:layout_constraintTop_toBottomOf="@id/IVicon_animation"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

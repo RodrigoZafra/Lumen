@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-//Eliminar archivos residuales de la animacion anterior rotate
 public class SplashScreen extends AppCompatActivity {
 
     ImageView appIcon;
@@ -54,7 +53,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+                Intent intent = new Intent(SplashScreen.this, InfoSlides.class);
                 startActivity(intent);
             }
         }, 2000);
