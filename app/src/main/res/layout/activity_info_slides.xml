@@ -7,11 +7,18 @@
     tools:context=".InfoSlides">
 
 
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/rounded_corner"
+        android:onClick="saltar"
+        android:text="@string/skip" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
