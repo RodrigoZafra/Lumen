@@ -10,17 +10,18 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -29,12 +30,15 @@ public class SplashScreen extends AppCompatActivity {
     Animation nameAnimation;
     AnimatedVectorDrawableCompat avdC;
     AnimatedVectorDrawable avd;
+    private String firstTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        /* AIMACIONES */
+        //Animacion logo
         appIcon = findViewById(R.id.IVicon_animation);
         Drawable drawable = appIcon.getDrawable();
 
@@ -46,41 +50,65 @@ public class SplashScreen extends AppCompatActivity {
             avd.start();
         }
 
+        //Animacion nombre
         appName = findViewById(R.id.appTittle);
         nameAnimation = AnimationUtils.loadAnimation(this, R.anim.lumen_animation);
         appName.startAnimation(nameAnimation);
 
-        leerJSON();
+        /* PRIMERA VEZ */
+        firstTime = readDataBase();
+        if (firstTime == null) {
+            writeDataBase();
+        }
+
+        /* ABRIR APP */
         openApp(true);
 
     }
 
-    private void leerJSON() {
-        String json =
-                "{\n" +
-                        " \"firstTime\": \"true\"\n" +
-                        "}";
-        String firstTime = "";
+    private String readDataBase() {
         try {
-            //Step 1: Load text as JSON Object:
-            JSONObject jsonObject = new JSONObject(json);
-            Log.d("APPJSON", "The raw object is: " + jsonObject.toString());
-            //Step 2: Get "Menu" object:
-            firstTime = jsonObject.getString("firstTime");
-        } catch (JSONException e) {
+            File file = getFilesDir();
+            FileInputStream fileIn = new FileInputStream(file.toString() + "/data_base.bat");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            DataBase dbRes = (DataBase) in.readObject();
+            return dbRes.primeraVez;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        Toast toast = new Toast(this);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setText(firstTime);
-        toast.show();
+        return null;
+    }
+
+    private void writeDataBase() {
+        try {
+            DataBase db = new DataBase();
+            db.primeraVez = "No";
+            FileOutputStream fileOut = new FileOutputStream(getFilesDir() + "/data_base.bat");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(db);
+            out.close();
+            fileOut.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void openApp(boolean locationPermission) {
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, InfoSlides.class);
+                Intent intent;
+                if (firstTime == null) {
+                    intent = new Intent(SplashScreen.this, InfoSlides.class);
+                } else {
+                    intent = new Intent(SplashScreen.this, MainActivity.class);
+                }
                 startActivity(intent);
             }
         }, 2000);
