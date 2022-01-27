@@ -1,5 +1,6 @@
 package com.rotirmar.lumen;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,5 +40,10 @@ public class InfoSlides extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });*/
+    }
+
+    public void saltar(View view) {
+        Intent intent = new Intent(InfoSlides.this, MainActivity.class);
+        startActivity(intent);
     }
 }
