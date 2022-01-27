@@ -107,7 +107,7 @@ public class SplashScreen extends AppCompatActivity {
                 if (firstTime == null) {
                     intent = new Intent(SplashScreen.this, InfoSlides.class);
                 } else {
-                    intent = new Intent(SplashScreen.this, MainActivity.class);
+                    intent = new Intent(SplashScreen.this, Consumption.class);
                 }
                 startActivity(intent);
             }
