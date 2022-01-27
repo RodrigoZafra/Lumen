@@ -7,6 +7,13 @@
     tools:context=".SplashScreen">
 
     <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/fondo_splash"
+        android:alpha="0.6"
+        />
+
+    <ImageView
         android:id="@+id/IVicon_animation"
         android:layout_width="300dp"
         android:layout_height="300dp"
@@ -23,7 +30,7 @@
         android:layout_marginTop="150dp"
         android:text="Lumen"
         android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/IVicon_animation"/>
