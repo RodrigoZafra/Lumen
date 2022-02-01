@@ -1,20 +1,19 @@
 package com.rotirmar.lumen;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.rotirmar.lumen.ui.main.SectionsPagerAdapter;
 import com.rotirmar.lumen.databinding.ActivityProductionBinding;
+import com.rotirmar.lumen.ui.main.SectionsPagerAdapterConsumption;
 
 public class Production extends AppCompatActivity {
 
@@ -27,18 +26,23 @@ public class Production extends AppCompatActivity {
         binding = ActivityProductionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = binding.viewPager;
+        SectionsPagerAdapterConsumption sectionsPagerAdapter = new SectionsPagerAdapterConsumption(this, getSupportFragmentManager());
+        ViewPager viewPager = binding.productionViewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = binding.tabs;
+        TabLayout tabs = binding.productionTabs;
         tabs.setupWithViewPager(viewPager);
-        FloatingActionButton fab = binding.fab;
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        BottomNavigationView consumptionBottom = findViewById(R.id.production_bottom_navigation);
+        consumptionBottom.setSelectedItemId(R.id.productionMenuButton);
+        consumptionBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.consumptionMenuButton:
+                        Intent intent = new Intent(getApplicationContext(), Consumption.class);
+                        startActivity(intent);
+                }
+                return false;
             }
         });
     }

@@ -11,6 +11,6 @@ public class Production1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_production1);
+        setContentView(R.layout.fragment_production1);
     }
 }

@@ -10,14 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lumen.Button.Blue">
         <activity
-            android:name=".productionFragments.Production3"
-            android:exported="false" />
-        <activity
-            android:name=".productionFragments.Production2"
-            android:exported="false" />
-        <activity
-            android:name=".productionFragments.Production1"
-            android:exported="false" />
+            android:name=".Production"
+            android:exported="false"
+            android:label="@string/title_activity_consumption"
+            android:theme="@style/Theme.Lumen.Button.Blue.NoActionBar" />
         <activity
             android:name=".Consumption"
             android:exported="false"
