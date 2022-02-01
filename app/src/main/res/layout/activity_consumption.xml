@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Lumen.Button.Blue.AppBarOverlay">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/consumption_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -25,17 +25,25 @@
             android:id="@+id/consumptionTabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
+        android:id="@+id/consumption_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.google.android.material.bottomappbar.BottomAppBar
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-    </com.google.android.material.bottomappbar.BottomAppBar>
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        app:itemIconSize="30dp"
+        app:layout_anchor="@+id/consumption_view_pager"
+        app:layout_anchorGravity="bottom|center"
+        app:menu="@menu/main_bottom_menu">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

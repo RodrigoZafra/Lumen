@@ -17,7 +17,7 @@ import com.rotirmar.lumen.consumptionFragments.Consumption3;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapterConsumption extends FragmentPagerAdapter {
+public class SectionsPagerAdapterProduction extends FragmentPagerAdapter {
 
     private final Context mContext;
 
@@ -28,7 +28,7 @@ public class SectionsPagerAdapterConsumption extends FragmentPagerAdapter {
             R.string.consumption_tab3
     };
 
-    public SectionsPagerAdapterConsumption(Context context, FragmentManager fm) {
+    public SectionsPagerAdapterProduction(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }

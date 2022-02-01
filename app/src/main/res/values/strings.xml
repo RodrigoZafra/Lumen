@@ -9,4 +9,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_consumption">Consumption</string>
 
+    <string name="consumption_tab1">Día</string>
+    <string name="consumption_tab2">Mes</string>
+    <string name="consumption_tab3">Año</string>
+    <string name="consumo">Consumo</string>
+    <string name="produccion">Producción</string>
+    <string name="title_activity_production">Production</string>
+
 </resources>
