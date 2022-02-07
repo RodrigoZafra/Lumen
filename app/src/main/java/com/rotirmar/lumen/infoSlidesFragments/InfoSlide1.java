@@ -1,6 +1,5 @@
 package com.rotirmar.lumen.infoSlidesFragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.rotirmar.lumen.InfoSlides;
-import com.rotirmar.lumen.MainActivity;
 import com.rotirmar.lumen.R;
 
 public class InfoSlide1 extends Fragment {

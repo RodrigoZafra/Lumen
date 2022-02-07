@@ -17,12 +17,21 @@
         <entry key="..\:/Users/tirso/StudioProjects/Lumen/app/src/main/res/drawable/ic_lumen_fuera.xml" value="0.2203125" />
         <entry key="..\:/Users/tirso/StudioProjects/Lumen/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/tirso/StudioProjects/Lumen/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_casa.xml" value="0.37135416666666665" />
+        <entry key="app/src/main/res/drawable/ic_edificio.xml" value="0.37135416666666665" />
+        <entry key="app/src/main/res/drawable/ic_green_production.xml" value="0.37135416666666665" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.37135416666666665" />
+        <entry key="app/src/main/res/drawable/ic_power_plant.xml" value="0.37135416666666665" />
         <entry key="app/src/main/res/drawable/rounded_corner.xml" value="0.20885416666666667" />
         <entry key="app/src/main/res/layout/activity_consumo_tabbed.xml" value="0.13802083333333334" />
+        <entry key="app/src/main/res/layout/activity_consumption.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_info_slides.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_production.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_consumo_tabbed.xml" value="0.21" />
+        <entry key="app/src/main/res/layout/fragment_consumption.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/fragment_consumption1.xml" value="0.33177083333333335" />
         <entry key="app/src/main/res/layout/fragment_info_slide1.xml" value="0.2142443543717429" />
         <entry key="app/src/main/res/layout/fragment_info_slide2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_info_slide3.xml" value="0.17708333333333334" />
@@ -30,6 +39,10 @@
         <entry key="app/src/main/res/layout/fragment_info_slide5.xml" value="0.17708333333333334" />
         <entry key="app/src/main/res/layout/fragment_info_slide6.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_info_slides.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/fragment_production.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/layout/fragment_production1.xml" value="0.35520833333333335" />
+        <entry key="app/src/main/res/layout/fragment_production3.xml" value="0.35520833333333335" />
+        <entry key="app/src/main/res/menu/main_bottom_menu.xml" value="0.33177083333333335" />
       </map>
     </option>
   </component>
