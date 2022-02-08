@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Lumen" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/azul_aguamarina</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/naranja</item>
+        <item name="colorPrimaryVariant">@color/azul_oscuro</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -15,4 +15,26 @@
         <item name="android:radius">20dp</item>
         <item name="fontFamily">@font/cocogoose</item>
     </style>
+
+    <style name="Theme.Lumen.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Lumen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Lumen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.Lumen.Button.Blue" parent="Theme.Lumen">
+        <item name="colorPrimary">@color/azul_aguamarina</item>
+    </style>
+
+    <style name="Theme.Lumen.Button.Blue.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Lumen.Button.Blue.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Lumen.Button.Blue.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
