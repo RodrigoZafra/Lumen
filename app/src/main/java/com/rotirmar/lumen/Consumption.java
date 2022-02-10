@@ -35,8 +35,6 @@ public class Consumption extends AppCompatActivity {
         SectionsPagerAdapterConsumption sectionsPagerAdapter = new SectionsPagerAdapterConsumption(this, getSupportFragmentManager());
         ViewPager viewPager = binding.consumptionViewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = binding.consumptionTabs;
-        tabs.setupWithViewPager(viewPager);
 
         BottomNavigationView consumptionBottom = findViewById(R.id.consumption_bottom_navigation);
         consumptionBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -51,4 +49,11 @@ public class Consumption extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {//Aparece el menu en la barra de arriba
+        getMenuInflater().inflate(R.menu.menu_navigation, menu);
+        return true;
+    }
+
 }

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.rotirmar.lumen.databinding.ActivityProductionBinding;
@@ -29,8 +30,6 @@ public class Production extends AppCompatActivity {
         SectionsPagerAdapterConsumption sectionsPagerAdapter = new SectionsPagerAdapterConsumption(this, getSupportFragmentManager());
         ViewPager viewPager = binding.productionViewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = binding.productionTabs;
-        tabs.setupWithViewPager(viewPager);
 
         BottomNavigationView consumptionBottom = findViewById(R.id.production_bottom_navigation);
         consumptionBottom.setSelectedItemId(R.id.productionMenuButton);
@@ -45,5 +44,10 @@ public class Production extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {//Aparece el menu en la barra de arriba
+        getMenuInflater().inflate(R.menu.menu_navigation, menu);
+        return true;
     }
 }

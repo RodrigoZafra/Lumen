@@ -13,12 +13,12 @@
             android:name=".Production"
             android:exported="false"
             android:label="@string/title_activity_consumption"
-            android:theme="@style/Theme.Lumen.Button.Blue.NoActionBar" />
+            android:theme="@style/Theme.Lumen.Button.Blue" />
         <activity
             android:name=".Consumption"
             android:exported="false"
             android:label="@string/title_activity_consumption"
-            android:theme="@style/Theme.Lumen.Button.Blue.NoActionBar" />
+            android:theme="@style/Theme.Lumen.Button.Blue" />
         <activity
             android:name=".InfoSlides"
             android:exported="false"
