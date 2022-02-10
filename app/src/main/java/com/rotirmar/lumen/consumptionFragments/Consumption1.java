@@ -12,6 +12,7 @@ import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Cartesian;
 import com.anychart.charts.Funnel;
 import com.anychart.charts.Pie;
 import com.rotirmar.lumen.R;
@@ -26,17 +27,28 @@ public class Consumption1 extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_consumption1, container, false);
 
-        AnyChartView anyChartView = (AnyChartView) view.findViewById(R.id.prueba);
+        AnyChartView pieChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionPorcentual);
         Pie pie = AnyChart.pie();
 
         List<DataEntry> datat = new ArrayList<>();
-        datat.add(new ValueDataEntry("John", 10000));
-        datat.add(new ValueDataEntry("Jake", 12000));
-        datat.add(new ValueDataEntry("Peter", 18000));
+        datat.add(new ValueDataEntry("Hidráulica", 11.1));
+        datat.add(new ValueDataEntry("Eólica", 30));
+        datat.add(new ValueDataEntry("Solar fotovoltaica", 4.4));
+        datat.add(new ValueDataEntry("Solar térmica", 0.5));
+        datat.add(new ValueDataEntry("Otras renovables", 1.9));
+        datat.add(new ValueDataEntry("Residuos renovables", 0.3));
+        datat.add(new ValueDataEntry("Nuclear", 17.3));
+        datat.add(new ValueDataEntry("Turbinación bombeo", 1.2));
+        datat.add(new ValueDataEntry("Ciclo combinado", 19.8));
+        datat.add(new ValueDataEntry("Carbón", 3.2));
+        datat.add(new ValueDataEntry("Cogeneración", 9.6));
+        datat.add(new ValueDataEntry("Residuos no renovables", 0.8));
 
         pie.data(datat);
 
-        anyChartView.setChart(pie);
+        pieChart.setChart(pie);
+
+        AnyChartView lineChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionyConsumo);
 
         return view;
     }

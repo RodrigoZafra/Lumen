@@ -5,9 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".consumptionFragments.Consumption1">
 
-    <com.anychart.AnyChartView
-        android:id="@+id/prueba"
-        android:layout_width="400dp"
-        android:layout_height="400dp"/>
+        <com.anychart.AnyChartView
+            android:id="@+id/graficoGeneracionyConsumo"
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
+            android:layout_height="390dp"
+            />
+
+        <com.anychart.AnyChartView
+            android:id="@+id/graficoGeneracionPorcentual"
+            android:layout_width="match_parent"
+            android:layout_height="390dp"
+            android:layout_gravity="bottom"
+            />
 
 </FrameLayout>
