@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
 import com.rotirmar.lumen.R;
 
 /**
@@ -55,6 +57,8 @@ public class Consumption1 extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        final AnyChartView acv = findViewById(R.id.chart);
+                Funnel funnel = AnyChart.funnel();
     }
 
     @Override
