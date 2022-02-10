@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:icon="@drawable/avd_empty_heart"
+        android:icon="@drawable/vd_heart_empty"
         android:orderInCategory="100"
         android:title="Item"
         app:showAsAction="always" />
