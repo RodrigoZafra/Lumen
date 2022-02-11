@@ -9,4 +9,8 @@
     <string name="consumo">Consumo</string>
     <string name="produccion">Producción</string>
     <string name="title_activity_production">Producción</string>
+    <string name="infoSlideString1">¿Sabes como funciona el sistema eléctrico español?</string>
+    <string name="infoSlideString2">Más de la mitad de la energía producida el año pasado fue no renovable, costosa y contaminante.</string>
+    <string name="infoSlideString3">Las empresas que producen nuestra energía conforman un oligopolio.</string>
+    <string name="infoSlideString4">Tú pagas cada kilovatio al máximo precio posible, aunque haya sido generado casi sin coste.</string>
 </resources>
