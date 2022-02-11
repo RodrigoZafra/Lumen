@@ -27,6 +27,7 @@
         <entry key="app/src/main/res/layout/activity_prueba.xml" value="0.14791666666666667" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_consumo_tabbed.xml" value="0.21" />
+        <entry key="app/src/main/res/layout/fragment_consumption.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_consumption1.xml" value="0.14" />
         <entry key="app/src/main/res/layout/fragment_info_slide1.xml" value="0.2142443543717429" />
         <entry key="app/src/main/res/layout/fragment_info_slide2.xml" value="0.25" />
@@ -36,6 +37,7 @@
         <entry key="app/src/main/res/layout/fragment_info_slide6.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_info_slides.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_production.xml" value="0.12447916666666667" />
+        <entry key="app/src/main/res/layout/fragment_production1.xml" value="0.1" />
       </map>
     </option>
   </component>
