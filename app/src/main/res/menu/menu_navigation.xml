@@ -2,17 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/favorite"
         android:icon="@drawable/avd_empty_heart"
         android:orderInCategory="100"
         android:title="Item"
         app:showAsAction="always" />
     <item
-        android:id="@+id/comoFunciona"
+        android:id="@+id/signOut"
         android:title="¿Como funciona?"
         app:showAsAction="never" />
     <item
-        android:id="@+id/sobreNosotros"
+        android:id="@+id/Accounts"
         android:title="Sobre nosotros"
         app:showAsAction="never" />
 
