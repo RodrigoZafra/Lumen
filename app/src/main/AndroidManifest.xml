@@ -12,7 +12,7 @@
         <activity
             android:name=".Production"
             android:exported="false"
-            android:label="@string/title_activity_consumption"
+            android:label="@string/title_activity_production"
             android:theme="@style/Theme.Lumen.Button.Blue" />
         <activity
             android:name=".Consumption"
