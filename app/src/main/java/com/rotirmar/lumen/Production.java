@@ -29,8 +29,7 @@ public class Production extends AppCompatActivity {
         SectionsPagerAdapterConsumption sectionsPagerAdapter = new SectionsPagerAdapterConsumption(this, getSupportFragmentManager());
         ViewPager viewPager = binding.productionViewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = binding.productionTabs;
-        tabs.setupWithViewPager(viewPager);
+
 
         BottomNavigationView consumptionBottom = findViewById(R.id.production_bottom_navigation);
         consumptionBottom.setSelectedItemId(R.id.productionMenuButton);
