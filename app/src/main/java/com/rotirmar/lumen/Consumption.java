@@ -35,6 +35,8 @@ public class Consumption extends AppCompatActivity {
         SectionsPagerAdapterConsumption sectionsPagerAdapter = new SectionsPagerAdapterConsumption(this, getSupportFragmentManager());
         ViewPager viewPager = binding.consumptionViewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = binding.consumptionTabs;
+        tabs.setupWithViewPager(viewPager);
 
         BottomNavigationView consumptionBottom = findViewById(R.id.consumption_bottom_navigation);
         consumptionBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

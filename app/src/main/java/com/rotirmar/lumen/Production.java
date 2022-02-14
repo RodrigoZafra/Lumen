@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.rotirmar.lumen.databinding.ActivityProductionBinding;
 import com.rotirmar.lumen.ui.main.SectionsPagerAdapterConsumption;
+import com.rotirmar.lumen.ui.main.SectionsPagerAdapterProduction;
 
 public class Production extends AppCompatActivity {
 
@@ -28,9 +29,11 @@ public class Production extends AppCompatActivity {
         binding = ActivityProductionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        SectionsPagerAdapterConsumption sectionsPagerAdapter = new SectionsPagerAdapterConsumption(this, getSupportFragmentManager());
+        SectionsPagerAdapterProduction sectionsPagerAdapter = new SectionsPagerAdapterProduction(this, getSupportFragmentManager());
         ViewPager viewPager = binding.productionViewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = binding.productionTabs;
+        tabs.setupWithViewPager(viewPager);
 
 
         BottomNavigationView consumptionBottom = findViewById(R.id.production_bottom_navigation);
