@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.anychart.APIlib;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
@@ -35,6 +36,7 @@ public class Consumption1 extends Fragment {
         view = inflater.inflate(R.layout.fragment_consumption1, container, false);
 
         AnyChartView pieChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionPorcentual);
+        APIlib.getInstance().setActiveAnyChartView(pieChart);
         Pie pie = AnyChart.pie();
 
         List<DataEntry> datat = new ArrayList<>();
@@ -56,7 +58,7 @@ public class Consumption1 extends Fragment {
         pieChart.setChart(pie);
 
         AnyChartView lineChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionyConsumo);
-
+        APIlib.getInstance().setActiveAnyChartView(lineChart);
         lineChart.setProgressBar(view.findViewById(R.id.progress_barGeneracionyConsumo));
 
         Cartesian cartesian = AnyChart.line();
