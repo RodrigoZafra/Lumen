@@ -50,4 +50,30 @@ public class Consumption extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {//Aparece el menu en la barra de arriba
+        getMenuInflater().inflate(R.menu.menu_navigation, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {//Gestiona las acciones sobre los botones
+        int id = item.getItemId();
+        if (id == R.id.favorite) {
+            Toast toast = Toast.makeText(this, "Has eleigo esta página como principal!", Toast.LENGTH_LONG);
+            toast.show();
+        }
+
+        if (id == R.id.comoFunciona) {
+            Intent intent = new Intent(Consumption.this, InfoSlides.class);
+            startActivity(intent);
+        }
+        if (id == R.id.sobreNosotros) {
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }
