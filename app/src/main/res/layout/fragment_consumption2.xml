@@ -59,8 +59,7 @@
                 android:layout_toEndOf="@id/cardViewImage1ConsumptionMonth"
                 android:drawablePadding="4dp"
                 android:text="Demanda real ahora"
-                android:textSize="18sp"
-                />
+                android:textSize="18sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
