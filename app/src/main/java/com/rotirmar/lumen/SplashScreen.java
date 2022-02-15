@@ -10,18 +10,24 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONObject;
+
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
+import cz.msebera.android.httpclient.Header;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -30,7 +36,10 @@ public class SplashScreen extends AppCompatActivity {
     Animation nameAnimation;
     AnimatedVectorDrawableCompat avdC;
     AnimatedVectorDrawable avd;
-    private String firstTime;
+
+    private boolean firstTime;
+
+    String URL = "https://apidatos.ree.es/es/datos/demanda/demanda-tiempo-real?start_date=2022-02-15T00:00&end_date=2022-02-15T23:59&time_trunc=hour";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +66,10 @@ public class SplashScreen extends AppCompatActivity {
 
         /* PRIMERA VEZ */
         firstTime = readDataBase();
-        if (firstTime == null) {
-            writeDataBase();
+        if (!firstTime) {
+            createDataBase();
+        } else {
+            requestDataWriteDataBase(URL, "consumptionDayDemanda.json");
         }
 
         /* ABRIR APP */
@@ -66,37 +77,63 @@ public class SplashScreen extends AppCompatActivity {
 
     }
 
-    private String readDataBase() {
-        try {
-            File file = getFilesDir();
-            FileInputStream fileIn = new FileInputStream(file.toString() + "/data_base.dat");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            DataBase dbRes = (DataBase) in.readObject();
-            return dbRes.primeraVez;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+    private boolean readDataBase() {
+        firstTime = new File(getFilesDir() + "/data_base.dat").exists();
+        return firstTime;
     }
 
-    private void writeDataBase() {
+    private void createDataBase() {
         try {
-            DataBase db = new DataBase();
-            db.primeraVez = "No";
-            FileOutputStream fileOut = new FileOutputStream(getFilesDir() + "/data_base.dat");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(db);
-            out.close();
-            fileOut.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            //Creacion ficheros iniciales
+            new File(getFilesDir() + "/data_base.dat").createNewFile();
+            //CONSUMPTION
+            //DAY
+            new File(getFilesDir(), "/" + "consumptionDayDemanda.json").createNewFile();
+            requestDataWriteDataBase(URL, "consumptionDayDemanda.json");
+            new File(getFilesDir(), "/" + "consumptionDayImpExp.json").createNewFile();
+            new File(getFilesDir(), "/" + "consumptionDayCostUni.json").createNewFile();
+            new File(getFilesDir(), "/" + "consumptionDayGenRen.json").createNewFile();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void requestDataWriteDataBase(String url, String archiveName) {
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        //client.setResponseTimeout(1000);
+        //client.setConnectTimeout(1000);
+
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // called when response HTTP status is "200 OK"
+                Log.d("Bitcoin", "JSON: " + response.toString());
+                try {
+                    //Escribir el archivo
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(new File(getFilesDir(), "/" + archiveName)));
+                    bw.write(response.toString());
+                    bw.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    Log.e("ReData", e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                Log.d("Status", "Request fail! Status code: " + statusCode);
+                Log.d("Request", "Fail response: " + response);
+                Log.e("ERROR", e.toString());
+
+                Toast.makeText(SplashScreen.this, "Request Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void openApp(boolean locationPermission) {
@@ -104,7 +141,7 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent;
-                if (firstTime == null) {
+                if (firstTime == false) {
                     intent = new Intent(SplashScreen.this, InfoSlides.class);
                 } else {
                     intent = new Intent(SplashScreen.this, Consumption.class);
