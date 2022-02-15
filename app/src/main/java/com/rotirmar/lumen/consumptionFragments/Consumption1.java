@@ -75,9 +75,9 @@ public class Consumption1 extends Fragment {
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
 
-        cartesian.title("Trend of Sales of the Most Popular Products of ACME Corp.");
+        cartesian.title("Demanda y generación energética.");
 
-        cartesian.yAxis(0).title("Number of Bottles Sold (thousands)");
+        cartesian.yAxis(0).title("Demanda (MW)");
         cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
 
         List<DataEntry> seriesData = new ArrayList<>();
@@ -113,7 +113,7 @@ public class Consumption1 extends Fragment {
         Mapping series3Mapping = set.mapAs("{ x: 'x', value: 'value3' }");
 
         Line series1 = cartesian.line(series1Mapping);
-        series1.name("Brandy");
+        series1.name("Prevista");
         series1.hovered().markers().enabled(true);
         series1.hovered().markers()
                 .type(MarkerType.CIRCLE)
@@ -125,7 +125,7 @@ public class Consumption1 extends Fragment {
                 .offsetY(5d);
 
         Line series2 = cartesian.line(series2Mapping);
-        series2.name("Whiskey");
+        series2.name("Prevista");
         series2.hovered().markers().enabled(true);
         series2.hovered().markers()
                 .type(MarkerType.CIRCLE)
@@ -137,7 +137,7 @@ public class Consumption1 extends Fragment {
                 .offsetY(5d);
 
         Line series3 = cartesian.line(series3Mapping);
-        series3.name("Tequila");
+        series3.name("Real");
         series3.hovered().markers().enabled(true);
         series3.hovered().markers()
                 .type(MarkerType.CIRCLE)

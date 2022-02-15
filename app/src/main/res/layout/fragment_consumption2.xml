@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".consumptionFragments.Consumption2">
 
-    <?xml version="1.0" encoding="utf-8"?>
+    <?xml version="1.0" encoding="utf-8"?>r
+    <!--IMPORTANTE: esta carta es para consumo diario en realidad-->
     <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,6 +33,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_chart_lines"
                 android:padding="5dp" />
 
             <!--Text View to display Course Name-->
