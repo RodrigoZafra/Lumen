@@ -51,9 +51,11 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         String fechaActual = obtenerFechaActual();
+        String fechaActualYear = (Integer.parseInt(fechaActual.substring(0,4))-1) + "";
+        String fecha5YearBefore = (Integer.parseInt(fechaActual.substring(0,4))-4) + "";
         CONSUMPTION_DAY_URL = "https://apidatos.ree.es/es/datos/demanda/demanda-tiempo-real?start_date=" + fechaActual +"T00:00&end_date=" + fechaActual + "T23:59&time_trunc=hour";
-        CONSUMPTION_MONTH_URL = "https://apidatos.ree.es/es/datos/demanda/demanda-tiempo-real?start_date=" + fechaActual +"T00:00&end_date=" + fechaActual + "T23:59&time_trunc=hour";
-        CONSUMPTION_YEAR_URL = "https://apidatos.ree.es/es/datos/demanda/demanda-tiempo-real?start_date=" + fechaActual +"T00:00&end_date=" + fechaActual + "T23:59&time_trunc=hour";
+        CONSUMPTION_MONTH_URL = "https://apidatos.ree.es/es/datos/demanda/demanda-tiempo-real?start_date=" + fecha5YearBefore +"T00:00&end_date=" + fechaActualYear + "T23:59&time_trunc=hour";
+        CONSUMPTION_YEAR_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=2018-01-01T00:00&end_date=2021-12-31T23:59&time_trunc=year&geo_trunc=electric_system&geo_limit=peninsular&geo_ids=8741";
 
         /* AIMACIONES */
         //Animacion logo

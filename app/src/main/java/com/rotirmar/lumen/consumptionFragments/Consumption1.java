@@ -186,7 +186,6 @@ public class Consumption1 extends Fragment {
 
         pieChart.setChart(pie);*/
 
-
         return view;
     }
 

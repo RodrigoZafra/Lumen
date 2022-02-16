@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.anychart.chart.common.dataentry.DataEntry;
 import com.rotirmar.lumen.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +20,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,6 +91,26 @@ public class Consumption2 extends Fragment {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        List<DataEntry> seriesData = new ArrayList<>();
+
+        try {
+            JSONArray jsonArrayDemandaAnual = jsonO1.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+
+
+            String year = "";
+            int valor = 0;
+
+            for (int i=0; i<5; i++) {
+                year = jsonArrayDemandaAnual.getJSONObject(i).get("datetime").toString().substring(0,4);
+                valor = Integer.parseInt(jsonArrayDemandaAnual.getJSONObject(i).getString("value"));
+
+                seriesData.add(new Consumption2.CustomDataEntry(year, valor));
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }*/
