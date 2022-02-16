@@ -10,6 +10,15 @@ import android.view.ViewGroup;
 
 import com.rotirmar.lumen.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Consumption2#newInstance} factory method to
@@ -62,5 +71,24 @@ public class Consumption2 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_consumption2, container, false);
+
+        //COLUM CHART
+
+        //Leer el archvo
+        /*BufferedReader br = null;
+        String json = "";
+        JSONObject jsonO1 = new JSONObject();
+        try {
+            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + "consumptionDayDemanda.json")));
+            json = br.readLine();
+            br.close();
+            jsonO1 = new JSONObject(json);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
     }
 }
