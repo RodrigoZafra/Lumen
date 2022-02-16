@@ -9,4 +9,10 @@
     <string name="consumo">Consumption</string>
     <string name="produccion">Production</string>
     <string name="title_activity_production">Production</string>
+    <string name="infoSlideString1">Do you know how the Spanish electricity sector?</string>
+    <string name="infoSlideString2">"Most of the "</string>
+    <string name="infoSlideString3">3</string>
+    <string name="infoSlideString4">4</string>
+    <string name="infoSlideString5">5</string>
+    <string name="infoSlideString6">emosido engañado</string>
 </resources>

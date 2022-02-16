@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Consumption">
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/consumptionTabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/consumption_view_pager"
+        app:layout_constraintTop_toBottomOf="@id/consumptionTabs"
+        app:layout_constraintBottom_toTopOf="@id/consumption_bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="600dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/consumption_bottom_navigation"
@@ -18,11 +28,10 @@
         android:layout_height="60dp"
         android:layout_gravity="bottom"
         app:itemIconSize="30dp"
-        app:layout_anchor="@+id/consumption_view_pager"
         app:layout_anchorGravity="bottom|center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/main_bottom_menu">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
