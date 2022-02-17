@@ -74,7 +74,7 @@ public class Consumption1 extends Fragment {
         String json = "";
         JSONObject jsonO1 = new JSONObject();
         try {
-            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + "consumptionDayDemanda.json")));
+            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + "consumptionDayDemandaTiempoReal.json")));
             json = br.readLine();
             br.close();
             jsonO1 = new JSONObject(json);

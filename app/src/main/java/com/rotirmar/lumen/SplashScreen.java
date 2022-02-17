@@ -41,9 +41,14 @@ public class SplashScreen extends AppCompatActivity {
     AnimatedVectorDrawable avd;
 
     private boolean firstTime;
-    String CONSUMPTION_DAY_URL;
-    String CONSUMPTION_MONTH_URL;
-    String CONSUMPTION_YEAR_URL;
+
+    private String CONSUMPTION_DAY_DEMANDAREAL_URL;
+    private String CONSUMPTION_DAY_DEMANDAPORDIA_URL;
+    private String CONSUMPTION_MONTH_DEMANDA_URL;
+    private String CONSUMPTION_MONTH_PRICE_URL;
+    private String CONSUMPTION_YEAR_DEMANDA_URL;
+    private String CONSUMPTION_YEAR_PRICE_URL;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +56,24 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         String fechaActual = obtenerFechaActual();
-        String fechaActualYear = (Integer.parseInt(fechaActual.substring(0,4))-1) + "";
-        String fecha5YearBefore = (Integer.parseInt(fechaActual.substring(0,4))-4) + "";
-        CONSUMPTION_DAY_URL = "https://apidatos.ree.es/es/datos/demanda/demanda-tiempo-real?start_date=" + fechaActual +"T00:00&end_date=" + fechaActual + "T23:59&time_trunc=hour";
-        CONSUMPTION_MONTH_URL = "https://apidatos.ree.es/es/datos/demanda/demanda-tiempo-real?start_date=" + fecha5YearBefore +"T00:00&end_date=" + fechaActualYear + "T23:59&time_trunc=hour";
-        CONSUMPTION_YEAR_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=2018-01-01T00:00&end_date=2021-12-31T23:59&time_trunc=year&geo_trunc=electric_system&geo_limit=peninsular&geo_ids=8741";
+        String diaActual = fechaActual.substring(8, 10);
+        String mesActual = fechaActual.substring(5, 7);
+        String lastMonth = Integer.parseInt(mesActual) - 1 + "";
+        String yearActual = fechaActual.substring(0, 4);
+        String lastYear = (Integer.parseInt(fechaActual.substring(0, 4)) - 1) + "";
+        String year5Before = (Integer.parseInt(lastYear) - 4) + "";
+        //DAY
+        CONSUMPTION_DAY_DEMANDAREAL_URL = "https://apidatos.ree.es/es/datos/demanda/demanda-tiempo-real?start_date=" + fechaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=hour";
+        if (mesActual.equals("01"))
+            CONSUMPTION_DAY_DEMANDAPORDIA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + "12" + diaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=day";
+        else
+            CONSUMPTION_DAY_DEMANDAPORDIA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + yearActual + lastMonth + diaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=day";
+        //MONTH
+        CONSUMPTION_MONTH_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + lastMonth + 01 + "T00:00&end_date=" + yearActual + lastMonth + 31 + "T23:59&time_trunc=month&geo_trunc=electric_system&geo_limit=peninsular&geo_ids=8741";
+        CONSUMPTION_MONTH_PRICE_URL = "";
+        //YEAR
+        CONSUMPTION_YEAR_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + year5Before + "T00:00&end_date="+ yearActual + "T23:59&time_trunc=year";
+        CONSUMPTION_YEAR_PRICE_URL = "";
 
         /* AIMACIONES */
         //Animacion logo
@@ -80,8 +98,8 @@ public class SplashScreen extends AppCompatActivity {
         if (!firstTime) {
             createDataBase();
         } else {
-            requestDataWriteDataBase(CONSUMPTION_DAY_URL, "consumptionDayDemanda.json");
-            requestDataWriteDataBase(CONSUMPTION_YEAR_URL, "consumptionYearDemanda.json");
+            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDAREAL_URL, "consumptionDayDemandaTiempoReal.json");
+            requestDataWriteDataBase(CONSUMPTION_YEAR_DEMANDA_URL, "consumptionYearDemanda.json");
         }
 
         /* ABRIR APP */
@@ -98,13 +116,26 @@ public class SplashScreen extends AppCompatActivity {
         try {
             //Creacion ficheros iniciales
             new File(getFilesDir() + "/data_base.dat").createNewFile();
-            //CONSUMPTION
+            /*CONSUMPTION*/
             //DAY
-            new File(getFilesDir(), "/" + "consumptionDayDemanda.json").createNewFile();
-            requestDataWriteDataBase(CONSUMPTION_DAY_URL, "consumptionDayDemanda.json");
+            new File(getFilesDir(), "/" + "consumptionDayDemandaTiempoReal.json").createNewFile();
+            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDAREAL_URL, "consumptionDayDemandaTiempoReal.json");
+            new File(getFilesDir(), "/" + "consumptionDayDemandaTiempoReal.json").createNewFile();
+            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDAPORDIA_URL, "consumptionDayDemandaPorDia.json");
+            //MONTH
             new File(getFilesDir(), "/" + "consumptionMonthDemanda.json").createNewFile();
-            new File(getFilesDir(), "/" + "consumptionDayYearDemanda.json").createNewFile();
-            requestDataWriteDataBase(CONSUMPTION_YEAR_URL, "consumptionYearDemanda.json");
+            requestDataWriteDataBase(CONSUMPTION_MONTH_DEMANDA_URL, "consumptionMonthDemanda.json");
+            new File(getFilesDir(), "/" + "consumptionMonthPrice.json").createNewFile();
+            requestDataWriteDataBase(CONSUMPTION_MONTH_PRICE_URL, "consumptionMonthPrice.json");
+            //YEAR
+            new File(getFilesDir(), "/" + "consumptionYearDemanda.json").createNewFile();
+            requestDataWriteDataBase(CONSUMPTION_YEAR_DEMANDA_URL, "consumptionYearDemanda.json");
+            new File(getFilesDir(), "/" + "consumptionYearPrice.json").createNewFile();
+            requestDataWriteDataBase(CONSUMPTION_YEAR_PRICE_URL, "consumptionYearPrice.json");
+            /*PRODUCTION*/
+            //DAY
+            //MONTH
+            //YEAR
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -143,9 +174,23 @@ public class SplashScreen extends AppCompatActivity {
                 Log.d("Request", "Fail response: " + response);
                 Log.e("ERROR", e.toString());
 
-                Toast.makeText(SplashScreen.this, "Request Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SplashScreen.this, "Request Failed" + archiveName, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public static String obtenerFechaActual() {
+        String formato = "yyyy-MM-dd";
+        return obtenerFechaConFormato(formato);
+    }
+
+    public static String obtenerFechaConFormato(String formato) {
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        SimpleDateFormat sdf;
+        sdf = new SimpleDateFormat(formato);
+        //sdf.setTimeZone(TimeZone.getTimeZone(zonaHoraria));
+        return sdf.format(date);
     }
 
     private void openApp(boolean locationPermission) {
@@ -163,17 +208,4 @@ public class SplashScreen extends AppCompatActivity {
         }, 2000);
     }
 
-    public static String obtenerFechaActual() {
-        String formato = "yyyy-MM-dd";
-        return obtenerFechaConFormato(formato);
-    }
-
-    public static String obtenerFechaConFormato(String formato) {
-        Calendar calendar = Calendar.getInstance();
-        Date date = calendar.getTime();
-        SimpleDateFormat sdf;
-        sdf = new SimpleDateFormat(formato);
-        //sdf.setTimeZone(TimeZone.getTimeZone(zonaHoraria));
-        return sdf.format(date);
-    }
 }
