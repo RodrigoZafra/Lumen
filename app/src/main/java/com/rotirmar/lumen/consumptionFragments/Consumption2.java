@@ -8,7 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.anychart.APIlib;
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Cartesian;
+import com.anychart.core.cartesian.series.Line;
+import com.anychart.data.Mapping;
+import com.anychart.data.Set;
+import com.anychart.enums.Anchor;
+import com.anychart.enums.MarkerType;
+import com.anychart.enums.TooltipPositionMode;
+import com.anychart.graphics.vector.Stroke;
 import com.rotirmar.lumen.R;
 
 import org.json.JSONArray;
@@ -30,6 +42,7 @@ import java.util.List;
  */
 public class Consumption2 extends Fragment {
 
+    private View view;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -74,16 +87,37 @@ public class Consumption2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_consumption2, container, false);
+        view = inflater.inflate(R.layout.fragment_consumption2, container, false);
 
-        //COLUM CHART
+        //LINE CHART
+        AnyChartView lineChart = (AnyChartView) view.findViewById(R.id.graficoDemandaMes);
+        APIlib.getInstance().setActiveAnyChartView(lineChart);
 
-        //Leer el archvo
-        /*BufferedReader br = null;
+        Cartesian cartesian = AnyChart.line();
+
+        cartesian.animation(true);
+
+        cartesian.padding(10d, 20d, 5d, 20d);
+
+        cartesian.crosshair().enabled(true);
+        cartesian.crosshair()
+                .yLabel(true)
+                // TODO ystroke
+                .yStroke((Stroke) null, null, null, (String) null, (String) null);
+
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+
+        cartesian.title("Demanda por mes del último año");
+
+        cartesian.yAxis(0).title("Demanda (MW)");
+        cartesian.xAxis(0).labels().padding(4.1d, 4.1d, 4.1d, 4.1d);
+
+        //Leer el archivo y crear el objeto JSON
+        BufferedReader br;
         String json = "";
         JSONObject jsonO1 = new JSONObject();
         try {
-            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + "consumptionDayDemanda.json")));
+            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + "consumptionMonthDemanda.json")));
             json = br.readLine();
             br.close();
             jsonO1 = new JSONObject(json);
@@ -98,21 +132,53 @@ public class Consumption2 extends Fragment {
         List<DataEntry> seriesData = new ArrayList<>();
 
         try {
-            JSONArray jsonArrayDemandaAnual = jsonO1.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+            JSONArray jsonArrayValoresDemandaPorMes = jsonO1.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
 
+            String day;
+            Double value;
 
-            String year = "";
-            int valor = 0;
+            for (int i = 0; i < 12; i++) {
+                day = jsonArrayValoresDemandaPorMes.getJSONObject(i).get("datetime").toString().substring(5, 7);
+                value = Double.parseDouble(jsonArrayValoresDemandaPorMes.getJSONObject(i).getString("value"));
 
-            for (int i=0; i<5; i++) {
-                year = jsonArrayDemandaAnual.getJSONObject(i).get("datetime").toString().substring(0,4);
-                valor = Integer.parseInt(jsonArrayDemandaAnual.getJSONObject(i).getString("value"));
-
-                seriesData.add(new Consumption2.CustomDataEntry(year, valor));
+                seriesData.add(new CustomDataEntry(day, value));
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }*/
+        }
+
+        Set set = Set.instantiate();
+        set.data(seriesData);
+        Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
+
+        Line series1 = cartesian.line(series1Mapping);
+        series1.name("MW");
+        series1.color("#ffea00");
+        series1.hovered().markers().enabled(true);
+        series1.hovered().markers()
+                .type(MarkerType.CIRCLE)
+                .size(4d);
+        series1.tooltip()
+                .position("right")
+                .anchor(Anchor.LEFT_CENTER)
+                .offsetX(5d)
+                .offsetY(5d);
+
+        cartesian.legend().enabled(true);
+        cartesian.legend().fontSize(13d);
+        cartesian.legend().padding(0d, 0d, 10d, 0d);
+
+        lineChart.setChart(cartesian);
+
+        return view;
+    }
+
+    private static class CustomDataEntry extends ValueDataEntry {
+
+        CustomDataEntry(String x, Number value) {
+            super(x, value);
+        }
+
     }
 }

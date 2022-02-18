@@ -14,8 +14,6 @@ import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
-import com.anychart.charts.Funnel;
-import com.anychart.charts.Pie;
 import com.anychart.core.cartesian.series.Line;
 import com.anychart.data.Mapping;
 import com.anychart.data.Set;
@@ -46,7 +44,7 @@ public class Consumption1 extends Fragment {
         view = inflater.inflate(R.layout.fragment_consumption1, container, false);
 
         //LINE CHART
-        AnyChartView lineChart = (AnyChartView) view.findViewById(R.id.graficoDemanda);
+        AnyChartView lineChart = (AnyChartView) view.findViewById(R.id.graficoDemandaReal);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
         //lineChart.setProgressBar(view.findViewById(R.id.progress_barGeneracionyConsumo));
 
@@ -67,7 +65,7 @@ public class Consumption1 extends Fragment {
         cartesian.title("Demanda en tiempo real");
 
         cartesian.yAxis(0).title("Demanda (MW)");
-        cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
+        cartesian.xAxis(0).labels().padding(1d, 1d, 1d, 1d);
 
         //Leer el archivo y crear el objeto JSON
         BufferedReader br = null;
@@ -98,13 +96,17 @@ public class Consumption1 extends Fragment {
             int programada = 0;
             int prevista = 0;
 
-            for (int i=0; i<144; i+=6) {
-                hora = jsonArrayValoresDemandaProgramada.getJSONObject(i).get("datetime").toString().substring(12,16);
+            for (int i = 0; i < 144; i += 6) {
+                hora = jsonArrayValoresDemandaProgramada.getJSONObject(i).get("datetime").toString().substring(12, 16);
                 real = Integer.parseInt(jsonArrayValoresDemandaReal.getJSONObject(i).getString("value"));
                 programada = Integer.parseInt(jsonArrayValoresDemandaProgramada.getJSONObject(i).getString("value"));
                 prevista = Integer.parseInt(jsonArrayValoresDemandaPrevista.getJSONObject(i).getString("value"));
 
                 seriesData.add(new CustomDataEntry(hora, real, programada, prevista));
+            }
+            for (DataEntry i :
+                    seriesData) {
+                System.out.println(i);
             }
 
         } catch (JSONException e) {
