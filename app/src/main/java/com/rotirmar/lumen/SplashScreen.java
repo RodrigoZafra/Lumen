@@ -65,14 +65,14 @@ public class SplashScreen extends AppCompatActivity {
         //DAY
         CONSUMPTION_DAY_DEMANDAREAL_URL = "https://apidatos.ree.es/es/datos/demanda/demanda-tiempo-real?start_date=" + fechaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=hour";
         if (mesActual.equals("01"))
-            CONSUMPTION_DAY_DEMANDAPORDIA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + "12" + diaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=day";
+            CONSUMPTION_DAY_DEMANDAPORDIA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + "-12" + "-" + diaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=day";
         else
-            CONSUMPTION_DAY_DEMANDAPORDIA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + yearActual + lastMonth + diaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=day";
+            CONSUMPTION_DAY_DEMANDAPORDIA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + yearActual + "-" + lastMonth + "-" + diaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=day";
         //MONTH
-        CONSUMPTION_MONTH_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + lastMonth + 01 + "T00:00&end_date=" + yearActual + lastMonth + 31 + "T23:59&time_trunc=month&geo_trunc=electric_system&geo_limit=peninsular&geo_ids=8741";
+        CONSUMPTION_MONTH_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + "-" + lastMonth + "-01" + "T00:00&end_date=" + yearActual + lastMonth + "31" + "T23:59&time_trunc=month&geo_trunc=electric_system&geo_limit=peninsular&geo_ids=8741";
         CONSUMPTION_MONTH_PRICE_URL = "";
         //YEAR
-        CONSUMPTION_YEAR_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + year5Before + "T00:00&end_date="+ yearActual + "T23:59&time_trunc=year";
+        CONSUMPTION_YEAR_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + year5Before + "-01-01" + "T00:00&end_date="+ lastYear+ "-12-31" + "T23:59&time_trunc=year";
         CONSUMPTION_YEAR_PRICE_URL = "";
 
         /* AIMACIONES */
@@ -98,8 +98,16 @@ public class SplashScreen extends AppCompatActivity {
         if (!firstTime) {
             createDataBase();
         } else {
+            /*CONSUMPTION*/
+            //DAY
             requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDAREAL_URL, "consumptionDayDemandaTiempoReal.json");
+            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDAPORDIA_URL, "consumptionDayDemandaPorDia.json");
+            //MONTH
+            requestDataWriteDataBase(CONSUMPTION_MONTH_DEMANDA_URL, "consumptionMonthDemanda.json");
+            requestDataWriteDataBase(CONSUMPTION_MONTH_PRICE_URL, "consumptionMonthPrice.json");
+            //YEAR
             requestDataWriteDataBase(CONSUMPTION_YEAR_DEMANDA_URL, "consumptionYearDemanda.json");
+            requestDataWriteDataBase(CONSUMPTION_YEAR_PRICE_URL, "consumptionYearPrice.json");
         }
 
         /* ABRIR APP */
