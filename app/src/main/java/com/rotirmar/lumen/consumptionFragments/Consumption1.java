@@ -37,7 +37,7 @@ import java.util.List;
 
 public class Consumption1 extends Fragment {
     private View view;
-
+//ak,edhajhfda
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
