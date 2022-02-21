@@ -1,7 +1,9 @@
 package com.rotirmar.lumen.consumptionFragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import com.anychart.enums.Anchor;
 import com.anychart.enums.MarkerType;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.rotirmar.lumen.R;
 
 import org.json.JSONArray;
@@ -37,20 +40,33 @@ import java.util.List;
 
 public class Consumption1 extends Fragment {
     private View view;
+    private View view2;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.fragment_consumption1, container, false);
+        view2 = inflater.inflate(R.layout.anychartgenerico, container, false);
+
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+
+        builder.setView(inflater.inflate(R.layout.anychartgenerico, container, false));
+
+
+        //Crea la notificación
+        AlertDialog dialog = builder.create();
+        //Lanza la notificación
+        dialog.show();
 
         //LINE CHART
-        AnyChartView lineChart = (AnyChartView) view.findViewById(R.id.graficoDemandaReal);
+        AnyChartView lineChart = (AnyChartView) view2.findViewById(R.id.anychartgenericogarafica);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
-        //lineChart.setProgressBar(view.findViewById(R.id.progress_barGeneracionyConsumo));
 
         Cartesian cartesian = AnyChart.line();
 
         cartesian.animation(true);
+
+        cartesian.background("#000");
 
         cartesian.padding(10d, 20d, 5d, 20d);
 
@@ -163,30 +179,6 @@ public class Consumption1 extends Fragment {
         cartesian.legend().padding(0d, 0d, 10d, 0d);
 
         lineChart.setChart(cartesian);
-
-        // PIE CHART
-        /*AnyChartView pieChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionPorcentual);
-        APIlib.getInstance().setActiveAnyChartView(pieChart);
-        Pie pie = AnyChart.pie();
-
-
-        List<DataEntry> datat = new ArrayList<>();
-
-        datat.add(new ValueDataEntry("Eólica", 30));
-        datat.add(new ValueDataEntry("Solar fotovoltaica", 4.4));
-        datat.add(new ValueDataEntry("Solar térmica", 0.5));
-        datat.add(new ValueDataEntry("Otras renovables", 1.9));
-        datat.add(new ValueDataEntry("Residuos renovables", 0.3));
-        datat.add(new ValueDataEntry("Nuclear", 17.3));
-        datat.add(new ValueDataEntry("Turbinación bombeo", 1.2));
-        datat.add(new ValueDataEntry("Ciclo combinado", 19.8));
-        datat.add(new ValueDataEntry("Carbón", 3.2));
-        datat.add(new ValueDataEntry("Cogeneración", 9.6));
-        datat.add(new ValueDataEntry("Residuos no renovables", 0.8));
-
-        pie.data(datat);
-
-        pieChart.setChart(pie);*/
 
         return view;
     }
