@@ -6,27 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".Production">
 
-    <com.google.android.material.appbar.AppBarLayout
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/production_tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.Lumen.Button.Blue.AppBarOverlay">
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/production_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:minHeight="?actionBarSize"
-            android:padding="@dimen/appbar_padding"
-            android:text="@string/produccion"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/production_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        
-    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/production_view_pager"
@@ -42,7 +27,6 @@
         app:itemIconSize="30dp"
         app:layout_anchor="@+id/production_view_pager"
         app:layout_anchorGravity="bottom|center"
-        app:menu="@menu/main_bottom_menu">
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+        app:menu="@menu/main_bottom_menu"></com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
