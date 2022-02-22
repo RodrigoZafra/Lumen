@@ -59,7 +59,7 @@ public class Consumption1 extends Fragment {
         dialog.show();
 
         //LINE CHART
-        AnyChartView lineChart = (AnyChartView) view2.findViewById(R.id.anychartgenericogarafica);
+        AnyChartView lineChart = (AnyChartView) view.findViewById(R.id.graficoDemandaReal);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
 
         Cartesian cartesian = AnyChart.line();
@@ -68,7 +68,7 @@ public class Consumption1 extends Fragment {
 
         cartesian.background("#000");
 
-        cartesian.padding(10d, 20d, 5d, 20d);
+        //cartesian.padding(10d, 20d, 5d, 20d);
 
         cartesian.crosshair().enabled(true);
         cartesian.crosshair()
