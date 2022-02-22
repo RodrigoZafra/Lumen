@@ -1,6 +1,5 @@
 package com.rotirmar.lumen.consumptionFragments;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -46,28 +45,24 @@ public class Consumption1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_consumption1, container, false);
-        view2 = inflater.inflate(R.layout.anychartgenerico, container, false);
+        view2 = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
 
-        builder.setView(inflater.inflate(R.layout.anychartgenerico, container, false));
-
-
-        //Crea la notificación
+        //ALERT DIALOG
+        builder.setView(view2);
         AlertDialog dialog = builder.create();
-        //Lanza la notificación
         dialog.show();
 
         //LINE CHART
-        AnyChartView lineChart = (AnyChartView) view.findViewById(R.id.graficoDemandaReal);
+        AnyChartView lineChart = (AnyChartView) view2.findViewById(R.id.anychartView);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
 
         Cartesian cartesian = AnyChart.line();
 
         cartesian.animation(true);
 
-        cartesian.background("#000");
-
+        //cartesian.background("#000");
         //cartesian.padding(10d, 20d, 5d, 20d);
 
         cartesian.crosshair().enabled(true);
@@ -83,6 +78,7 @@ public class Consumption1 extends Fragment {
         cartesian.yAxis(0).title("Demanda (MW)");
         cartesian.xAxis(0).labels().padding(1d, 1d, 1d, 1d);
 
+        //-----------------------------------------------
         //Leer el archivo y crear el objeto JSON
         BufferedReader br = null;
         String json = "";
@@ -128,6 +124,7 @@ public class Consumption1 extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        //------------------------------------------------
 
         Set set = Set.instantiate();
         set.data(seriesData);
