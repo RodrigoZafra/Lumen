@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:padding="20dp"
             android:textColor="@color/azul_oscuro"
-            android:text="@string/infoSlideString5"
+            android:text="@string/infoSlideString4"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
