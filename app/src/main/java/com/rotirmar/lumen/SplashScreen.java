@@ -58,10 +58,11 @@ public class SplashScreen extends AppCompatActivity {
         String fechaActual = obtenerFechaActual();
         String diaActual = fechaActual.substring(8, 10);
         String mesActual = fechaActual.substring(5, 7);
-        String lastMonth = Integer.parseInt(mesActual) - 1 + "";
+        int lastMonth = Integer.parseInt(mesActual) - 1;
         String yearActual = fechaActual.substring(0, 4);
-        String lastYear = (Integer.parseInt(fechaActual.substring(0, 4)) - 1) + "";
-        String year5Before = (Integer.parseInt(lastYear) - 4) + "";
+        int lastYear = (Integer.parseInt(yearActual) - 1);
+        int year5Before = lastYear - 4;
+        /*CONSUMPTION*/
         //DAY
         CONSUMPTION_DAY_DEMANDAREAL_URL = "https://apidatos.ree.es/es/datos/demanda/demanda-tiempo-real?start_date=" + fechaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=hour";
         if (mesActual.equals("01"))
@@ -69,11 +70,17 @@ public class SplashScreen extends AppCompatActivity {
         else
             CONSUMPTION_DAY_DEMANDAPORDIA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + yearActual + "-" + lastMonth + "-" + diaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=day";
         //MONTH
-        CONSUMPTION_MONTH_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + "-" + lastMonth + "-01" + "T00:00&end_date=" + yearActual + lastMonth + "31" + "T23:59&time_trunc=month&geo_trunc=electric_system&geo_limit=peninsular&geo_ids=8741";
-        CONSUMPTION_MONTH_PRICE_URL = "";
+        if (mesActual.equals("01"))
+            CONSUMPTION_MONTH_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + "-01-01" + "T00:00&end_date=" + lastYear + "-12-31" + "T23:59&time_trunc=month&geo_trunc=electric_system&geo_limit=peninsular&geo_ids=8741";
+        else
+            CONSUMPTION_MONTH_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + "-" + mesActual + "-01" + "T00:00&end_date=" + yearActual + "-" + lastMonth + "-31" + "T23:59&time_trunc=month&geo_trunc=electric_system&geo_limit=peninsular&geo_ids=8741";
+        if (mesActual.equals("01"))
+            CONSUMPTION_MONTH_PRICE_URL = "https://apidatos.ree.es/en/datos/mercados/componentes-precio?start_date=" + lastYear + "01-01" + "T00:00&end_date=" + lastYear + "-12-31" + "T23:59&time_trunc=month";
+        else
+            CONSUMPTION_MONTH_PRICE_URL = "https://apidatos.ree.es/en/datos/mercados/componentes-precio?start_date=" + lastYear + "-" + mesActual + "-01T00:00&end_date=" + yearActual + "-" + lastMonth + "-31T23:59&time_trunc=month";
         //YEAR
-        CONSUMPTION_YEAR_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + year5Before + "-01-01" + "T00:00&end_date="+ lastYear+ "-12-31" + "T23:59&time_trunc=year";
-        CONSUMPTION_YEAR_PRICE_URL = "";
+        CONSUMPTION_YEAR_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + year5Before + "-01-01" + "T00:00&end_date=" + lastYear + "-12-31" + "T23:59&time_trunc=year";
+        CONSUMPTION_YEAR_PRICE_URL = "https://apidatos.ree.es/en/datos/mercados/componentes-precio-energia-cierre-desglose?start_date=" + year5Before + "-01-01T00:00&end_date=" + lastYear + "-12-31T23:59&time_trunc=year";
 
         /* AIMACIONES */
         //Animacion logo
