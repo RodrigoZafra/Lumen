@@ -1,8 +1,10 @@
 package com.rotirmar.lumen.consumptionFragments;
 
 import android.app.AlertDialog;
+import android.nfc.cardemulation.CardEmulation;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -31,32 +33,59 @@ import java.util.List;
 
 public class Consumption1 extends Fragment {
     private View view;
+    private CardView cvConsumptionDay1;
+    private CardView cvConsumptionDay2;
+    AlertDialog builder;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_consumption1, container, false);
-/*
-        AnyChartView pieChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionPorcentual);
-        APIlib.getInstance().setActiveAnyChartView(pieChart);
-        Pie pie = AnyChart.pie();
 
-        List<DataEntry> datat = new ArrayList<>();
-        datat.add(new ValueDataEntry("Hidráulica", 11.1));
-        datat.add(new ValueDataEntry("Eólica", 30));
-        datat.add(new ValueDataEntry("Solar fotovoltaica", 4.4));
-        datat.add(new ValueDataEntry("Solar térmica", 0.5));
-        datat.add(new ValueDataEntry("Otras renovables", 1.9));
-        datat.add(new ValueDataEntry("Residuos renovables", 0.3));
-        datat.add(new ValueDataEntry("Nuclear", 17.3));
-        datat.add(new ValueDataEntry("Turbinación bombeo", 1.2));
-        datat.add(new ValueDataEntry("Ciclo combinado", 19.8));
-        datat.add(new ValueDataEntry("Carbón", 3.2));
-        datat.add(new ValueDataEntry("Cogeneración", 9.6));
-        datat.add(new ValueDataEntry("Residuos no renovables", 0.8));
+        cvConsumptionDay1 = view.findViewById(R.id.cvConsumptionDay1);
+        cvConsumptionDay2 = view.findViewById(R.id.cvConsumptionDay2);
 
-        pie.data(datat);
 
-        pieChart.setChart(pie);
+        cvConsumptionDay1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        cvConsumptionDay2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+
+
+
+
+        //AnyChartView pieChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionPorcentual);
+        //APIlib.getInstance().setActiveAnyChartView(pieChart);
+        //Pie pie = AnyChart.pie();
+//
+        //List<DataEntry> datat = new ArrayList<>();
+        //datat.add(new ValueDataEntry("Hidráulica", 11.1));
+        //datat.add(new ValueDataEntry("Eólica", 30));
+        //datat.add(new ValueDataEntry("Solar fotovoltaica", 4.4));
+        //datat.add(new ValueDataEntry("Solar térmica", 0.5));
+        //datat.add(new ValueDataEntry("Otras renovables", 1.9));
+        //datat.add(new ValueDataEntry("Residuos renovables", 0.3));
+        //datat.add(new ValueDataEntry("Nuclear", 17.3));
+        //datat.add(new ValueDataEntry("Turbinación bombeo", 1.2));
+        //datat.add(new ValueDataEntry("Ciclo combinado", 19.8));
+        //datat.add(new ValueDataEntry("Carbón", 3.2));
+        //datat.add(new ValueDataEntry("Cogeneración", 9.6));
+        //datat.add(new ValueDataEntry("Residuos no renovables", 0.8));
+//
+        //pie.data(datat);
+//
+        //pieChart.setChart(pie);
 
         AnyChartView lineChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionyConsumo);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
@@ -154,7 +183,7 @@ public class Consumption1 extends Fragment {
         cartesian.legend().padding(0d, 0d, 10d, 0d);
 
         lineChart.setChart(cartesian);
-*/
+
         return view;
     }
 
