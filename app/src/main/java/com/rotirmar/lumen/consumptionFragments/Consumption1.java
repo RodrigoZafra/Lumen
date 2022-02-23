@@ -57,6 +57,7 @@ public class Consumption1 extends Fragment {
         //LINE CHART
         AnyChartView lineChart = (AnyChartView) view2.findViewById(R.id.anychartView);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
+        //lineChart.setProgressBar(view.findViewById(R.id.progress_barGeneracionyConsumo));
 
         Cartesian cartesian = AnyChart.line();
 
