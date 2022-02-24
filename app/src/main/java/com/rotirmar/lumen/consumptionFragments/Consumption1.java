@@ -55,8 +55,6 @@ public class Consumption1 extends Fragment {
         cvConsumptionDay1 = view.findViewById(R.id.cvConsumptionDay1);
         cvConsumptionDay2 = view.findViewById(R.id.cvConsumptionDay2);
 
-        //generarAnychartConsumoReal();
-
         cvConsumptionDay1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +63,8 @@ public class Consumption1 extends Fragment {
                 builder.setView(viewAnyChartPattern);
                 AlertDialog dialog = builder.create();
                 dialog.show();
+
+                generarAnychartConsumoReal();
             }
         });
 
@@ -133,9 +133,8 @@ public class Consumption1 extends Fragment {
     }
 
     private void generarAnychartConsumoReal() {
-        AnyChartView lineChart = (AnyChartView) viewAnyChartPattern.findViewById(R.id.any_chart_view);
+        AnyChartView lineChart = (AnyChartView) viewAnyChartPattern.findViewById(R.id.anychartView);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
-        //lineChart.setProgressBar(view.findViewById(R.id.progress_barGeneracionyConsumo));
 
         Cartesian cartesian = AnyChart.line();
 
