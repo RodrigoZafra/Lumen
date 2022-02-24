@@ -1,8 +1,11 @@
 package com.rotirmar.lumen.consumptionFragments;
 
+import android.app.AlertDialog;
+import android.nfc.cardemulation.CardEmulation;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,11 +20,14 @@ import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
 import com.anychart.charts.Funnel;
 import com.anychart.charts.Pie;
+import com.anychart.core.cartesian.series.Column;
 import com.anychart.core.cartesian.series.Line;
 import com.anychart.data.Mapping;
 import com.anychart.data.Set;
 import com.anychart.enums.Anchor;
+import com.anychart.enums.HoverMode;
 import com.anychart.enums.MarkerType;
+import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -43,21 +49,108 @@ public class Consumption1 extends Fragment {
     private View view;
     private View view2;
 
+    private CardView cvConsumptionDay1;
+    private CardView cvConsumptionDay2;
+    AlertDialog builder;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_consumption1, container, false);
         view2 = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
 
+        cvConsumptionDay1 = view.findViewById(R.id.cvConsumptionDay1);
+        cvConsumptionDay2 = view.findViewById(R.id.cvConsumptionDay2);
+
+
+        cvConsumptionDay1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        cvConsumptionDay2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
+
+        AnyChartView anyChartView = view.findViewById(R.id.graficoColumnas);
+        anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
+
+        Cartesian cartesian = AnyChart.column();
+
+        List<DataEntry> data = new ArrayList<>();
+        data.add(new ValueDataEntry("Rouge", 80540));
+        data.add(new ValueDataEntry("Foundation", 94190));
+        data.add(new ValueDataEntry("Mascara", 102610));
+        data.add(new ValueDataEntry("Lip gloss", 110430));
+        data.add(new ValueDataEntry("Lipstick", 128000));
+        data.add(new ValueDataEntry("Nail polish", 143760));
+        data.add(new ValueDataEntry("Eyebrow pencil", 170670));
+        data.add(new ValueDataEntry("Eyeliner", 213210));
+        data.add(new ValueDataEntry("Eyeshadows", 249980));
+
+        Column column = cartesian.column(data);
+
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+        column.tooltip()
+                .titleFormat("{%X}")
+                .position(Position.CENTER_BOTTOM)
+                .anchor(Anchor.CENTER_BOTTOM)
+                .offsetX(0d)
+                .offsetY(5d)
+                .format("${%Value}{groupsSeparator: }");
 
         //ALERT DIALOG
         builder.setView(view2);
         AlertDialog dialog = builder.create();
         dialog.show();
+        cartesian.animation(true);
+        cartesian.title("Top 10 Cosmetic Products by Revenue");
 
-        //LINE CHART
-        AnyChartView lineChart = (AnyChartView) view2.findViewById(R.id.anychartView);
+        cartesian.yScale().minimum(0d);
+
+        cartesian.yAxis(0).labels().format("${%Value}{groupsSeparator: }");
+
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+        cartesian.interactivity().hoverMode(HoverMode.BY_X);
+
+        cartesian.xAxis(0).title("Product");
+        cartesian.yAxis(0).title("Revenue");
+
+        anyChartView.setChart(cartesian);
+
+
+
+
+        //AnyChartView pieChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionPorcentual);
+        //APIlib.getInstance().setActiveAnyChartView(pieChart);
+        //Pie pie = AnyChart.pie();
+//
+        //List<DataEntry> datat = new ArrayList<>();
+        //datat.add(new ValueDataEntry("Hidráulica", 11.1));
+        //datat.add(new ValueDataEntry("Eólica", 30));
+        //datat.add(new ValueDataEntry("Solar fotovoltaica", 4.4));
+        //datat.add(new ValueDataEntry("Solar térmica", 0.5));
+        //datat.add(new ValueDataEntry("Otras renovables", 1.9));
+        //datat.add(new ValueDataEntry("Residuos renovables", 0.3));
+        //datat.add(new ValueDataEntry("Nuclear", 17.3));
+        //datat.add(new ValueDataEntry("Turbinación bombeo", 1.2));
+        //datat.add(new ValueDataEntry("Ciclo combinado", 19.8));
+        //datat.add(new ValueDataEntry("Carbón", 3.2));
+        //datat.add(new ValueDataEntry("Cogeneración", 9.6));
+        //datat.add(new ValueDataEntry("Residuos no renovables", 0.8));
+//
+        //pie.data(datat);
+//
+        //pieChart.setChart(pie);
+
+        AnyChartView lineChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionyConsumo);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
         //lineChart.setProgressBar(view.findViewById(R.id.progress_barGeneracionyConsumo));
 
