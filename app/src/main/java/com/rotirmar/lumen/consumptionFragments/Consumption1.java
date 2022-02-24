@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,26 +62,50 @@ public class Consumption1 extends Fragment {
         cvConsumptionDay1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (viewAnyChartPattern != null) {
+                    ViewGroup parent = (ViewGroup) viewAnyChartPattern.getParent();
+                    if (parent != null) {
+                        parent.removeView(viewAnyChartPattern);
+                    }
+                }
+                try {
+                    viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
+                } catch (InflateException e) {
+
+                }
+
+                generarAnychartConsumoReal();
                 //ALERT DIALOG
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
                 builder.setView(viewAnyChartPattern);
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
-                generarAnychartConsumoReal();
             }
         });
 
         cvConsumptionDay2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (viewAnyChartPattern != null) {
+                    ViewGroup parent = (ViewGroup) viewAnyChartPattern.getParent();
+                    if (parent != null) {
+                        parent.removeView(viewAnyChartPattern);
+                    }
+                }
+                try {
+                    viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
+                } catch (InflateException e) {
+
+                }
+
+                generarAnychartConsumoPorDia();
                 //ALERT DIALOG
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
                 builder.setView(viewAnyChartPattern);
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
-                generarAnychartConsumoPorDia();
             }
         });
 
@@ -108,7 +133,7 @@ public class Consumption1 extends Fragment {
     private void generarAnychartConsumoReal() {
         AnyChartView lineChart = (AnyChartView) viewAnyChartPattern.findViewById(R.id.anychartView);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
-        //lineChart.setZoomEnabled(true);
+        lineChart.setZoomEnabled(true);
 
         Cartesian cartesian = AnyChart.line();
 
