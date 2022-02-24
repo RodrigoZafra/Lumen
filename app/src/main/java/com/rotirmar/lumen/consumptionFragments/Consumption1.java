@@ -43,78 +43,65 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Consumption1 extends Fragment {
-    private View view;
     private View viewAnyChartPattern;
-
-    private CardView cvConsumptionDay1;
-    private CardView cvConsumptionDay2;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_consumption1, container, false);
+        View view = inflater.inflate(R.layout.fragment_consumption1, container, false);
         viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
 
-        cvConsumptionDay1 = view.findViewById(R.id.cvConsumptionDay1);
-        cvConsumptionDay2 = view.findViewById(R.id.cvConsumptionDay2);
+        CardView cvConsumptionDay1 = view.findViewById(R.id.cvConsumptionDay1);
+        CardView cvConsumptionDay2 = view.findViewById(R.id.cvConsumptionDay2);
 
         cvConsumptionDay1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (viewAnyChartPattern != null) {
-                    ViewGroup parent = (ViewGroup) viewAnyChartPattern.getParent();
-                    if (parent != null) {
-                        parent.removeView(viewAnyChartPattern);
-                    }
-                }
-                try {
-                    viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
-                } catch (InflateException e) {
-
-                }
-
+                cleanViewAnyChartPattern(inflater, container);
+                generateAlertDialog();
                 generarAnychartConsumoReal();
-                //ALERT DIALOG
-                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
-                builder.setView(viewAnyChartPattern);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
             }
         });
 
         cvConsumptionDay2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (viewAnyChartPattern != null) {
-                    ViewGroup parent = (ViewGroup) viewAnyChartPattern.getParent();
-                    if (parent != null) {
-                        parent.removeView(viewAnyChartPattern);
-                    }
-                }
-                try {
-                    viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
-                } catch (InflateException e) {
-
-                }
-
-                generarAnychartConsumoPorDia();
-                //ALERT DIALOG
-                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
-                builder.setView(viewAnyChartPattern);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
+                cleanViewAnyChartPattern(inflater, container);
+                generateAlertDialog();
+                AnyChartDemandPerDayGenerator();
             }
         });
 
         return view;
     }
 
-    private static class CustomDataEntryReal extends ValueDataEntry {
+    private void cleanViewAnyChartPattern(LayoutInflater inflater, ViewGroup container) {
+        //VIEW CLEANER
+        if (viewAnyChartPattern != null) {
+            ViewGroup parent = (ViewGroup) viewAnyChartPattern.getParent();
+            if (parent != null) {
+                parent.removeView(viewAnyChartPattern);
+            }
+        }
+        try {
+            viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
+        } catch (InflateException e) {
+            e.printStackTrace();
+        }
+    }
 
-        CustomDataEntryReal(String x, Number value, Number value2, Number value3) {
+    private void generateAlertDialog() {
+        //ALERT DIALOG GENERATOR
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+        builder.setView(viewAnyChartPattern);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private static class customDataEntryRealTimeDemand extends ValueDataEntry {
+
+        customDataEntryRealTimeDemand(String x, Number value, Number value2, Number value3) {
             super(x, value);
             setValue("value2", value2);
             setValue("value3", value3);
@@ -122,15 +109,66 @@ public class Consumption1 extends Fragment {
 
     }
 
-    private static class CustomDataEntryPorDia extends ValueDataEntry {
+    private static class customDataEntryDemandPerDay extends ValueDataEntry {
 
-        CustomDataEntryPorDia(String x, Number value) {
+        customDataEntryDemandPerDay(String x, Number value) {
             super(x, value);
         }
 
     }
 
+    private JSONObject readFileAndGenerateJsonObject (String file) {
+        //READ THE FILE AND GENERATE JSON OBJECT
+        BufferedReader br;
+        String jsonText;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + file)));
+            jsonText = br.readLine();
+            br.close();
+            jsonObject = new JSONObject(jsonText);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  jsonObject;
+    }
+
     private void generarAnychartConsumoReal() {
+        //-----------------------EXTRACT DATA------------------------
+        JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionDayDemandaTiempoReal.json");
+
+        List<DataEntry> seriesData = new ArrayList<>();
+
+        try {
+            JSONArray jsonArrayOfRealDemandValues = jsonObject.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+            JSONArray jsonArrayOfPlannedDemandValues = jsonObject.getJSONArray("included").getJSONObject(1).getJSONObject("attributes").getJSONArray("values");
+            JSONArray jsonArrayOfExpectedDemandValues = jsonObject.getJSONArray("included").getJSONObject(2).getJSONObject("attributes").getJSONArray("values");
+
+            String hour;
+            int real;
+            int planned;
+            int expected;
+
+            for (int i = 0; i < 144; i += 6) {
+                hour = jsonArrayOfPlannedDemandValues.getJSONObject(i).get("datetime").toString().substring(12, 16);
+                real = Integer.parseInt(jsonArrayOfRealDemandValues.getJSONObject(i).getString("value"));
+                planned = Integer.parseInt(jsonArrayOfPlannedDemandValues.getJSONObject(i).getString("value"));
+                expected = Integer.parseInt(jsonArrayOfExpectedDemandValues.getJSONObject(i).getString("value"));
+
+                seriesData.add(new customDataEntryRealTimeDemand(hour, real, planned, expected));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //------------------------------------------------
+
+
+        //-----------------------GENERATE LINE CHART (DEMAND REAL TIME)------------------------
         AnyChartView lineChart = (AnyChartView) viewAnyChartPattern.findViewById(R.id.anychartView);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
         lineChart.setZoomEnabled(true);
@@ -139,7 +177,6 @@ public class Consumption1 extends Fragment {
 
         cartesian.animation(true);
 
-        //cartesian.background("#000");
         //cartesian.padding(10d, 20d, 5d, 20d);
 
         cartesian.crosshair().enabled(true);
@@ -152,56 +189,8 @@ public class Consumption1 extends Fragment {
 
         cartesian.title("Demanda en tiempo real");
 
-        cartesian.yAxis(0).title("Demanda (MW)");
+        cartesian.yAxis(0).title("MW");
         cartesian.xAxis(0).labels().padding(1d, 1d, 1d, 1d);
-
-        //-----------------------------------------------
-        //Leer el archivo y crear el objeto JSON
-        BufferedReader br = null;
-        String json = "";
-        JSONObject jsonO1 = new JSONObject();
-        try {
-            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + "consumptionDayDemandaTiempoReal.json")));
-            json = br.readLine();
-            br.close();
-            jsonO1 = new JSONObject(json);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        List<DataEntry> seriesData = new ArrayList<>();
-
-        try {
-            JSONArray jsonArrayValoresDemandaReal = jsonO1.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
-            JSONArray jsonArrayValoresDemandaProgramada = jsonO1.getJSONArray("included").getJSONObject(1).getJSONObject("attributes").getJSONArray("values");
-            JSONArray jsonArrayValoresDemandaPrevista = jsonO1.getJSONArray("included").getJSONObject(2).getJSONObject("attributes").getJSONArray("values");
-
-            String hora = "";
-            int real = 0;
-            int programada = 0;
-            int prevista = 0;
-
-            for (int i = 0; i < 144; i += 6) {
-                hora = jsonArrayValoresDemandaProgramada.getJSONObject(i).get("datetime").toString().substring(12, 16);
-                real = Integer.parseInt(jsonArrayValoresDemandaReal.getJSONObject(i).getString("value"));
-                programada = Integer.parseInt(jsonArrayValoresDemandaProgramada.getJSONObject(i).getString("value"));
-                prevista = Integer.parseInt(jsonArrayValoresDemandaPrevista.getJSONObject(i).getString("value"));
-
-                seriesData.add(new CustomDataEntryReal(hora, real, programada, prevista));
-            }
-            for (DataEntry i :
-                    seriesData) {
-                System.out.println(i);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        //------------------------------------------------
 
         Set set = Set.instantiate();
         set.data(seriesData);
@@ -255,54 +244,37 @@ public class Consumption1 extends Fragment {
         lineChart.setChart(cartesian);
     }
 
-    private void generarAnychartConsumoPorDia() {
-        //FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
-
-        AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
-        //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
-
-        Cartesian cartesian = AnyChart.column();
-
-        //-----------------------------------------------
-        //Leer el archivo y crear el objeto JSON
-        BufferedReader br;
-        String json;
-        JSONObject jsonO1 = new JSONObject();
-        try {
-            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + "consumptionDayDemandaPorDia.json")));
-            json = br.readLine();
-            br.close();
-            jsonO1 = new JSONObject(json);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    private void AnyChartDemandPerDayGenerator() {
+        //-----------------------EXTRACT DATA------------------------
+        JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionDayDemandaPorDia.json");
 
         List<DataEntry> seriesData = new ArrayList<>();
 
         try {
-            JSONArray jsonArrayValoresDemandaPorDia = jsonO1.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+            JSONArray jsonArrayOfDemandPerDayValues = jsonObject.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
 
             String day;
-            Double value;
+            double value;
 
             for (int i = 0; i < 31; i++) {
-                day = jsonArrayValoresDemandaPorDia.getJSONObject(i).get("datetime").toString().substring(5, 10);
-                value = Double.parseDouble(jsonArrayValoresDemandaPorDia.getJSONObject(i).getString("value"));
+                day = jsonArrayOfDemandPerDayValues.getJSONObject(i).get("datetime").toString().substring(5, 10);
+                value = (Double.parseDouble(jsonArrayOfDemandPerDayValues.getJSONObject(i).getString("value")) / 1000);
 
-                seriesData.add(new CustomDataEntryPorDia(day, value));
-            }
-            for (DataEntry i : seriesData) {
-                System.out.println(i);
+                seriesData.add(new customDataEntryDemandPerDay(day, value));
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         //------------------------------------------------
+
+
+        //-----------------------GENERATE COLUM CHART (DEMAND PER DAY)------------------------
+        //FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
+        AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
+        //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
+
+        Cartesian cartesian = AnyChart.column();
 
         Column column = cartesian.column(seriesData);
 
@@ -312,20 +284,20 @@ public class Consumption1 extends Fragment {
                 .anchor(Anchor.CENTER_BOTTOM)
                 .offsetX(0d)
                 .offsetY(5d)
-                .format("{%Value}{groupsSeparator: } MW/h");
+                .format("{%Value}{groupsSeparator: }");
 
         cartesian.animation(true);
         cartesian.title("Demanda por día del último mes");
 
         cartesian.yScale().minimum(0d);
 
-        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: } MW/h");
+        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: } GWh");
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
         cartesian.interactivity().hoverMode(HoverMode.BY_X);
 
-        cartesian.xAxis(0).title("Día");
-        cartesian.yAxis(0).title("MW");
+        cartesian.yAxis(0).title("GWh");
+        //cartesian.xAxis(0).title("Día");
 
         anyChartView.setChart(cartesian);
     }

@@ -22,7 +22,7 @@ import com.rotirmar.lumen.databinding.ActivityConsumptionBinding;
 import com.rotirmar.lumen.ui.main.SectionsPagerAdapterConsumption;
 
 public class Consumption extends AppCompatActivity {
-//holi
+
     private ActivityConsumptionBinding binding;
 
     @Override
