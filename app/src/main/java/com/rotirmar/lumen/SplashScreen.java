@@ -42,12 +42,20 @@ public class SplashScreen extends AppCompatActivity {
 
     private boolean firstTime;
 
-    private String CONSUMPTION_DAY_DEMANDAREAL_URL;
-    private String CONSUMPTION_DAY_DEMANDAPORDIA_URL;
-    private String CONSUMPTION_MONTH_DEMANDA_URL;
+    private String CONSUMPTION_DAY_REALDEMAND_URL;
+    private String CONSUMPTION_DAY_DEMANDPERDAY_URL;
+    private String CONSUMPTION_MONTH_DEMAND_URL;
     private String CONSUMPTION_MONTH_PRICE_URL;
-    private String CONSUMPTION_YEAR_DEMANDA_URL;
+    private String CONSUMPTION_YEAR_DEMAND_URL;
     private String CONSUMPTION_YEAR_PRICE_URL;
+
+    private String PRODUCTION_DAY_GENERATION_STRUCTURE_URL;
+    private String PRODUCTION_DAY_RENEWABLE_PROPORTION_URL;
+    private String PRODUCTION_DAY_EMISSIONS_PROPORTION_URL;
+    private String PRODUCTION_MONTH_GENERATION_RENEWABLE_URL;
+    private String PRODUCTION_MONTH_EMISSIONS_PROPORTION_URL;
+    private String PRODUCTION_YEAR_GENERATION_RENEWABLE_URL;
+    private String PRODUCTION_YEAR_EMISSIONS_PROPORTION_URL;
 
 
     @Override
@@ -55,35 +63,48 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        String fechaActual = obtenerFechaActual();
-        String diaActual = fechaActual.substring(8, 10);
-        String mesActual = fechaActual.substring(5, 7);
-        int lastMonth = Integer.parseInt(mesActual) - 1;
-        String yearActual = fechaActual.substring(0, 4);
-        int lastYear = (Integer.parseInt(yearActual) - 1);
+        String currentDate = obtenerFechaActual();
+        String currentDay = currentDate.substring(8, 10);
+        String currentMonth = currentDate.substring(5, 7);
+        int lastMonth = Integer.parseInt(currentMonth) - 1;
+        String currentYear = currentDate.substring(0, 4);
+        int lastYear = (Integer.parseInt(currentYear) - 1);
         int year5Before = lastYear - 4;
 
-        /*CONSUMPTION*/
+        /*-----CONSUMPTION-----*/
         //DAY
-        CONSUMPTION_DAY_DEMANDAREAL_URL = "https://apidatos.ree.es/es/datos/demanda/demanda-tiempo-real?start_date=" + fechaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=hour";
-        if (mesActual.equals("01"))
-            CONSUMPTION_DAY_DEMANDAPORDIA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + "-12" + "-" + diaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=day";
+        CONSUMPTION_DAY_REALDEMAND_URL = "https://apidatos.ree.es/es/datos/demanda/demanda-tiempo-real?start_date=" + currentDate + "T00:00&end_date=" + currentDate + "T23:59&time_trunc=hour";
+        if (currentMonth.equals("01"))
+            CONSUMPTION_DAY_DEMANDPERDAY_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + "-12-" + currentDay + "T00:00&end_date=" + currentDate + "T23:59&time_trunc=day";
         else
-            CONSUMPTION_DAY_DEMANDAPORDIA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + yearActual + "-" + lastMonth + "-" + diaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=day";
+            CONSUMPTION_DAY_DEMANDPERDAY_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + currentYear + "-" + lastMonth + "-" + currentDay + "T00:00&end_date=" + currentDate + "T23:59&time_trunc=day";
         //MONTH
-        if (mesActual.equals("01"))
-            CONSUMPTION_MONTH_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + "-01-01" + "T00:00&end_date=" + lastYear + "-12-31" + "T23:59&time_trunc=month&geo_trunc=electric_system&geo_limit=peninsular&geo_ids=8741";
-        else
-            CONSUMPTION_MONTH_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + "-" + mesActual + "-01" + "T00:00&end_date=" + yearActual + "-" + lastMonth + "-31" + "T23:59&time_trunc=month&geo_trunc=electric_system&geo_limit=peninsular&geo_ids=8741";
-        if (mesActual.equals("01"))
+        if (currentMonth.equals("01")) {
+            CONSUMPTION_MONTH_DEMAND_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + "-01-01" + "T00:00&end_date=" + lastYear + "-12-31" + "T23:59&time_trunc=month&geo_trunc=electric_system&geo_limit=peninsular&geo_ids=8741";
             CONSUMPTION_MONTH_PRICE_URL = "https://apidatos.ree.es/en/datos/mercados/componentes-precio?start_date=" + lastYear + "01-01" + "T00:00&end_date=" + lastYear + "-12-31" + "T23:59&time_trunc=month";
-        else
-            CONSUMPTION_MONTH_PRICE_URL = "https://apidatos.ree.es/en/datos/mercados/componentes-precio?start_date=" + lastYear + "-" + mesActual + "-01T00:00&end_date=" + yearActual + "-" + lastMonth + "-31T23:59&time_trunc=month";
+        } else {
+            CONSUMPTION_MONTH_DEMAND_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + lastYear + "-" + currentMonth + "-01" + "T00:00&end_date=" + currentYear + "-" + lastMonth + "-31" + "T23:59&time_trunc=month&geo_trunc=electric_system&geo_limit=peninsular&geo_ids=8741";
+            CONSUMPTION_MONTH_PRICE_URL = "https://apidatos.ree.es/en/datos/mercados/componentes-precio?start_date=" + lastYear + "-" + currentMonth + "-01T00:00&end_date=" + currentYear + "-" + lastMonth + "-31T23:59&time_trunc=month";
+        }
         //YEAR
-        CONSUMPTION_YEAR_DEMANDA_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + year5Before + "-01-01" + "T00:00&end_date=" + lastYear + "-12-31" + "T23:59&time_trunc=year";
+        CONSUMPTION_YEAR_DEMAND_URL = "https://apidatos.ree.es/en/datos/demanda/evolucion?start_date=" + year5Before + "-01-01" + "T00:00&end_date=" + lastYear + "-12-31" + "T23:59&time_trunc=year";
         CONSUMPTION_YEAR_PRICE_URL = "https://apidatos.ree.es/en/datos/mercados/componentes-precio-energia-cierre-desglose?start_date=" + year5Before + "-01-01T00:00&end_date=" + lastYear + "-12-31T23:59&time_trunc=year";
 
-        /* AIMACIONES */
+        /*-----PRODUCTION-----*/
+        //DAY
+        PRODUCTION_DAY_GENERATION_STRUCTURE_URL = "https://apidatos.ree.es/es/datos/generacion/estructura-generacion?start_date=" + currentDate + "T00:00&end_date=" + currentDate + "T23:59&time_trunc=day";
+        if (currentMonth.equals("01")) {
+            PRODUCTION_DAY_RENEWABLE_PROPORTION_URL = "https://apidatos.ree.es/es/datos/generacion/evolucion-renovable-no-renovable?start_date=" + lastYear + "-12-" + currentDay + "T00:00&end_date=" + currentDate + "T23:59&time_trunc=day";
+            PRODUCTION_DAY_EMISSIONS_PROPORTION_URL = "https://apidatos.ree.es/es/datos/generacion/evolucion-estructura-generacion-emisiones-asociadas?start_date=" + lastYear + "-12-" + currentDay + "T00:00&end_date=" + currentDate + "T23:59&time_trunc=day";
+        } else {
+            PRODUCTION_DAY_RENEWABLE_PROPORTION_URL = "https://apidatos.ree.es/es/datos/generacion/evolucion-renovable-no-renovable?start_date=" + currentYear + "-" + lastMonth + "-" + currentDay + "T00:00&end_date=" + currentDate + "T23:59&time_trunc=day";
+            PRODUCTION_DAY_EMISSIONS_PROPORTION_URL = "https://apidatos.ree.es/es/datos/generacion/evolucion-estructura-generacion-emisiones-asociadas?start_date=" + currentYear + "-" + lastMonth + "-" + currentDay + "T00:00&end_date=" + currentDate + "T23:59&time_trunc=day";
+        }
+        //MONTH
+        //YEAR
+
+
+        /*-----AIMACIONES-----*/
         //Animacion logo
         appIcon = findViewById(R.id.IVicon_animation);
         Drawable drawable = appIcon.getDrawable();
@@ -101,24 +122,32 @@ public class SplashScreen extends AppCompatActivity {
         nameAnimation = AnimationUtils.loadAnimation(this, R.anim.lumen_animation);
         appName.startAnimation(nameAnimation);
 
-        /* PRIMERA VEZ */
+
+        /*-----PRIMERA VEZ-----*/
         firstTime = readDataBase();
         if (!firstTime) {
             createDataBase();
         } else {
-            /*CONSUMPTION*/
+            /*---CONSUMPTION---*/
             //DAY
-            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDAREAL_URL, "consumptionDayDemandaTiempoReal.json");
-            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDAPORDIA_URL, "consumptionDayDemandaPorDia.json");
+            requestDataWriteDataBase(CONSUMPTION_DAY_REALDEMAND_URL, "consumptionDayDemandaTiempoReal.json");
+            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDPERDAY_URL, "consumptionDayDemandaPorDia.json");
             //MONTH
-            requestDataWriteDataBase(CONSUMPTION_MONTH_DEMANDA_URL, "consumptionMonthDemanda.json");
+            requestDataWriteDataBase(CONSUMPTION_MONTH_DEMAND_URL, "consumptionMonthDemanda.json");
             requestDataWriteDataBase(CONSUMPTION_MONTH_PRICE_URL, "consumptionMonthPrice.json");
             //YEAR
-            requestDataWriteDataBase(CONSUMPTION_YEAR_DEMANDA_URL, "consumptionYearDemanda.json");
+            requestDataWriteDataBase(CONSUMPTION_YEAR_DEMAND_URL, "consumptionYearDemanda.json");
             requestDataWriteDataBase(CONSUMPTION_YEAR_PRICE_URL, "consumptionYearPrice.json");
+            /*---PRODUCTION---*/
+            //DAY
+            requestDataWriteDataBase(PRODUCTION_DAY_GENERATION_STRUCTURE_URL, "productionDayGenerationStructure.json");
+            requestDataWriteDataBase(PRODUCTION_DAY_RENEWABLE_PROPORTION_URL, "productionDayRenewableProportion.json");
+            requestDataWriteDataBase(PRODUCTION_DAY_EMISSIONS_PROPORTION_URL, "productionDayEmissionsProportion.json");
+            //MONTH
+            //YEAR
         }
 
-        /* ABRIR APP */
+        /*ABRIR APP*/
         openApp(true);
 
     }
@@ -132,24 +161,30 @@ public class SplashScreen extends AppCompatActivity {
         try {
             //Creacion ficheros iniciales
             new File(getFilesDir() + "/data_base.dat").createNewFile();
-            /*CONSUMPTION*/
+            /*-----CONSUMPTION-----*/
             //DAY
             new File(getFilesDir(), "/" + "consumptionDayDemandaTiempoReal.json").createNewFile();
-            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDAREAL_URL, "consumptionDayDemandaTiempoReal.json");
+            requestDataWriteDataBase(CONSUMPTION_DAY_REALDEMAND_URL, "consumptionDayDemandaTiempoReal.json");
             new File(getFilesDir(), "/" + "consumptionDayDemandaTiempoReal.json").createNewFile();
-            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDAPORDIA_URL, "consumptionDayDemandaPorDia.json");
+            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDPERDAY_URL, "consumptionDayDemandaPorDia.json");
             //MONTH
             new File(getFilesDir(), "/" + "consumptionMonthDemanda.json").createNewFile();
-            requestDataWriteDataBase(CONSUMPTION_MONTH_DEMANDA_URL, "consumptionMonthDemanda.json");
+            requestDataWriteDataBase(CONSUMPTION_MONTH_DEMAND_URL, "consumptionMonthDemanda.json");
             new File(getFilesDir(), "/" + "consumptionMonthPrice.json").createNewFile();
             requestDataWriteDataBase(CONSUMPTION_MONTH_PRICE_URL, "consumptionMonthPrice.json");
             //YEAR
             new File(getFilesDir(), "/" + "consumptionYearDemanda.json").createNewFile();
-            requestDataWriteDataBase(CONSUMPTION_YEAR_DEMANDA_URL, "consumptionYearDemanda.json");
+            requestDataWriteDataBase(CONSUMPTION_YEAR_DEMAND_URL, "consumptionYearDemanda.json");
             new File(getFilesDir(), "/" + "consumptionYearPrice.json").createNewFile();
             requestDataWriteDataBase(CONSUMPTION_YEAR_PRICE_URL, "consumptionYearPrice.json");
-            /*PRODUCTION*/
+            /*-----PRODUCTION-----*/
             //DAY
+            new File(getFilesDir(), "/" + "productionDayGenerationStructure.json").createNewFile();
+            requestDataWriteDataBase(PRODUCTION_DAY_GENERATION_STRUCTURE_URL, "productionDayGenerationStructure.json");
+            new File(getFilesDir(), "/" + "productionDayRenewableProportion.json").createNewFile();
+            requestDataWriteDataBase(PRODUCTION_DAY_RENEWABLE_PROPORTION_URL, "productionDayRenewableProportion.json");
+            new File(getFilesDir(), "/" + "productionDayEmissionsProportion.json").createNewFile();
+            requestDataWriteDataBase(PRODUCTION_DAY_EMISSIONS_PROPORTION_URL, "productionDayEmissionsProportion.json");
             //MONTH
             //YEAR
 
@@ -157,7 +192,6 @@ public class SplashScreen extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
     private void requestDataWriteDataBase(String url, String archiveName) {
 
@@ -205,7 +239,6 @@ public class SplashScreen extends AppCompatActivity {
         Date date = calendar.getTime();
         SimpleDateFormat sdf;
         sdf = new SimpleDateFormat(formato);
-        //sdf.setTimeZone(TimeZone.getTimeZone(zonaHoraria));
         return sdf.format(date);
     }
 
@@ -214,7 +247,7 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent;
-                if (firstTime == false) {
+                if (!firstTime) {
                     intent = new Intent(SplashScreen.this, InfoSlides.class);
                 } else {
                     intent = new Intent(SplashScreen.this, Consumption.class);
