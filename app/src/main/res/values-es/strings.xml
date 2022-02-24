@@ -9,8 +9,24 @@
     <string name="consumo">Consumo</string>
     <string name="produccion">Producción</string>
     <string name="title_activity_production">Producción</string>
-    <string name="infoSlideString1">¿Sabes como funciona el sistema eléctrico español?</string>
-    <string name="infoSlideString2">Más de la mitad de la energía producida el año pasado fue no renovable, costosa y contaminante.</string>
-    <string name="infoSlideString3">Las empresas que producen nuestra energía conforman un oligopolio.</string>
-    <string name="infoSlideString4">Tú pagas cada kilovatio al máximo precio posible, aunque haya sido generado casi sin coste.</string>
+
+    <string name="infoSlideString1">¿Sabes cómo funciona el sistema eléctrico español?</string>
+
+    <string name="infoSlideString2"> Hay cuatro actores que posibilitan su funcionamiento. La generación, el transporte, la distribución y la comercialización.
+    </string>
+    <string name="infoSlideString3">Red Electrica de España es la empresa pública encarga de distribuir y garantizar el
+	suministro eléctrico. La generación y la distribución están en manos del oligopolio eléctrico español.</string>
+
+    <string name="infoSlideString4">Los generadores producen la energía y la vierten a la red. La REE posee y mantiene la red de transporte
+	que une las redes de distribución. Las distribuidoras poseen y mantienen la infraestructura para suministrar a los consumidores.
+        Los comercializadores compran la energia y cobran a los usuarios</string>
+
+    <string name="infoSlideString5">En el mercado diario de la electricidad, el pool, las comercializadoras (muchas veces pertenecientes a las productoras)
+    compran a las productoras la energía en función de las previsiones de uso en cada hora del día.
+    </string>
+    <string name="infoSlideString6">El mercado eléctrico lo conforma un sistema de corte marginalista. Esto fomenta la venta de energías mas eficientes
+        siempre que existan energías fósiles de alto coste, puesto que los ciudadanos pagan cada kilovatio al precio de casación, que está fijado
+        arbitrariamente por las empresas del oligopolio nacional.
+    </string>
+
 </resources>

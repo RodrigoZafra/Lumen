@@ -15,8 +15,11 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/production_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="570dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_gravity="clip_vertical|center_vertical"
+        android:layout_marginTop="32dp"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/production_bottom_navigation"
@@ -24,8 +27,8 @@
         android:layout_height="60dp"
         android:layout_gravity="bottom"
         app:itemIconSize="30dp"
-        app:layout_anchor="@+id/production_view_pager"
         app:layout_anchorGravity="bottom|center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/main_bottom_menu">
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 

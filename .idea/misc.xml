@@ -39,10 +39,10 @@
         <entry key="app/src/main/res/drawable/rounded_corner.xml" value="0.20885416666666667" />
         <entry key="app/src/main/res/layout-land/fragment_consumption1.xml" value="0.16458333333333333" />
         <entry key="app/src/main/res/layout/activity_consumo_tabbed.xml" value="0.13802083333333334" />
-        <entry key="app/src/main/res/layout/activity_consumption.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/activity_consumption.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_info_slides.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_production.xml" value="0.12447916666666667" />
+        <entry key="app/src/main/res/layout/activity_production.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_prueba.xml" value="0.14791666666666667" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.25" />
         <entry key="app/src/main/res/layout/card_layout.xml" value="0.33" />

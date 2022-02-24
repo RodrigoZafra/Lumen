@@ -36,7 +36,7 @@
             android:padding="20dp"
             android:text="@string/infoSlideString6"
             android:textColor="@color/naranja_muy_oscuro"
-            android:textSize="30sp"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
