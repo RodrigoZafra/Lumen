@@ -45,6 +45,7 @@ public class Consumption1 extends Fragment {
     private CardView cvConsumptionDay1;
     private CardView cvConsumptionDay2;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
