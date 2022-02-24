@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,14 +12,15 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/consumption_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="570dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toTopOf="@id/consumption_bottom_navigation"
-        app:layout_constraintTop_toBottomOf="@id/consumptionTabs" />
-
+        android:layout_gravity="clip_vertical|center_vertical"
+        android:layout_marginTop="32dp"
+        android:background="@color/amarillo_claro"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/consumption_bottom_navigation"
@@ -33,4 +34,4 @@
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

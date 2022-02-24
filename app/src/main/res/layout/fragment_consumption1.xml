@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".consumptionFragments.Consumption1">
 
-    <com.anychart.AnyChartView
-        android:id="@+id/graficoGeneracionyConsumo"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <!--ProgressBar
         android:id="@+id/progress_barGeneracionyConsumo"
@@ -20,9 +14,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" /-->
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

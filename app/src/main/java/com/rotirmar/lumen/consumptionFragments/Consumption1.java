@@ -37,7 +37,7 @@ public class Consumption1 extends Fragment {
         view = inflater.inflate(R.layout.fragment_consumption1, container, false);
 
         
-        AnyChartView lineChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionyConsumo);
+       /* AnyChartView lineChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionyConsumo);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
         //lineChart.setProgressBar(view.findViewById(R.id.progress_barGeneracionyConsumo));
 
@@ -132,7 +132,7 @@ public class Consumption1 extends Fragment {
         cartesian.legend().fontSize(13d);
         cartesian.legend().padding(0d, 0d, 10d, 0d);
 
-        lineChart.setChart(cartesian);
+        lineChart.setChart(cartesian);*/
         return view;
     }
 

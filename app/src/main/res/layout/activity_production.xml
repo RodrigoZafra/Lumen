@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Production">
 
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/production_tabs"
         android:layout_width="match_parent"
@@ -27,6 +26,7 @@
         app:itemIconSize="30dp"
         app:layout_anchor="@+id/production_view_pager"
         app:layout_anchorGravity="bottom|center"
-        app:menu="@menu/main_bottom_menu"></com.google.android.material.bottomnavigation.BottomNavigationView>
+        app:menu="@menu/main_bottom_menu">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
