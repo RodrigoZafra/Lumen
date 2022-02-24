@@ -16,11 +16,14 @@ import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
+import com.anychart.core.cartesian.series.Column;
 import com.anychart.core.cartesian.series.Line;
 import com.anychart.data.Mapping;
 import com.anychart.data.Set;
 import com.anychart.enums.Anchor;
+import com.anychart.enums.HoverMode;
 import com.anychart.enums.MarkerType;
+import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -71,60 +74,22 @@ public class Consumption1 extends Fragment {
         cvConsumptionDay2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //ALERT DIALOG
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+                builder.setView(viewAnyChartPattern);
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
+                generarAnychartConsumoPorDia();
             }
         });
-
-        /*/FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
-
-        AnyChartView anyChartView = view.findViewById(R.id.graficoColumnas);
-        anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
-
-        Cartesian cartesian = AnyChart.column();
-
-        List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("Rouge", 80540));
-        data.add(new ValueDataEntry("Foundation", 94190));
-        data.add(new ValueDataEntry("Mascara", 102610));
-        data.add(new ValueDataEntry("Lip gloss", 110430));
-        data.add(new ValueDataEntry("Lipstick", 128000));
-        data.add(new ValueDataEntry("Nail polish", 143760));
-        data.add(new ValueDataEntry("Eyebrow pencil", 170670));
-        data.add(new ValueDataEntry("Eyeliner", 213210));
-        data.add(new ValueDataEntry("Eyeshadows", 249980));
-
-        Column column = cartesian.column(data);
-
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
-        column.tooltip()
-                .titleFormat("{%X}")
-                .position(Position.CENTER_BOTTOM)
-                .anchor(Anchor.CENTER_BOTTOM)
-                .offsetX(0d)
-                .offsetY(5d)
-                .format("${%Value}{groupsSeparator: }");
-
-        cartesian.animation(true);
-        cartesian.title("Top 10 Cosmetic Products by Revenue");
-
-        cartesian.yScale().minimum(0d);
-
-        cartesian.yAxis(0).labels().format("${%Value}{groupsSeparator: }");
-
-        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
-        cartesian.interactivity().hoverMode(HoverMode.BY_X);
-
-        cartesian.xAxis(0).title("Product");
-        cartesian.yAxis(0).title("Revenue");
-
-        anyChartView.setChart(cartesian);*/
 
         return view;
     }
 
-    private static class CustomDataEntry extends ValueDataEntry {
+    private static class CustomDataEntryReal extends ValueDataEntry {
 
-        CustomDataEntry(String x, Number value, Number value2, Number value3) {
+        CustomDataEntryReal(String x, Number value, Number value2, Number value3) {
             super(x, value);
             setValue("value2", value2);
             setValue("value3", value3);
@@ -132,9 +97,18 @@ public class Consumption1 extends Fragment {
 
     }
 
+    private static class CustomDataEntryPorDia extends ValueDataEntry {
+
+        CustomDataEntryPorDia(String x, Number value) {
+            super(x, value);
+        }
+
+    }
+
     private void generarAnychartConsumoReal() {
         AnyChartView lineChart = (AnyChartView) viewAnyChartPattern.findViewById(R.id.anychartView);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
+        //lineChart.setZoomEnabled(true);
 
         Cartesian cartesian = AnyChart.line();
 
@@ -192,7 +166,7 @@ public class Consumption1 extends Fragment {
                 programada = Integer.parseInt(jsonArrayValoresDemandaProgramada.getJSONObject(i).getString("value"));
                 prevista = Integer.parseInt(jsonArrayValoresDemandaPrevista.getJSONObject(i).getString("value"));
 
-                seriesData.add(new CustomDataEntry(hora, real, programada, prevista));
+                seriesData.add(new CustomDataEntryReal(hora, real, programada, prevista));
             }
             for (DataEntry i :
                     seriesData) {
@@ -254,6 +228,81 @@ public class Consumption1 extends Fragment {
         cartesian.legend().padding(0d, 0d, 10d, 0d);
 
         lineChart.setChart(cartesian);
+    }
+
+    private void generarAnychartConsumoPorDia() {
+        //FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
+
+        AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
+        //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
+
+        Cartesian cartesian = AnyChart.column();
+
+        //-----------------------------------------------
+        //Leer el archivo y crear el objeto JSON
+        BufferedReader br;
+        String json;
+        JSONObject jsonO1 = new JSONObject();
+        try {
+            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + "consumptionDayDemandaPorDia.json")));
+            json = br.readLine();
+            br.close();
+            jsonO1 = new JSONObject(json);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        List<DataEntry> seriesData = new ArrayList<>();
+
+        try {
+            JSONArray jsonArrayValoresDemandaPorDia = jsonO1.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+
+            String day;
+            Double value;
+
+            for (int i = 0; i < 31; i++) {
+                day = jsonArrayValoresDemandaPorDia.getJSONObject(i).get("datetime").toString().substring(5, 10);
+                value = Double.parseDouble(jsonArrayValoresDemandaPorDia.getJSONObject(i).getString("value"));
+
+                seriesData.add(new CustomDataEntryPorDia(day, value));
+            }
+            for (DataEntry i : seriesData) {
+                System.out.println(i);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //------------------------------------------------
+
+        Column column = cartesian.column(seriesData);
+
+        column.tooltip()
+                .titleFormat("{%X}")
+                .position(Position.CENTER_BOTTOM)
+                .anchor(Anchor.CENTER_BOTTOM)
+                .offsetX(0d)
+                .offsetY(5d)
+                .format("{%Value}{groupsSeparator: } MW/h");
+
+        cartesian.animation(true);
+        cartesian.title("Demanda por día del último mes");
+
+        cartesian.yScale().minimum(0d);
+
+        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: } MW/h");
+
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+        cartesian.interactivity().hoverMode(HoverMode.BY_X);
+
+        cartesian.xAxis(0).title("Día");
+        cartesian.yAxis(0).title("MW");
+
+        anyChartView.setChart(cartesian);
     }
 
 }
