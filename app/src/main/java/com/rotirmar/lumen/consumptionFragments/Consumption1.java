@@ -1,7 +1,5 @@
 package com.rotirmar.lumen.consumptionFragments;
 
-import android.app.AlertDialog;
-import android.nfc.cardemulation.CardEmulation;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,16 +16,11 @@ import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
-import com.anychart.charts.Funnel;
-import com.anychart.charts.Pie;
-import com.anychart.core.cartesian.series.Column;
 import com.anychart.core.cartesian.series.Line;
 import com.anychart.data.Mapping;
 import com.anychart.data.Set;
 import com.anychart.enums.Anchor;
-import com.anychart.enums.HoverMode;
 import com.anychart.enums.MarkerType;
-import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -47,26 +40,30 @@ import java.util.List;
 
 public class Consumption1 extends Fragment {
     private View view;
-    private View view2;
+    private View viewAnyChartPattern;
 
     private CardView cvConsumptionDay1;
     private CardView cvConsumptionDay2;
-    AlertDialog builder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_consumption1, container, false);
-        view2 = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
+        viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
 
         cvConsumptionDay1 = view.findViewById(R.id.cvConsumptionDay1);
         cvConsumptionDay2 = view.findViewById(R.id.cvConsumptionDay2);
 
+        //generarAnychartConsumoReal();
 
         cvConsumptionDay1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //ALERT DIALOG
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+                builder.setView(viewAnyChartPattern);
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
@@ -77,7 +74,7 @@ public class Consumption1 extends Fragment {
             }
         });
 
-        //FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
+        /*/FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
 
         AnyChartView anyChartView = view.findViewById(R.id.graficoColumnas);
         anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
@@ -106,10 +103,6 @@ public class Consumption1 extends Fragment {
                 .offsetY(5d)
                 .format("${%Value}{groupsSeparator: }");
 
-        //ALERT DIALOG
-        builder.setView(view2);
-        AlertDialog dialog = builder.create();
-        dialog.show();
         cartesian.animation(true);
         cartesian.title("Top 10 Cosmetic Products by Revenue");
 
@@ -123,34 +116,23 @@ public class Consumption1 extends Fragment {
         cartesian.xAxis(0).title("Product");
         cartesian.yAxis(0).title("Revenue");
 
-        anyChartView.setChart(cartesian);
+        anyChartView.setChart(cartesian);*/
 
+        return view;
+    }
 
+    private static class CustomDataEntry extends ValueDataEntry {
 
+        CustomDataEntry(String x, Number value, Number value2, Number value3) {
+            super(x, value);
+            setValue("value2", value2);
+            setValue("value3", value3);
+        }
 
-        //AnyChartView pieChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionPorcentual);
-        //APIlib.getInstance().setActiveAnyChartView(pieChart);
-        //Pie pie = AnyChart.pie();
-//
-        //List<DataEntry> datat = new ArrayList<>();
-        //datat.add(new ValueDataEntry("Hidráulica", 11.1));
-        //datat.add(new ValueDataEntry("Eólica", 30));
-        //datat.add(new ValueDataEntry("Solar fotovoltaica", 4.4));
-        //datat.add(new ValueDataEntry("Solar térmica", 0.5));
-        //datat.add(new ValueDataEntry("Otras renovables", 1.9));
-        //datat.add(new ValueDataEntry("Residuos renovables", 0.3));
-        //datat.add(new ValueDataEntry("Nuclear", 17.3));
-        //datat.add(new ValueDataEntry("Turbinación bombeo", 1.2));
-        //datat.add(new ValueDataEntry("Ciclo combinado", 19.8));
-        //datat.add(new ValueDataEntry("Carbón", 3.2));
-        //datat.add(new ValueDataEntry("Cogeneración", 9.6));
-        //datat.add(new ValueDataEntry("Residuos no renovables", 0.8));
-//
-        //pie.data(datat);
-//
-        //pieChart.setChart(pie);
+    }
 
-        AnyChartView lineChart = (AnyChartView) view.findViewById(R.id.graficoGeneracionyConsumo);
+    private void generarAnychartConsumoReal() {
+        AnyChartView lineChart = (AnyChartView) viewAnyChartPattern.findViewById(R.id.any_chart_view);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
         //lineChart.setProgressBar(view.findViewById(R.id.progress_barGeneracionyConsumo));
 
@@ -272,17 +254,6 @@ public class Consumption1 extends Fragment {
         cartesian.legend().padding(0d, 0d, 10d, 0d);
 
         lineChart.setChart(cartesian);
-        return view;
-    }
-
-    private static class CustomDataEntry extends ValueDataEntry {
-
-        CustomDataEntry(String x, Number value, Number value2, Number value3) {
-            super(x, value);
-            setValue("value2", value2);
-            setValue("value3", value3);
-        }
-
     }
 
 }
