@@ -10,7 +10,6 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -38,73 +37,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Consumption3 extends Fragment {
-    private View view;
     private View viewAnyChartPattern;
-
-    private CardView cvConsumptionYear1;
-    private CardView cvConsumptionYear2;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_consumption3, container, false);
+        View view = inflater.inflate(R.layout.fragment_consumption3, container, false);
         viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
 
-        cvConsumptionYear1 = view.findViewById(R.id.cvConsumptionYear1);
-        cvConsumptionYear2 = view.findViewById(R.id.cvConsumptionYear2);
-
+        CardView cvConsumptionYear1 = view.findViewById(R.id.cvConsumptionYear1);
+        CardView cvConsumptionYear2 = view.findViewById(R.id.cvConsumptionYear2);
 
         cvConsumptionYear1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (viewAnyChartPattern != null) {
-                    ViewGroup parent = (ViewGroup) viewAnyChartPattern.getParent();
-                    if (parent != null) {
-                        parent.removeView(viewAnyChartPattern);
-                    }
-                }
-                try {
-                    viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
-                } catch (InflateException e) {
-
-                }
-
-                generarAnychartDemandaPorYear();
-                //ALERT DIALOG
-                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
-                builder.setView(viewAnyChartPattern);
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                cleanViewAnyChartPattern(inflater, container);
+                generateAlertDialog();
+                generateAnyChartDemandPerYear();
             }
         });
 
         cvConsumptionYear2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (viewAnyChartPattern != null) {
-                    ViewGroup parent = (ViewGroup) viewAnyChartPattern.getParent();
-                    if (parent != null) {
-                        parent.removeView(viewAnyChartPattern);
-                    }
-                }
-                try {
-                    viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
-                } catch (InflateException e) {
-
-                }
-
-                generarAnychartPrecioPorYear();
-                //ALERT DIALOG
-                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
-                builder.setView(viewAnyChartPattern);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
+                cleanViewAnyChartPattern(inflater, container);
+                generateAlertDialog();
+                generateAnyChartPricePerYear();
             }
         });
 
         return view;
+    }
+
+    private void cleanViewAnyChartPattern(LayoutInflater inflater, ViewGroup container) {
+        //VIEW CLEANER
+        if (viewAnyChartPattern != null) {
+            ViewGroup parent = (ViewGroup) viewAnyChartPattern.getParent();
+            if (parent != null) {
+                parent.removeView(viewAnyChartPattern);
+            }
+        }
+        try {
+            viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
+        } catch (InflateException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void generateAlertDialog() {
+        //ALERT DIALOG GENERATOR
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+        builder.setView(viewAnyChartPattern);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private static class CustomDataEntry extends ValueDataEntry {
@@ -113,22 +98,16 @@ public class Consumption3 extends Fragment {
         }
     }
 
-    private void generarAnychartDemandaPorYear() {
-        AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
-        //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
-
-        Cartesian cartesian = AnyChart.column();
-
-        //-----------------------------------------------
-        //Leer el archivo y crear el objeto JSON
+    private JSONObject readFileAndGenerateJsonObject(String file) {
+        //READ THE FILE AND GENERATE JSON OBJECT
         BufferedReader br;
-        String json = "";
-        JSONObject jsonO1 = new JSONObject();
+        String jsonText;
+        JSONObject jsonObject = new JSONObject();
         try {
-            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + "consumptionYearDemanda.json")));
-            json = br.readLine();
+            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + file)));
+            jsonText = br.readLine();
             br.close();
-            jsonO1 = new JSONObject(json);
+            jsonObject = new JSONObject(jsonText);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -136,18 +115,24 @@ public class Consumption3 extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return jsonObject;
+    }
+
+    private void generateAnyChartDemandPerYear() {
+        //-----------------------EXTRACT DATA------------------------
+        JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionYearDemanda.json");
 
         List<DataEntry> seriesData = new ArrayList<>();
 
         try {
-            JSONArray jsonArrayValoresDemandaPorYear = jsonO1.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+            JSONArray jsonArrayOfDemandValuesPerYear = jsonObject.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
 
             String year;
-            Double value;
+            double value;
 
             for (int i = 0; i < 5; i++) {
-                year = jsonArrayValoresDemandaPorYear.getJSONObject(i).get("datetime").toString().substring(0, 4);
-                value = Double.parseDouble(jsonArrayValoresDemandaPorYear.getJSONObject(i).getString("value"));
+                year = jsonArrayOfDemandValuesPerYear.getJSONObject(i).get("datetime").toString().substring(0, 4);
+                value = (Double.parseDouble(jsonArrayOfDemandValuesPerYear.getJSONObject(i).getString("value")) / 1000);
 
                 seriesData.add(new CustomDataEntry(year, value));
             }
@@ -156,6 +141,14 @@ public class Consumption3 extends Fragment {
             e.printStackTrace();
         }
         //------------------------------------------------
+
+
+        //-----------------------GENERATE COLUM CHART (DEMAND PER YEAR)------------------------
+        //FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
+        AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
+        //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
+
+        Cartesian cartesian = AnyChart.column();
 
         Column column = cartesian.column(seriesData);
 
@@ -165,59 +158,39 @@ public class Consumption3 extends Fragment {
                 .anchor(Anchor.CENTER_BOTTOM)
                 .offsetX(0d)
                 .offsetY(5d)
-                .format("{%Value}{groupsSeparator: } MW/h");
+                .format("{%Value}{groupsSeparator: } GWh");
 
         cartesian.animation(true);
         cartesian.title("Demanda por año");
 
         cartesian.yScale().minimum(0d);
 
-        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: } MW/h");
+        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: }");
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
         cartesian.interactivity().hoverMode(HoverMode.BY_X);
 
-        cartesian.xAxis(0).title("Día");
-        cartesian.yAxis(0).title("MW");
+        cartesian.yAxis(0).title("GWh");
+        //cartesian.xAxis(0).title("Año");
 
         anyChartView.setChart(cartesian);
     }
 
-    private void generarAnychartPrecioPorYear() {
-        AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
-        //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
-
-        Cartesian cartesian = AnyChart.column();
-
-        //-----------------------------------------------
-        //Leer el archivo y crear el objeto JSON
-        BufferedReader br;
-        String json = "";
-        JSONObject jsonO1 = new JSONObject();
-        try {
-            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + "consumptionYearPrice.json")));
-            json = br.readLine();
-            br.close();
-            jsonO1 = new JSONObject(json);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    private void generateAnyChartPricePerYear() {
+        //-----------------------EXTRACT DATA------------------------
+        JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionYearPrice.json");
 
         List<DataEntry> seriesData = new ArrayList<>();
 
         try {
-            JSONArray jsonArrayValoresPricePorYear = jsonO1.getJSONArray("included").getJSONObject(3).getJSONObject("attributes").getJSONArray("content").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+            JSONArray jsonArrayOfPricePerYear = jsonObject.getJSONArray("included").getJSONObject(3).getJSONObject("attributes").getJSONArray("content").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
 
             String year;
-            Double value;
+            double value;
 
             for (int i = 0; i < 5; i++) {
-                year = jsonArrayValoresPricePorYear.getJSONObject(i).get("datetime").toString().substring(0, 4);
-                value = Double.parseDouble(jsonArrayValoresPricePorYear.getJSONObject(i).getString("value"));
+                year = jsonArrayOfPricePerYear.getJSONObject(i).get("datetime").toString().substring(0, 4);
+                value = Double.parseDouble(jsonArrayOfPricePerYear.getJSONObject(i).getString("value"));
 
                 seriesData.add(new CustomDataEntry(year, value));
             }
@@ -226,6 +199,14 @@ public class Consumption3 extends Fragment {
             e.printStackTrace();
         }
         //------------------------------------------------
+
+
+        //-----------------------GENERATE COLUM CHART (PRICE PER YEAR)------------------------
+        //FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
+        AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
+        //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
+
+        Cartesian cartesian = AnyChart.column();
 
         Column column = cartesian.column(seriesData);
 
@@ -242,13 +223,13 @@ public class Consumption3 extends Fragment {
 
         cartesian.yScale().minimum(0d);
 
-        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: } €");
+        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: }");
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
         cartesian.interactivity().hoverMode(HoverMode.BY_X);
 
-        cartesian.xAxis(0).title("Día");
-        cartesian.yAxis(0).title("MW");
+        cartesian.yAxis(0).title("EUROS");
+        //cartesian.xAxis(0).title("Año");
 
         anyChartView.setChart(cartesian);
     }

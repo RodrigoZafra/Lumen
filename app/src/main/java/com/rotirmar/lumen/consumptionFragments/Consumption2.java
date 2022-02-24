@@ -36,105 +36,78 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the  factory method to
- * create an instance of this fragment.
- */
 public class Consumption2 extends Fragment {
-    private View view;
     private View viewAnyChartPattern;
 
-    private CardView cvConsumptionMonth1;
-    private CardView cvConsumptionMonth2;
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_consumption2, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_consumption2, container, false);
         viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
 
-        cvConsumptionMonth1 = view.findViewById(R.id.cvConsumptionMonth1);
-        cvConsumptionMonth2 = view.findViewById(R.id.cvConsumptionMonth2);
+        CardView cvConsumptionMonth1 = view.findViewById(R.id.cvConsumptionMonth1);
+        CardView cvConsumptionMonth2 = view.findViewById(R.id.cvConsumptionMonth2);
 
         cvConsumptionMonth1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (viewAnyChartPattern != null) {
-                    ViewGroup parent = (ViewGroup) viewAnyChartPattern.getParent();
-                    if (parent != null) {
-                        parent.removeView(viewAnyChartPattern);
-                    }
-                }
-                try {
-                    viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
-                } catch (InflateException e) {
-
-                }
-
-                generarAnychartDemandaPorMes();
-                //ALERT DIALOG
-                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
-                builder.setView(viewAnyChartPattern);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
+                cleanViewAnyChartPattern(inflater, container);
+                generateAlertDialog();
+                generateAnyChartDemandPerMonth();
             }
         });
 
         cvConsumptionMonth2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (viewAnyChartPattern != null) {
-                    ViewGroup parent = (ViewGroup) viewAnyChartPattern.getParent();
-                    if (parent != null) {
-                        parent.removeView(viewAnyChartPattern);
-                    }
-                }
-                try {
-                    viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
-                } catch (InflateException e) {
-
-                }
-
-                generarAnychartPrecioPorMes();
-                //ALERT DIALOG
-                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
-                builder.setView(viewAnyChartPattern);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
+                cleanViewAnyChartPattern(inflater, container);
+                generateAlertDialog();
+                generateAnychartPricePerMonth();
             }
         });
-
 
         return view;
     }
 
-    private static class CustomDataEntry extends ValueDataEntry {
+    private void cleanViewAnyChartPattern(LayoutInflater inflater, ViewGroup container) {
+        //VIEW CLEANER
+        if (viewAnyChartPattern != null) {
+            ViewGroup parent = (ViewGroup) viewAnyChartPattern.getParent();
+            if (parent != null) {
+                parent.removeView(viewAnyChartPattern);
+            }
+        }
+        try {
+            viewAnyChartPattern = inflater.inflate(R.layout.alert_dialog_pattern, container, false);
+        } catch (InflateException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void generateAlertDialog() {
+        //ALERT DIALOG GENERATOR
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+        builder.setView(viewAnyChartPattern);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private static class CustomDataEntry extends ValueDataEntry {
         CustomDataEntry(String x, Number value) {
             super(x, value);
         }
-
     }
 
-    private void generarAnychartDemandaPorMes() {
-        AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
-        //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
-
-        Cartesian cartesian = AnyChart.column();
-
-        //-----------------------------------------------
-        //Leer el archivo y crear el objeto JSON
+    private JSONObject readFileAndGenerateJsonObject(String file) {
+        //READ THE FILE AND GENERATE JSON OBJECT
         BufferedReader br;
-        String json = "";
-        JSONObject jsonO1 = new JSONObject();
+        String jsonText;
+        JSONObject jsonObject = new JSONObject();
         try {
-            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + "consumptionMonthDemanda.json")));
-            json = br.readLine();
+            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + file)));
+            jsonText = br.readLine();
             br.close();
-            jsonO1 = new JSONObject(json);
+            jsonObject = new JSONObject(jsonText);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -142,26 +115,40 @@ public class Consumption2 extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return jsonObject;
+    }
+
+    private void generateAnyChartDemandPerMonth() {
+        //-----------------------EXTRACT DATA------------------------
+        JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionMonthDemanda.json");
 
         List<DataEntry> seriesData = new ArrayList<>();
 
         try {
-            JSONArray jsonArrayValoresDemandaPorMes = jsonO1.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+            JSONArray jsonArrayOfDemandValuesPerMonth = jsonObject.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
 
-            String day;
-            Double value;
+            String month;
+            double value;
 
             for (int i = 0; i < 12; i++) {
-                day = jsonArrayValoresDemandaPorMes.getJSONObject(i).get("datetime").toString().substring(5, 7);
-                value = Double.parseDouble(jsonArrayValoresDemandaPorMes.getJSONObject(i).getString("value"));
+                month = jsonArrayOfDemandValuesPerMonth.getJSONObject(i).get("datetime").toString().substring(5, 7);
+                value = (Double.parseDouble(jsonArrayOfDemandValuesPerMonth.getJSONObject(i).getString("value")) / 1000);
 
-                seriesData.add(new CustomDataEntry(day, value));
+                seriesData.add(new CustomDataEntry(month, value));
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         //------------------------------------------------
+
+
+        //-----------------------GENERATE COLUM CHART (DEMAND PER MONTH)------------------------
+        //FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
+        AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
+        //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
+
+        Cartesian cartesian = AnyChart.column();
 
         Column column = cartesian.column(seriesData);
 
@@ -171,67 +158,55 @@ public class Consumption2 extends Fragment {
                 .anchor(Anchor.CENTER_BOTTOM)
                 .offsetX(0d)
                 .offsetY(5d)
-                .format("{%Value}{groupsSeparator: } MW/h");
+                .format("{%Value}{groupsSeparator: } GWh");
 
         cartesian.animation(true);
-        cartesian.title("Demanda por día del último mes");
+        cartesian.title("Demanda por mes del último año");
 
         cartesian.yScale().minimum(0d);
 
-        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: } MW/h");
+        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: }");
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
         cartesian.interactivity().hoverMode(HoverMode.BY_X);
 
-        cartesian.xAxis(0).title("Día");
-        cartesian.yAxis(0).title("MW");
+        cartesian.yAxis(0).title("GWh");
+        //cartesian.xAxis(0).title("Día");
 
         anyChartView.setChart(cartesian);
     }
 
-    private void generarAnychartPrecioPorMes() {
-        AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
-        //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
-
-        Cartesian cartesian = AnyChart.column();
-
-        //-----------------------------------------------
-        //Leer el archivo y crear el objeto JSON
-        BufferedReader br;
-        String json = "";
-        JSONObject jsonO1 = new JSONObject();
-        try {
-            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + "consumptionMonthPrice.json")));
-            json = br.readLine();
-            br.close();
-            jsonO1 = new JSONObject(json);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    private void generateAnychartPricePerMonth() {
+        //-----------------------EXTRACT DATA------------------------
+        JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionMonthPrice.json");
 
         List<DataEntry> seriesData = new ArrayList<>();
 
         try {
-            JSONArray jsonArrayValoresDemandaPorMes = jsonO1.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+            JSONArray jsonArrayOfPricePerMonth = jsonObject.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
 
-            String day;
-            Double value;
+            String month;
+            double value;
 
             for (int i = 0; i < 12; i++) {
-                day = jsonArrayValoresDemandaPorMes.getJSONObject(i).get("datetime").toString().substring(5, 7);
-                value = Double.parseDouble(jsonArrayValoresDemandaPorMes.getJSONObject(i).getString("value"));
+                month = jsonArrayOfPricePerMonth.getJSONObject(i).get("datetime").toString().substring(5, 7);
+                value = Double.parseDouble(jsonArrayOfPricePerMonth.getJSONObject(i).getString("value"));
 
-                seriesData.add(new CustomDataEntry(day, value));
+                seriesData.add(new CustomDataEntry(month, value));
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         //------------------------------------------------
+
+
+        //-----------------------GENERATE COLUM CHART (PRICE PER MONTH)------------------------
+        //FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
+        AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
+        //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
+
+        Cartesian cartesian = AnyChart.column();
 
         Column column = cartesian.column(seriesData);
 
@@ -241,20 +216,20 @@ public class Consumption2 extends Fragment {
                 .anchor(Anchor.CENTER_BOTTOM)
                 .offsetX(0d)
                 .offsetY(5d)
-                .format("{%Value}{groupsSeparator: } MW/h");
+                .format("{%Value}{groupsSeparator: } €");
 
         cartesian.animation(true);
-        cartesian.title("Demanda por día del último mes");
+        cartesian.title("Precio por mes del último año");
 
         cartesian.yScale().minimum(0d);
 
-        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: } MW/h");
+        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: }");
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
         cartesian.interactivity().hoverMode(HoverMode.BY_X);
 
-        cartesian.xAxis(0).title("Día");
-        cartesian.yAxis(0).title("MW");
+        cartesian.yAxis(0).title("EUROS");
+        //cartesian.xAxis(0).title("Mes");
 
         anyChartView.setChart(cartesian);
     }

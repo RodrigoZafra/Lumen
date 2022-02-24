@@ -45,7 +45,6 @@ import java.util.List;
 public class Consumption1 extends Fragment {
     private View viewAnyChartPattern;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -60,7 +59,7 @@ public class Consumption1 extends Fragment {
             public void onClick(View v) {
                 cleanViewAnyChartPattern(inflater, container);
                 generateAlertDialog();
-                generarAnychartConsumoReal();
+                generateAnychartRealDemand();
             }
         });
 
@@ -69,7 +68,7 @@ public class Consumption1 extends Fragment {
             public void onClick(View v) {
                 cleanViewAnyChartPattern(inflater, container);
                 generateAlertDialog();
-                AnyChartDemandPerDayGenerator();
+                generateAnyChartDemandPerDay();
             }
         });
 
@@ -117,7 +116,7 @@ public class Consumption1 extends Fragment {
 
     }
 
-    private JSONObject readFileAndGenerateJsonObject (String file) {
+    private JSONObject readFileAndGenerateJsonObject(String file) {
         //READ THE FILE AND GENERATE JSON OBJECT
         BufferedReader br;
         String jsonText;
@@ -134,10 +133,10 @@ public class Consumption1 extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return  jsonObject;
+        return jsonObject;
     }
 
-    private void generarAnychartConsumoReal() {
+    private void generateAnychartRealDemand() {
         //-----------------------EXTRACT DATA------------------------
         JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionDayDemandaTiempoReal.json");
 
@@ -155,7 +154,11 @@ public class Consumption1 extends Fragment {
 
             for (int i = 0; i < 144; i += 6) {
                 hour = jsonArrayOfPlannedDemandValues.getJSONObject(i).get("datetime").toString().substring(12, 16);
-                real = Integer.parseInt(jsonArrayOfRealDemandValues.getJSONObject(i).getString("value"));
+                try {
+                    real = Integer.parseInt(jsonArrayOfRealDemandValues.getJSONObject(i).getString("value"));
+                } catch (JSONException e) {
+                    real = 0;
+                }
                 planned = Integer.parseInt(jsonArrayOfPlannedDemandValues.getJSONObject(i).getString("value"));
                 expected = Integer.parseInt(jsonArrayOfExpectedDemandValues.getJSONObject(i).getString("value"));
 
@@ -244,7 +247,7 @@ public class Consumption1 extends Fragment {
         lineChart.setChart(cartesian);
     }
 
-    private void AnyChartDemandPerDayGenerator() {
+    private void generateAnyChartDemandPerDay() {
         //-----------------------EXTRACT DATA------------------------
         JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionDayDemandaPorDia.json");
 
@@ -284,14 +287,14 @@ public class Consumption1 extends Fragment {
                 .anchor(Anchor.CENTER_BOTTOM)
                 .offsetX(0d)
                 .offsetY(5d)
-                .format("{%Value}{groupsSeparator: }");
+                .format("{%Value}{groupsSeparator: } GWh");
 
         cartesian.animation(true);
-        cartesian.title("Demanda por día del último mes");
+        cartesian.title("Demanda por dia del último mes");
 
         cartesian.yScale().minimum(0d);
 
-        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: } GWh");
+        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: }");
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
         cartesian.interactivity().hoverMode(HoverMode.BY_X);
