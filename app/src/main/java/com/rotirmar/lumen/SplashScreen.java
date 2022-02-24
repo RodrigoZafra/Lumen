@@ -62,6 +62,7 @@ public class SplashScreen extends AppCompatActivity {
         String yearActual = fechaActual.substring(0, 4);
         int lastYear = (Integer.parseInt(yearActual) - 1);
         int year5Before = lastYear - 4;
+
         /*CONSUMPTION*/
         //DAY
         CONSUMPTION_DAY_DEMANDAREAL_URL = "https://apidatos.ree.es/es/datos/demanda/demanda-tiempo-real?start_date=" + fechaActual + "T00:00&end_date=" + fechaActual + "T23:59&time_trunc=hour";
