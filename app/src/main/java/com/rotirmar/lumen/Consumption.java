@@ -1,6 +1,7 @@
 package com.rotirmar.lumen;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -73,7 +74,9 @@ public class Consumption extends AppCompatActivity {
             startActivity(intent);
         }
         if (id == R.id.sobreNosotros) {
-
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse("https://github.com/RodrigoZafra/Lumen"));
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
