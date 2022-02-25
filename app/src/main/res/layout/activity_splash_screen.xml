@@ -5,14 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/azul_claro"
     tools:context=".SplashScreen">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/fondo_splash"
-        android:alpha="0.6"
-        />
 
     <ImageView
         android:id="@+id/IVicon_animation"
@@ -30,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:text="Lumen"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
