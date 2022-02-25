@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lumen</string>
+    <string name="skip">Skip</string>
+    <string name="title_activity_consumption">Consumption</string>
+    <string name="consumption_tab1">Day</string>
+    <string name="consumption_tab2">Month</string>
+    <string name="consumption_tab3">Year</string>
+    <string name="consumo">Consumption</string>
+    <string name="produccion">Production</string>
+    <string name="title_activity_production">Production</string>
+    <string name="infoSlideString1">Do you know how the Spanish electricity sector?</string>
+    <string name="infoSlideString2">"Most of the "</string>
+    <string name="infoSlideString3">Red Electrica de España is the public company in charge of distributing and guaranteeing the electricity supply at all times.
+	electricity supply at all times.</string>
+    <string name="infoSlideString4">In the daily electricity market (the pool) the traders buy the energy they will need and the producers the energy they can offer for each hour of the day.
+	and the producers the energy they can offer for each hour of the day.</string>
+    <string name="infoSlideString5">The market is based on a marginalist system, it promotes the most efficient energies, since the cheapest ones are the first to enter the pool.
+	the cheapest ones are the first to enter the pool, although in the end they are all paid at the price of the
+	matching point</string>
+    <string name="infoSlideString6">More than 30% of the energy produced in 2020 was non-renewable, costly and polluting.</string>
+</resources>

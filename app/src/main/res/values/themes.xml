@@ -16,6 +16,11 @@
         <item name="fontFamily">@font/cocogoose</item>
     </style>
 
+    <style name="Theme.Numbers" parent="Theme.Lumen.Button.Blue">
+        <item name="fontFamily">@font/adam_bold</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
     <style name="Theme.Lumen.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -24,4 +29,17 @@
     <style name="Theme.Lumen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Lumen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.Lumen.Button.Blue" parent="Theme.Lumen">
+        <item name="colorPrimary">@color/azul_aguamarina</item>
+    </style>
+
+    <style name="Theme.Lumen.Button.Blue.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Lumen.Button.Blue.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Lumen.Button.Blue.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
