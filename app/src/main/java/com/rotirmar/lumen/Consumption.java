@@ -22,7 +22,6 @@ import com.rotirmar.lumen.ui.main.SectionsPagerAdapter;
 import com.rotirmar.lumen.databinding.ActivityConsumptionBinding;
 import com.rotirmar.lumen.ui.main.SectionsPagerAdapterConsumption;
 
-
 public class Consumption extends AppCompatActivity {
 
     private ActivityConsumptionBinding binding;

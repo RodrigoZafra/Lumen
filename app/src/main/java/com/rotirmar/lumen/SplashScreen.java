@@ -245,7 +245,7 @@ public class SplashScreen extends AppCompatActivity {
                 Log.d("Request", "Fail response: " + response);
                 Log.e("ERROR", e.toString());
 
-                Toast.makeText(SplashScreen.this, "Request Failed" + archiveName, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SplashScreen.this, "Request Failed " + archiveName, Toast.LENGTH_SHORT).show();
             }
         });
     }

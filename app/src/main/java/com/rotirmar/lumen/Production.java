@@ -55,6 +55,7 @@ public class Production extends AppCompatActivity {
         });
     }
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {//Aparece el menu en la barra de arriba
         getMenuInflater().inflate(R.menu.menu_navigation, menu);
         return true;
