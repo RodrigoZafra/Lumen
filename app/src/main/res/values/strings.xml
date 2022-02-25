@@ -50,5 +50,8 @@
     <string name="plainTextCvProduction5">Generación sin emisiones</string>
     <string name="plainTextCvProduction6">Generación renovable</string>
     <string name="plainTextCvProduction7">Generación sin emisiones</string>
+    <string name="menu_top_1">¿Como funciona?</string>
+    <string name="menu_top_2">Sobre nosotros</string>
+    <string name="toast_favorite">Has eleigo esta página como principal!</string>
 
 </resources>

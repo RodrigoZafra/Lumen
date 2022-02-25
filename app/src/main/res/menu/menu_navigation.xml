@@ -9,11 +9,11 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/comoFunciona"
-        android:title="¿Como funciona?"
+        android:title="@string/menu_top_1"
         app:showAsAction="never" />
     <item
         android:id="@+id/sobreNosotros"
-        android:title="Sobre nosotros"
+        android:title="@string/menu_top_2"
         app:showAsAction="never" />
 
 </menu>
