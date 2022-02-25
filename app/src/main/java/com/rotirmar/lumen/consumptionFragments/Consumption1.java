@@ -262,6 +262,7 @@ public class Consumption1 extends Fragment {
         //FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
         AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
         //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
+        anyChartView.setZoomEnabled(true);
 
         Cartesian cartesian = AnyChart.column();
 
