@@ -20,4 +20,7 @@
     <string name="infoSlideString6">The energy market works in a marginalist way. This way of commercialisation endorses efficient and greener generation techniques. At the moment, this system
         turns to be quite profitable for the producers, because the customers pay each one of the kilowatts they buy at the higher cost (the cassation cost), which is
         fixed by the three oligopolistic companies that run the spanish grid.</string>
+    <string name="production_tab1">Day</string>
+    <string name="production_tab2">Month</string>
+    <string name="production_tab3">Year</string>
 </resources>

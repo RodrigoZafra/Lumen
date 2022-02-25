@@ -28,5 +28,8 @@
         siempre que existan energías fósiles de alto coste, puesto que los ciudadanos pagan cada kilovatio al precio de casación, que está fijado
         arbitrariamente por las empresas del oligopolio nacional.
     </string>
+    <string name="production_tab1">Día</string>
+    <string name="production_tab2">Mes</string>
+    <string name="production_tab3">Año</string>
 
 </resources>
