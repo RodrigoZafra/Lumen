@@ -37,5 +37,18 @@
         siempre que existan energías fósiles de alto coste, puesto que los ciudadanos pagan cada kilovatio al precio de casación, que está fijado
         arbitrariamente por las empresas del oligopolio nacional.
     </string>
+    <string name="plainTextCvConsumption1">Consumo en tiempo real</string>
+    <string name="plainTextCvConsumption2">Desglose por días</string>
+    <string name="plainTextCvConsumption3">Consumo mensual</string>
+    <string name="plainTextCvConsumption4">Precio mensual</string>
+    <string name="plainTextCvConsumption5">Consumo anual</string>
+    <string name="plainTextCvConsumption6">Precio anual</string>
+    <string name="plainTextCvProduction1">Estructura de la generación</string>
+    <string name="plainTextCvProduction2">Generación renovable</string>
+    <string name="plainTextCvProduction3">Generacion sin emisiones</string>
+    <string name="plainTextCvProduction4">Generación renovable</string>
+    <string name="plainTextCvProduction5">Generación sin emisiones</string>
+    <string name="plainTextCvProduction6">Generación renovable</string>
+    <string name="plainTextCvProduction7">Generación sin emisiones</string>
 
 </resources>

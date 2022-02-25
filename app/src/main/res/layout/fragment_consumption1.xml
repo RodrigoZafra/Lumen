@@ -43,7 +43,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:paddingTop="50dp"
-                    android:text="Consumo en tiempo real"
+                    android:text="@string/plainTextCvConsumption1"
                     android:textAlignment="center"
                     android:textSize="15sp" />
 
@@ -115,7 +115,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:paddingTop="15dp"
-                    android:text="Desglose por días"
+                    android:text="@string/plainTextCvConsumption2"
                     android:textAlignment="center"
                     android:textSize="15sp" />
 

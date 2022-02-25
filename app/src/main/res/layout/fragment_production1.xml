@@ -42,7 +42,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:paddingTop="15dp"
-                    android:text="Estructura de la generación"
+                    android:text="@string/plainTextCvProduction1"
                     android:textAlignment="center"
                     android:textSize="15sp" />
 
@@ -118,7 +118,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:paddingTop="15dp"
-                    android:text="Generación renovable"
+                    android:text="@string/plainTextCvProduction2"
                     android:textAlignment="center"
                     android:textSize="15sp" />
 
@@ -206,7 +206,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:paddingTop="15dp"
-                    android:text="Generacion sin emisiones"
+                    android:text="@string/plainTextCvProduction3"
                     android:textAlignment="center"
                     android:textSize="15sp" />
 

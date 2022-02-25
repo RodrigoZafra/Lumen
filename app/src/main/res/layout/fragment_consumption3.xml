@@ -42,7 +42,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:paddingTop="15dp"
-                    android:text="Consumo anual"
+                    android:text="@string/plainTextCvConsumption5"
                     android:textAlignment="center"
                     android:textSize="15sp" />
 
@@ -128,7 +128,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:paddingTop="15dp"
-                    android:text="Precio anual"
+                    android:text="@string/plainTextCvConsumption6"
                     android:textAlignment="center"
                     android:textSize="15sp" />
 

@@ -23,4 +23,17 @@
     <string name="production_tab1">Day</string>
     <string name="production_tab2">Month</string>
     <string name="production_tab3">Year</string>
+    <string name="plainTextCvConsumption1">Real time consumption</string>
+    <string name="plainTextCvConsumption2">Day to day consumption</string>
+    <string name="plainTextCvConsumption3">Monthly consumption</string>
+    <string name="plainTextCvConsumption4">Monthly prices</string>
+    <string name="plainTextCvConsumption5">Annual consumption</string>
+    <string name="plainTextCvConsumption6">Annual prices</string>
+    <string name="plainTextCvProduction1">Generation structure</string>
+    <string name="plainTextCvProduction2">Renewable generation</string>
+    <string name="plainTextCvProduction4">Renewable generation</string>
+    <string name="plainTextCvProduction6">Renewable generation</string>
+    <string name="plainTextCvProduction3">No emissions generation</string>
+    <string name="plainTextCvProduction5">No emissions generation</string>
+    <string name="plainTextCvProduction7">No emissions generation</string>
 </resources>
