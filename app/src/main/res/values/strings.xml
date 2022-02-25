@@ -23,10 +23,10 @@
 
     <string name="infoSlideString2"> Hay cuatro actores que posibilitan su funcionamiento. La generación, el transporte, la distribución y la comercialización.
     </string>
-    <string name="infoSlideString3">Red Electrica de España es la empresa pública encarga de distribuir y garantizar el
+    <string name="infoSlideString3">Red Electrica de España es la empresa pública se encarga de distribuir y garantizar el
 	suministro eléctrico. La generación y la distribución están en manos del oligopolio eléctrico español.</string>
 
-    <string name="infoSlideString4">Los generadores producen la energía y la vierten a la red. La REE posee y mantiene la red de transporte
+    <string name="infoSlideString4">Los generadores producen la energía y la vierten a la red. REE posee y mantiene la red de transporte
 	que une las redes de distribución. Las distribuidoras poseen y mantienen la infraestructura para suministrar a los consumidores.
         Los comercializadores compran la energia y cobran a los usuarios</string>
 
