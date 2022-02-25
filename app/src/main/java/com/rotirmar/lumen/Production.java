@@ -64,6 +64,13 @@ public class Production extends AppCompatActivity {
         if (id == R.id.favorite) {
             Toast toast = Toast.makeText(this, "Has eleigo esta página como principal!", Toast.LENGTH_LONG);
             toast.show();
+            //Change favourite page
+            final boolean ifConsumptionFavourite = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                    .getBoolean("ifConsumptionFavourite", true);
+            if (ifConsumptionFavourite) {
+                getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                        .putBoolean("ifConsumptionFavourite", false).commit();
+            }
         }
 
         if (id == R.id.comoFunciona) {
