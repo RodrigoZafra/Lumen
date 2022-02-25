@@ -142,7 +142,7 @@ public class Consumption2 extends Fragment {
         }
 
         //-----------------------GENERATE COLUM CHART (DEMAND PER MONTH)------------------------
-        generateColumChart(seriesData, "GWh", "Demanda por mes del último año", "GWh");
+        generateColumChart(seriesData, "GWh", getString(R.string.string_consumption_chart3_title), "GWh");
     }
 
     private void generateAnychartPricePerMonth() {
@@ -169,7 +169,7 @@ public class Consumption2 extends Fragment {
         }
 
         //-----------------------GENERATE COLUM CHART (PRICE PER MONTH)------------------------
-        generateColumChart(seriesData, "€", "Precio por mes del último año", "EUROS");
+        generateColumChart(seriesData, "€", getString(R.string.string_consumption_chart4_title), "EUROS");
     }
 
     private JSONObject readFileAndGenerateJsonObject(String file) {

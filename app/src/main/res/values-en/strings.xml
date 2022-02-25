@@ -36,4 +36,7 @@
     <string name="plainTextCvProduction3">No emissions generation</string>
     <string name="plainTextCvProduction5">No emissions generation</string>
     <string name="plainTextCvProduction7">No emissions generation</string>
+    <string name="menu_top_1">¿How does it work?</string>
+    <string name="menu_top_2">About us</string>
+    <string name="toast_favorite">You have chosen this page as your favorite!</string>
 </resources>

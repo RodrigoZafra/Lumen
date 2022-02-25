@@ -204,7 +204,7 @@ public class Production1 extends Fragment {
                 .format("{%Value}{groupsSeparator: } GWh");
 
         cartesian.animation(true);
-        cartesian.title("Generación por tecnología hoy");
+        cartesian.title(getString(R.string.string_consumption_chart7_title));
 
         cartesian.yScale().minimum(0d);
 
@@ -251,7 +251,7 @@ public class Production1 extends Fragment {
         }
 
         //-----------------------GENERATE LINE CHART (RENEWABLE/NO RENEWABLE)------------------------
-        generateLineChart(seriesData, "Producción renovable/no renovable", "%", "Renovable", "No renovable");
+        generateLineChart(seriesData, getString(R.string.string_consumption_chart8_title), "%", getString(R.string.string_consumption_chart8_s1), getString(R.string.string_consumption_chart8_s2));
     }
 
     private void generateAnyChartDayEmissionsNoEmissions() {
@@ -286,7 +286,7 @@ public class Production1 extends Fragment {
         }
 
         //-----------------------GENERATE LINE CHART (RENEWABLE/NO RENEWABLE)------------------------
-        generateLineChart(seriesData, "Producción con/sin emisiones", "%", "Sin emisiones", "Con emisiones");
+        generateLineChart(seriesData, getString(R.string.string_consumption_chart9_title), "%", getString(R.string.string_consumption_chart9_s1), getString(R.string.string_consumption_chart9_s2));
     }
 
     private JSONObject readFileAndGenerateJsonObject(String file) {
