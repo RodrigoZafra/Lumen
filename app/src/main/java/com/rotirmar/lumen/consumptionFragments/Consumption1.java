@@ -176,7 +176,7 @@ public class Consumption1 extends Fragment {
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
 
-        cartesian.title("Demanda en tiempo real");
+        cartesian.title(getString(R.string.string_consumption_chart1_title));
 
         cartesian.yAxis(0).title("MW");
         cartesian.xAxis(0).labels().padding(1d, 1d, 1d, 1d);
@@ -188,7 +188,7 @@ public class Consumption1 extends Fragment {
         Mapping series3Mapping = set.mapAs("{ x: 'x', value: 'value3' }");
 
         Line series1 = cartesian.line(series1Mapping);
-        series1.name("Real");
+        series1.name(getString(R.string.string_consumption_chart1_series1));
         series1.color("#ffea00");
         series1.hovered().markers().enabled(true);
         series1.hovered().markers()
@@ -201,7 +201,7 @@ public class Consumption1 extends Fragment {
                 .offsetY(5d);
 
         Line series2 = cartesian.line(series2Mapping);
-        series2.name("Programada");
+        series2.name(getString(R.string.string_consumption_chart1_series2));
         series2.color("#e90b0b");
         series2.hovered().markers().enabled(true);
         series2.hovered().markers()
@@ -214,7 +214,7 @@ public class Consumption1 extends Fragment {
                 .offsetY(5d);
 
         Line series3 = cartesian.line(series3Mapping);
-        series3.name("Prevista");
+        series3.name(getString(R.string.string_consumption_chart1_series3));
         series3.color("#41d641");
         series3.hovered().markers().enabled(true);
         series3.hovered().markers()
@@ -277,7 +277,7 @@ public class Consumption1 extends Fragment {
                 .format("{%Value}{groupsSeparator: } GWh");
 
         cartesian.animation(true);
-        cartesian.title("Demanda por dia del último mes");
+        cartesian.title(getString(R.string.string_consumption_chart2_title));
 
         cartesian.yScale().minimum(0d);
 

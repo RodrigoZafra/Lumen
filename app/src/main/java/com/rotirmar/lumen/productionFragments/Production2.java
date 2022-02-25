@@ -165,7 +165,7 @@ public class Production2 extends Fragment {
         }
 
         //-----------------------GENERATE LINE CHART (RENEWABLE/NO RENEWABLE)------------------------
-        generateLineChart(seriesData, "Producción renovable/no renovable", "%", "Renovable", "No renovable");
+        generateLineChart(seriesData, getString(R.string.string_consumption_chart10_title), "%", getString(R.string.string_consumption_chart10_s1), getString(R.string.string_consumption_chart10_s2));
     }
 
     private void generateAnyChartMonthEmissionsNoEmissions() {
@@ -200,7 +200,7 @@ public class Production2 extends Fragment {
         }
 
         //-----------------------GENERATE LINE CHART (RENEWABLE/NO RENEWABLE)------------------------
-        generateLineChart(seriesData, "Producción con/sin emisiones", "%", "Sin emisiones", "Con emisiones");
+        generateLineChart(seriesData, getString(R.string.string_consumption_chart11_title), "%", getString(R.string.string_consumption_chart11_s1), getString(R.string.string_consumption_chart11_s2));
     }
 
     private JSONObject readFileAndGenerateJsonObject(String file) {

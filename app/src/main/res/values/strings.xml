@@ -52,6 +52,34 @@
     <string name="plainTextCvProduction7">Generación sin emisiones</string>
     <string name="menu_top_1">¿Como funciona?</string>
     <string name="menu_top_2">Sobre nosotros</string>
-    <string name="toast_favorite">Has eleigo esta página como principal!</string>
+    <string name="toast_favorite">¡Has elegido esta página como principal!</string>
+    <string name="string_consumption_chart1_title">Demanda en tiempo real</string>
+    <string name="string_consumption_chart1_series1">Real</string>
+    <string name="string_consumption_chart1_series2">Programada</string>
+    <string name="string_consumption_chart1_series3">Prevista</string>
+    <string name="string_consumption_chart2_title">Demanda por dia del último mes</string>
+    <string name="string_consumption_chart3_title">Demanda por mes del último año</string>
+    <string name="string_consumption_chart4_title">Precio por mes del último año</string>
+    <string name="string_consumption_chart5_title">Demanda por año</string>
+    <string name="string_consumption_chart6_title">Precio medio por año</string>
+    <string name="string_consumption_chart7_title">Generación por tecnología hoy</string>
+    <string name="string_consumption_chart8_title">Producción renovable/no renovable</string>
+    <string name="string_consumption_chart8_s1">Renovable</string>
+    <string name="string_consumption_chart8_s2">No renovable</string>
+    <string name="string_consumption_chart9_title">Producción con/sin emisiones</string>
+    <string name="string_consumption_chart9_s1">Sin emisiones</string>
+    <string name="string_consumption_chart9_s2">Con emisiones</string>
+    <string name="string_consumption_chart10_title">Producción renovable/no renovable</string>
+    <string name="string_consumption_chart10_s1">Renovable</string>
+    <string name="string_consumption_chart10_s2">No renovable</string>
+    <string name="string_consumption_chart11_s1">Sin emisiones</string>
+    <string name="string_consumption_chart11_s2">Con emisiones</string>
+    <string name="string_consumption_chart11_title">Producción con/sin emisiones</string>
+    <string name="string_consumption_chart12_title">Producción renovable/no renovable</string>
+    <string name="string_consumption_chart13_title">Producción con/sin emisiones</string>
+    <string name="string_consumption_chart12_s1">Renovable</string>
+    <string name="string_consumption_chart12_s2">No renovable</string>
+    <string name="string_consumption_chart13_s1">Sin emisiones</string>
+    <string name="string_consumption_chart13_s2">Con emisiones</string>
 
 </resources>
