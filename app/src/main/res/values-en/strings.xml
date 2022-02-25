@@ -9,33 +9,15 @@
     <string name="consumo">Consumption</string>
     <string name="produccion">Production</string>
     <string name="title_activity_production">Production</string>
-    <string name="infoSlideString1">Do you know how the Spanish electricity sector?</string>
-    <string name="infoSlideString2">"Most of the "</string>
-    <string name="infoSlideString3">Red Electrica de España is the public company in charge of distributing and guaranteeing the electricity supply at all times.
-	electricity supply at all times.</string>
-    <string name="infoSlideString4">In the daily electricity market (the pool) the traders buy the energy they will need and the producers the energy they can offer for each hour of the day.
-	and the producers the energy they can offer for each hour of the day.</string>
-    <string name="infoSlideString5">The market is based on a marginalist system, it promotes the most efficient energies, since the cheapest ones are the first to enter the pool.
-	the cheapest ones are the first to enter the pool, although in the end they are all paid at the price of the
-	matching point</string>
-    <string name="infoSlideString6">More than 30% of the energy produced in 2020 was non-renewable, costly and polluting.</string>
-
-    <!--string name="infoSlideString1">¿Sabes cómo funciona el sistema eléctrico español?</string>
-
-    <string name="infoSlideString2"> Hay cuatro actores que posibilitan su funcionamiento. La generación, el transporte, la distribución y la comercialización.
-    </string>
-    <string name="infoSlideString3">Red Electrica de España es la empresa pública se encarga de distribuir y garantizar el
-	suministro eléctrico. La generación y la distribución están en manos del oligopolio eléctrico español.</string>
-
-    <string name="infoSlideString4">Los generadores producen la energía y la vierten a la red. REE posee y mantiene la red de transporte
-	que une las redes de distribución. Las distribuidoras poseen y mantienen la infraestructura para suministrar a los consumidores.
-        Los comercializadores compran la energia y cobran a los usuarios</string>
-
-    <string name="infoSlideString5">En el mercado diario de la electricidad, el pool, las comercializadoras (muchas veces pertenecientes a las productoras)
-    compran a las productoras la energía en función de las previsiones de uso en cada hora del día.
-    </string>
-    <string name="infoSlideString6">El mercado eléctrico lo conforma un sistema de corte marginalista. Esto fomenta la venta de energías mas eficientes
-        siempre que existan energías fósiles de alto coste, puesto que los ciudadanos pagan cada kilovatio al precio de casación, que está fijado
-        arbitrariamente por las empresas del oligopolio nacional.
-    </string-->
+    <string name="infoSlideString1">Are you aware of how the Spanish energy system works?</string>
+    <string name="infoSlideString2">There are four parts that are crucial for this system to function: Generation, transport, distribution and commercialisation.</string>
+    <string name="infoSlideString3">The public company in charge of energy transportation is called "Red Electrica de España (REE)". The generation and distribution
+        are handled by the spanish energy oligopoly.</string>
+    <string name="infoSlideString4">These three companies that generate energy pour it into the grid. REE owns and maintains the grid so the distribution can be done.
+        The distributors use this infrastructure so energy can reach the customers through the marketers.</string>
+    <string name="infoSlideString5">The daily energy market is called the pool, and It is the place where the marketers (most of them belong to the three big producers)
+        buy energy from the producers estimating how much energy is needed at each hour of the day.</string>
+    <string name="infoSlideString6">The energy market works in a marginalist way. This way of commercialisation endorses efficient and greener generation techniques. At the moment, this system
+        turns to be quite profitable for the producers, because the customers pay each one of the kilowatts they buy at the higher cost (the cassation cost), which is
+        fixed by the three oligopolistic companies that run the spanish grid.</string>
 </resources>
