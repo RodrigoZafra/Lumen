@@ -28,10 +28,8 @@
         <entry key="..\:/Rodrigo y Mario/Lumen/app/src/main/res/layout/fragment_info_slides.xml" value="0.16770833333333332" />
         <entry key="..\:/Rodrigo y Mario/Lumen/app/src/main/res/menu/bottom_app_bar_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Rodrigo y Mario/Lumen/app/src/main/res/menu/menu.xml" value="0.36666666666666664" />
-        <entry key="app/src/main/res/layout/activity_consumption.xml" value="0.35520833333333335" />
-        <entry key="app/src/main/res/layout/fragment_production1.xml" value="0.35520833333333335" />
-        <entry key="app/src/main/res/layout/fragment_production2.xml" value="0.35520833333333335" />
-        <entry key="app/src/main/res/layout/fragment_production3.xml" value="0.35520833333333335" />
+        <entry key="..\:/Users/tirso/AndroidStudioProjects/Lumen/app/src/main/res/layout/fragment_consumption1.xml" value="0.1" />
+        <entry key="..\:/Users/tirso/AndroidStudioProjects/Lumen/app/src/main/res/layout/fragment_production1.xml" value="0.1" />
       </map>
     </option>
   </component>
