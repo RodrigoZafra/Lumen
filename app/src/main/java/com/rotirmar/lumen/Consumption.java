@@ -69,6 +69,13 @@ public class Consumption extends AppCompatActivity {
         if (id == R.id.favorite) {
             Toast toast = Toast.makeText(this, "Has elegido esta página como principal!", Toast.LENGTH_LONG);
             toast.show();
+            //Change favourite page
+            final boolean ifConsumptionFavourite = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                    .getBoolean("ifConsumptionFavourite", true);
+            if (!ifConsumptionFavourite) {
+                getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                        .putBoolean("ifConsumptionFavourite", true).commit();
+            }
         }
 
         if (id == R.id.comoFunciona) {
