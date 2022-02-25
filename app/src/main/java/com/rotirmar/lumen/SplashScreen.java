@@ -40,7 +40,7 @@ public class SplashScreen extends AppCompatActivity {
     AnimatedVectorDrawableCompat avdC;
     AnimatedVectorDrawable avd;
 
-    private boolean firstTime;
+    private boolean secondTime;
 
     private String CONSUMPTION_DAY_REALDEMAND_URL;
     private String CONSUMPTION_DAY_DEMANDPERDAY_URL;
@@ -133,8 +133,8 @@ public class SplashScreen extends AppCompatActivity {
 
 
         /*-----PRIMERA VEZ-----*/
-        firstTime = readDataBase();
-        if (!firstTime) {
+        secondTime = readDataBase();
+        if (!secondTime) {
             createDataBase();
         } else {
             /*---CONSUMPTION---*/
@@ -166,8 +166,8 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private boolean readDataBase() {
-        firstTime = new File(getFilesDir() + "/data_base.dat").exists();
-        return firstTime;
+        secondTime = new File(getFilesDir() + "/data_base.dat").exists();
+        return secondTime;
     }
 
     private void createDataBase() {
@@ -268,14 +268,31 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent;
-                if (!firstTime) {
+                if (!secondTime) {
                     intent = new Intent(SplashScreen.this, InfoSlides.class);
                 } else {
-                    intent = new Intent(SplashScreen.this, Consumption.class);
+                    Boolean isConsumptionFavourite = isConsumptionFavourite();
+
+                    if (isConsumptionFavourite) {
+                        intent = new Intent(SplashScreen.this, Consumption.class);
+                        overridePendingTransition(0, 0);
+                    } else {
+                        intent = new Intent(SplashScreen.this, Production.class);
+                        overridePendingTransition(0, 0);
+                    }
+
                 }
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         }, 2000);
+    }
+
+    public boolean isConsumptionFavourite() {
+        final boolean ifConsumptionFavourite = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("ifConsumptionFavourite", true);
+        return ifConsumptionFavourite;
     }
 
 }
