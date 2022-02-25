@@ -69,7 +69,7 @@ public class SplashScreen extends AppCompatActivity {
     private String readDataBase() {
         try {
             File file = getFilesDir();
-            FileInputStream fileIn = new FileInputStream(file.toString() + "/data_base.bat");
+            FileInputStream fileIn = new FileInputStream(file.toString() + "/data_base.dat");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             DataBase dbRes = (DataBase) in.readObject();
             return dbRes.primeraVez;
@@ -87,7 +87,7 @@ public class SplashScreen extends AppCompatActivity {
         try {
             DataBase db = new DataBase();
             db.primeraVez = "No";
-            FileOutputStream fileOut = new FileOutputStream(getFilesDir() + "/data_base.bat");
+            FileOutputStream fileOut = new FileOutputStream(getFilesDir() + "/data_base.dat");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(db);
             out.close();
