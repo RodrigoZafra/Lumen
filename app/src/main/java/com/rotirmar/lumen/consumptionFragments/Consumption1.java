@@ -10,6 +10,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
@@ -54,6 +55,9 @@ public class Consumption1 extends Fragment {
         CardView cvConsumptionDay1 = view.findViewById(R.id.cvConsumptionDay1);
         CardView cvConsumptionDay2 = view.findViewById(R.id.cvConsumptionDay2);
 
+        TextView cvAPITitleConsumptionDay2 = view.findViewById(R.id.cvAPITitleConsumptionDay2);
+        cvAPITitleConsumptionDay2.setText(maxValueDemand());
+
         cvConsumptionDay1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +77,26 @@ public class Consumption1 extends Fragment {
         });
 
         return view;
+    }
+
+    private String maxValueDemand() {
+        JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionDayDemand.json");
+        double value = 1.0D;
+        try {
+            JSONArray jsonArrayOfDemandPerDayValues = jsonObject.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+
+            double aux;
+
+            for (int i = 0; i < 31; i++) {
+                aux = (Double.parseDouble(jsonArrayOfDemandPerDayValues.getJSONObject(i).getString("value")) / 1000);
+                if (aux > value)
+                    value = aux;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return String.format("%.2f", value);
     }
 
     private void cleanViewAnyChartPattern(LayoutInflater inflater, ViewGroup container) {

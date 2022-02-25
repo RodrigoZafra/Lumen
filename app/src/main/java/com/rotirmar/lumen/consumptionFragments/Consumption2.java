@@ -10,6 +10,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -48,6 +49,11 @@ public class Consumption2 extends Fragment {
         CardView cvConsumptionMonth1 = view.findViewById(R.id.cvConsumptionMonth1);
         CardView cvConsumptionMonth2 = view.findViewById(R.id.cvConsumptionMonth2);
 
+        TextView cvAPITitleConsumptionMonth1 = view.findViewById(R.id.cvAPITitleConsumptionMonth1);
+        cvAPITitleConsumptionMonth1.setText(maxValue("consumptionMonthDemand.json", 1000));
+        TextView cvAPITitleConsumptionMonth2 = view.findViewById(R.id.cvAPITitleConsumptionMonth2);
+        cvAPITitleConsumptionMonth2.setText(maxValue("consumptionMonthPrice.json", 1));
+
         cvConsumptionMonth1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +73,26 @@ public class Consumption2 extends Fragment {
         });
 
         return view;
+    }
+
+    private String maxValue(String file, int divisor) {
+        JSONObject jsonObject = readFileAndGenerateJsonObject(file);
+        double value = 1.0D;
+        try {
+            JSONArray jsonArrayValues = jsonObject.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+
+            double aux;
+
+            for (int i = 0; i < 13; i++) {
+                aux = (Double.parseDouble(jsonArrayValues.getJSONObject(i).getString("value")) / divisor);
+                if (aux > value)
+                    value = aux;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return String.format("%.2f", value);
     }
 
     private void cleanViewAnyChartPattern(LayoutInflater inflater, ViewGroup container) {

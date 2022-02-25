@@ -10,6 +10,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -48,6 +49,11 @@ public class Consumption3 extends Fragment {
         CardView cvConsumptionYear1 = view.findViewById(R.id.cvConsumptionYear1);
         CardView cvConsumptionYear2 = view.findViewById(R.id.cvConsumptionYear2);
 
+        TextView cvAPITitleConsumptionYear1 = view.findViewById(R.id.cvAPITitleConsumptionYear1);
+        cvAPITitleConsumptionYear1.setText(maxValue("consumptionYearDemand.json", 1000));
+        TextView cvAPITitleConsumptionYear2 = view.findViewById(R.id.cvAPITitleConsumptionYear2);
+        cvAPITitleConsumptionYear2.setText(maxValue("consumptionYearPrice.json", 1));
+
         cvConsumptionYear1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +73,30 @@ public class Consumption3 extends Fragment {
         });
 
         return view;
+    }
+
+    private String maxValue(String file, int divisor) {
+        JSONObject jsonObject = readFileAndGenerateJsonObject(file);
+        double value = 1.0D;
+        try {
+            JSONArray jsonArrayValues = null;
+            if (divisor == 1000)
+                jsonArrayValues = jsonObject.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+            else
+                jsonArrayValues = jsonObject.getJSONArray("included").getJSONObject(3).getJSONObject("attributes").getJSONArray("content").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+
+            double aux;
+
+            for (int i = 0; i < 5; i++) {
+                aux = (Double.parseDouble(jsonArrayValues.getJSONObject(i).getString("value")) / divisor);
+                if (aux > value)
+                    value = aux;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return String.format("%.2f", value);
     }
 
     private void cleanViewAnyChartPattern(LayoutInflater inflater, ViewGroup container) {
