@@ -92,35 +92,9 @@ public class Consumption2 extends Fragment {
         dialog.show();
     }
 
-    private static class CustomDataEntry extends ValueDataEntry {
-        CustomDataEntry(String x, Number value) {
-            super(x, value);
-        }
-    }
-
-    private JSONObject readFileAndGenerateJsonObject(String file) {
-        //READ THE FILE AND GENERATE JSON OBJECT
-        BufferedReader br;
-        String jsonText;
-        JSONObject jsonObject = new JSONObject();
-        try {
-            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + file)));
-            jsonText = br.readLine();
-            br.close();
-            jsonObject = new JSONObject(jsonText);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonObject;
-    }
-
     private void generateAnyChartDemandPerMonth() {
         //-----------------------EXTRACT DATA------------------------
-        JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionMonthDemanda.json");
+        JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionMonthDemand.json");
 
         List<DataEntry> seriesData = new ArrayList<>();
 
@@ -140,40 +114,9 @@ public class Consumption2 extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //------------------------------------------------
-
 
         //-----------------------GENERATE COLUM CHART (DEMAND PER MONTH)------------------------
-        //FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
-        AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
-        //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
-
-        Cartesian cartesian = AnyChart.column();
-
-        Column column = cartesian.column(seriesData);
-
-        column.tooltip()
-                .titleFormat("{%X}")
-                .position(Position.CENTER_BOTTOM)
-                .anchor(Anchor.CENTER_BOTTOM)
-                .offsetX(0d)
-                .offsetY(5d)
-                .format("{%Value}{groupsSeparator: } GWh");
-
-        cartesian.animation(true);
-        cartesian.title("Demanda por mes del último año");
-
-        cartesian.yScale().minimum(0d);
-
-        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: }");
-
-        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
-        cartesian.interactivity().hoverMode(HoverMode.BY_X);
-
-        cartesian.yAxis(0).title("GWh");
-        //cartesian.xAxis(0).title("Día");
-
-        anyChartView.setChart(cartesian);
+        generateColumChart(seriesData, "GWh", "Demanda por mes del último año", "GWh");
     }
 
     private void generateAnychartPricePerMonth() {
@@ -198,10 +141,38 @@ public class Consumption2 extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //------------------------------------------------
-
 
         //-----------------------GENERATE COLUM CHART (PRICE PER MONTH)------------------------
+        generateColumChart(seriesData, "€", "Precio por mes del último año", "EUROS");
+    }
+
+    private JSONObject readFileAndGenerateJsonObject(String file) {
+        //READ THE FILE AND GENERATE JSON OBJECT
+        BufferedReader br;
+        String jsonText;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + file)));
+            jsonText = br.readLine();
+            br.close();
+            jsonObject = new JSONObject(jsonText);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    private static class CustomDataEntry extends ValueDataEntry {
+        CustomDataEntry(String x, Number value) {
+            super(x, value);
+        }
+    }
+
+    private void generateColumChart(List<DataEntry> seriesData, String columFormat, String chartTitle, String yAxisTitle) {
         //FULL COLUMNAS, HABRÁ QUE RENOMBRAR EL GRÁFICO y LA PROGRESS
         AnyChartView anyChartView = viewAnyChartPattern.findViewById(R.id.anychartView);
         //anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
@@ -216,10 +187,10 @@ public class Consumption2 extends Fragment {
                 .anchor(Anchor.CENTER_BOTTOM)
                 .offsetX(0d)
                 .offsetY(5d)
-                .format("{%Value}{groupsSeparator: } €");
+                .format("{%Value}{groupsSeparator: } " + columFormat);
 
         cartesian.animation(true);
-        cartesian.title("Precio por mes del último año");
+        cartesian.title(chartTitle);
 
         cartesian.yScale().minimum(0d);
 
@@ -228,8 +199,8 @@ public class Consumption2 extends Fragment {
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
         cartesian.interactivity().hoverMode(HoverMode.BY_X);
 
-        cartesian.yAxis(0).title("EUROS");
-        //cartesian.xAxis(0).title("Mes");
+        cartesian.yAxis(0).title(yAxisTitle);
+        //cartesian.xAxis(0).title("Dia");
 
         anyChartView.setChart(cartesian);
     }

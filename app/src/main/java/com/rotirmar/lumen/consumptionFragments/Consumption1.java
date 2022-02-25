@@ -98,47 +98,9 @@ public class Consumption1 extends Fragment {
         dialog.show();
     }
 
-    private static class customDataEntryRealTimeDemand extends ValueDataEntry {
-
-        customDataEntryRealTimeDemand(String x, Number value, Number value2, Number value3) {
-            super(x, value);
-            setValue("value2", value2);
-            setValue("value3", value3);
-        }
-
-    }
-
-    private static class customDataEntryDemandPerDay extends ValueDataEntry {
-
-        customDataEntryDemandPerDay(String x, Number value) {
-            super(x, value);
-        }
-
-    }
-
-    private JSONObject readFileAndGenerateJsonObject(String file) {
-        //READ THE FILE AND GENERATE JSON OBJECT
-        BufferedReader br;
-        String jsonText;
-        JSONObject jsonObject = new JSONObject();
-        try {
-            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + file)));
-            jsonText = br.readLine();
-            br.close();
-            jsonObject = new JSONObject(jsonText);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonObject;
-    }
-
     private void generateAnychartRealDemand() {
         //-----------------------EXTRACT DATA------------------------
-        JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionDayDemandaTiempoReal.json");
+        JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionDayDemandRealTime.json");
 
         List<DataEntry> seriesData = new ArrayList<>();
 
@@ -249,7 +211,7 @@ public class Consumption1 extends Fragment {
 
     private void generateAnyChartDemandPerDay() {
         //-----------------------EXTRACT DATA------------------------
-        JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionDayDemandaPorDia.json");
+        JSONObject jsonObject = readFileAndGenerateJsonObject("consumptionDayDemand.json");
 
         List<DataEntry> seriesData = new ArrayList<>();
 
@@ -303,6 +265,44 @@ public class Consumption1 extends Fragment {
         //cartesian.xAxis(0).title("Día");
 
         anyChartView.setChart(cartesian);
+    }
+
+    private JSONObject readFileAndGenerateJsonObject(String file) {
+        //READ THE FILE AND GENERATE JSON OBJECT
+        BufferedReader br;
+        String jsonText;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + file)));
+            jsonText = br.readLine();
+            br.close();
+            jsonObject = new JSONObject(jsonText);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    private static class customDataEntryRealTimeDemand extends ValueDataEntry {
+
+        customDataEntryRealTimeDemand(String x, Number value, Number value2, Number value3) {
+            super(x, value);
+            setValue("value2", value2);
+            setValue("value3", value3);
+        }
+
+    }
+
+    private static class customDataEntryDemandPerDay extends ValueDataEntry {
+
+        customDataEntryDemandPerDay(String x, Number value) {
+            super(x, value);
+        }
+
     }
 
 }

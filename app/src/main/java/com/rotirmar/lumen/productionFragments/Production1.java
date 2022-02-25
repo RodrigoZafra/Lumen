@@ -77,6 +77,7 @@ public class Production1 extends Fragment {
             public void onClick(View v) {
                 cleanViewAnyChartPattern(inflater, container);
                 generateAlertDialog();
+                generateAnyChartDayEmissionsNoEmissions();
             }
         });
 
@@ -104,39 +105,6 @@ public class Production1 extends Fragment {
         builder.setView(viewAnyChartPattern);
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-    private static class customDataEntry extends ValueDataEntry {
-        customDataEntry(String x, Number value) {
-            super(x, value);
-        }
-    }
-
-    private static class customDataEntryLinear extends ValueDataEntry {
-        customDataEntryLinear(String x, Number value, Number value2) {
-            super(x, value);
-            setValue("value2", value2);
-        }
-    }
-
-    private JSONObject readFileAndGenerateJsonObject(String file) {
-        //READ THE FILE AND GENERATE JSON OBJECT
-        BufferedReader br;
-        String jsonText;
-        JSONObject jsonObject = new JSONObject();
-        try {
-            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + file)));
-            jsonText = br.readLine();
-            br.close();
-            jsonObject = new JSONObject(jsonText);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonObject;
     }
 
     private void generateAnyChartDayProductionStructure() {
@@ -213,13 +181,13 @@ public class Production1 extends Fragment {
             double sum;
 
             for (int i = 0; i < 32; i++) {
-                day = jsonArrayOfNoRenewableValues.getJSONObject(i).get("datetime").toString().substring(6, 11);
+                day = jsonArrayOfNoRenewableValues.getJSONObject(i).get("datetime").toString().substring(6, 10);
                 renewable = (Double.parseDouble(jsonArrayOfRenewableValues.getJSONObject(i).getString("value")) / 1000);
                 noRenewable = (Double.parseDouble(jsonArrayOfNoRenewableValues.getJSONObject(i).getString("value")) / 1000);
                 sum = renewable + noRenewable;
 
-                renewable = (renewable * 100) / sum;
-                noRenewable = (noRenewable * 100) / sum;
+                renewable = Math.round((renewable * 100) / sum);
+                noRenewable = Math.round((noRenewable * 100) / sum);
 
                 seriesData.add(new customDataEntryLinear(day, renewable, noRenewable));
             }
@@ -227,10 +195,80 @@ public class Production1 extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //------------------------------------------------
-
 
         //-----------------------GENERATE LINE CHART (RENEWABLE/NO RENEWABLE)------------------------
+        generateLineChart(seriesData, "Producción renovable/no renovable", "%", "Renovable", "No renovable");
+    }
+
+    private void generateAnyChartDayEmissionsNoEmissions() {
+        //-----------------------EXTRACT DATA------------------------
+        JSONObject jsonObject = readFileAndGenerateJsonObject("productionDayEmissionsProportion.json");
+
+        List<DataEntry> seriesData = new ArrayList<>();
+
+        try {
+            JSONArray jsonArrayOfRenewableValues = jsonObject.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+            JSONArray jsonArrayOfNoRenewableValues = jsonObject.getJSONArray("included").getJSONObject(1).getJSONObject("attributes").getJSONArray("values");
+
+            String day;
+            double emissions;
+            double noEmissions;
+            double sum;
+
+            for (int i = 0; i < 32; i++) {
+                day = jsonArrayOfNoRenewableValues.getJSONObject(i).get("datetime").toString().substring(6, 10);
+                emissions = (Double.parseDouble(jsonArrayOfRenewableValues.getJSONObject(i).getString("value")) / 1000);
+                noEmissions = (Double.parseDouble(jsonArrayOfNoRenewableValues.getJSONObject(i).getString("value")) / 1000);
+                sum = emissions + noEmissions;
+
+                emissions = Math.round((emissions * 100) / sum);
+                noEmissions = Math.round((noEmissions * 100) / sum);
+
+                seriesData.add(new customDataEntryLinear(day, emissions, noEmissions));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //-----------------------GENERATE LINE CHART (RENEWABLE/NO RENEWABLE)------------------------
+        generateLineChart(seriesData, "Producción con/sin emisiones", "%", "Sin emisiones", "Con emisiones");
+    }
+
+    private JSONObject readFileAndGenerateJsonObject(String file) {
+        //READ THE FILE AND GENERATE JSON OBJECT
+        BufferedReader br;
+        String jsonText;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            br = new BufferedReader(new FileReader(new File(getActivity().getFilesDir(), "/" + file)));
+            jsonText = br.readLine();
+            br.close();
+            jsonObject = new JSONObject(jsonText);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    private static class customDataEntry extends ValueDataEntry {
+        customDataEntry(String x, Number value) {
+            super(x, value);
+        }
+    }
+
+    private static class customDataEntryLinear extends ValueDataEntry {
+        customDataEntryLinear(String x, Number value, Number value2) {
+            super(x, value);
+            setValue("value2", value2);
+        }
+    }
+
+    private void generateLineChart(List<DataEntry> seriesData, String chartTitle, String yAxisTitle, String s1Name, String s2Name) {
         AnyChartView lineChart = (AnyChartView) viewAnyChartPattern.findViewById(R.id.anychartView);
         APIlib.getInstance().setActiveAnyChartView(lineChart);
         lineChart.setZoomEnabled(true);
@@ -246,11 +284,12 @@ public class Production1 extends Fragment {
                 .yLabel(true)
                 .yStroke((Stroke) null, null, null, (String) null, (String) null);
 
-        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
+                            .format("{%Value}{groupsSeparator: } %");
 
-        cartesian.title("Producción renovable/no renovable");
+        cartesian.title(chartTitle);
 
-        cartesian.yAxis(0).title("%");
+        cartesian.yAxis(0).title(yAxisTitle);
         cartesian.xAxis(0).labels().padding(1d, 1d, 1d, 1d);
 
         Set set = Set.instantiate();
@@ -259,7 +298,7 @@ public class Production1 extends Fragment {
         Mapping series2Mapping = set.mapAs("{ x: 'x', value: 'value2' }");
 
         Line series1 = cartesian.line(series1Mapping);
-        series1.name("Renovable");
+        series1.name(s1Name);
         series1.color("#ffea00");
         series1.hovered().markers().enabled(true);
         series1.hovered().markers()
@@ -272,7 +311,7 @@ public class Production1 extends Fragment {
                 .offsetY(5d);
 
         Line series2 = cartesian.line(series2Mapping);
-        series2.name("No renovable");
+        series2.name(s2Name);
         series2.color("#e90b0b");
         series2.hovered().markers().enabled(true);
         series2.hovered().markers()

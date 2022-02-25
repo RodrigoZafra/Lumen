@@ -52,9 +52,9 @@ public class SplashScreen extends AppCompatActivity {
     private String PRODUCTION_DAY_GENERATION_STRUCTURE_URL;
     private String PRODUCTION_DAY_RENEWABLE_PROPORTION_URL;
     private String PRODUCTION_DAY_EMISSIONS_PROPORTION_URL;
-    private String PRODUCTION_MONTH_GENERATION_RENEWABLE_URL;
+    private String PRODUCTION_MONTH_RENEWABLE_PROPORTION_URL;
     private String PRODUCTION_MONTH_EMISSIONS_PROPORTION_URL;
-    private String PRODUCTION_YEAR_GENERATION_RENEWABLE_URL;
+    private String PRODUCTION_YEAR_RENEWABLE_PROPORTION_URL;
     private String PRODUCTION_YEAR_EMISSIONS_PROPORTION_URL;
 
 
@@ -101,7 +101,16 @@ public class SplashScreen extends AppCompatActivity {
             PRODUCTION_DAY_EMISSIONS_PROPORTION_URL = "https://apidatos.ree.es/es/datos/generacion/evolucion-estructura-generacion-emisiones-asociadas?start_date=" + currentYear + "-" + lastMonth + "-" + currentDay + "T00:00&end_date=" + currentDate + "T23:59&time_trunc=day";
         }
         //MONTH
+        if (currentMonth.equals("01")) {
+            PRODUCTION_MONTH_RENEWABLE_PROPORTION_URL = "https://apidatos.ree.es/es/datos/generacion/evolucion-renovable-no-renovable?start_date=" + lastYear + "-01-01" + "T00:00&end_date=" + lastYear + "-12-31" + "T23:59&time_trunc=month";
+            PRODUCTION_MONTH_EMISSIONS_PROPORTION_URL = "https://apidatos.ree.es/es/datos/generacion/evolucion-estructura-generacion-emisiones-asociadas?start_date=" + lastYear + "-01-01" + "T00:00&end_date=" + lastYear + "-12-31" + "T23:59&time_trunc=month";
+        } else {
+            PRODUCTION_MONTH_RENEWABLE_PROPORTION_URL = "https://apidatos.ree.es/es/datos/generacion/evolucion-renovable-no-renovable?start_date=" + lastYear + "-" + currentMonth + "-01" + "T00:00&end_date=" + currentYear + "-" + lastMonth + "-31" + "T23:59&time_trunc=month";
+            PRODUCTION_MONTH_EMISSIONS_PROPORTION_URL = "https://apidatos.ree.es/es/datos/generacion/evolucion-estructura-generacion-emisiones-asociadas?start_date=" + lastYear + "-" + currentMonth + "-01" + "T00:00&end_date=" + currentYear + "-" + lastMonth + "-31" + "T23:59&time_trunc=month";
+        }
         //YEAR
+        PRODUCTION_YEAR_RENEWABLE_PROPORTION_URL = "https://apidatos.ree.es/es/datos/generacion/evolucion-renovable-no-renovable?start_date=" + year5Before + "-01-01" + "T00:00&end_date=" + lastYear + "-12-31" + "T23:59&time_trunc=year";
+        PRODUCTION_YEAR_EMISSIONS_PROPORTION_URL = "https://apidatos.ree.es/es/datos/generacion/evolucion-estructura-generacion-emisiones-asociadas?start_date=" + year5Before + "-01-01" + "T00:00&end_date=" + lastYear + "-12-31" + "T23:59&time_trunc=year";
 
 
         /*-----AIMACIONES-----*/
@@ -130,13 +139,13 @@ public class SplashScreen extends AppCompatActivity {
         } else {
             /*---CONSUMPTION---*/
             //DAY
-            requestDataWriteDataBase(CONSUMPTION_DAY_REALDEMAND_URL, "consumptionDayDemandaTiempoReal.json");
-            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDPERDAY_URL, "consumptionDayDemandaPorDia.json");
+            requestDataWriteDataBase(CONSUMPTION_DAY_REALDEMAND_URL, "consumptionDayDemandRealTime.json");
+            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDPERDAY_URL, "consumptionDayDemand.json");
             //MONTH
-            requestDataWriteDataBase(CONSUMPTION_MONTH_DEMAND_URL, "consumptionMonthDemanda.json");
+            requestDataWriteDataBase(CONSUMPTION_MONTH_DEMAND_URL, "consumptionMonthDemand.json");
             requestDataWriteDataBase(CONSUMPTION_MONTH_PRICE_URL, "consumptionMonthPrice.json");
             //YEAR
-            requestDataWriteDataBase(CONSUMPTION_YEAR_DEMAND_URL, "consumptionYearDemanda.json");
+            requestDataWriteDataBase(CONSUMPTION_YEAR_DEMAND_URL, "consumptionYearDemand.json");
             requestDataWriteDataBase(CONSUMPTION_YEAR_PRICE_URL, "consumptionYearPrice.json");
             /*---PRODUCTION---*/
             //DAY
@@ -144,7 +153,11 @@ public class SplashScreen extends AppCompatActivity {
             requestDataWriteDataBase(PRODUCTION_DAY_RENEWABLE_PROPORTION_URL, "productionDayRenewableProportion.json");
             requestDataWriteDataBase(PRODUCTION_DAY_EMISSIONS_PROPORTION_URL, "productionDayEmissionsProportion.json");
             //MONTH
+            requestDataWriteDataBase(PRODUCTION_MONTH_RENEWABLE_PROPORTION_URL, "productionMonthRenewableProportion.json");
+            requestDataWriteDataBase(PRODUCTION_MONTH_EMISSIONS_PROPORTION_URL, "productionMonthEmissionsProportion.json");
             //YEAR
+            requestDataWriteDataBase(PRODUCTION_YEAR_RENEWABLE_PROPORTION_URL, "productionYearRenewableProportion.json");
+            requestDataWriteDataBase(PRODUCTION_YEAR_EMISSIONS_PROPORTION_URL, "productionYearEmissionsProportion.json");
         }
 
         /*ABRIR APP*/
@@ -163,18 +176,18 @@ public class SplashScreen extends AppCompatActivity {
             new File(getFilesDir() + "/data_base.dat").createNewFile();
             /*-----CONSUMPTION-----*/
             //DAY
-            new File(getFilesDir(), "/" + "consumptionDayDemandaTiempoReal.json").createNewFile();
-            requestDataWriteDataBase(CONSUMPTION_DAY_REALDEMAND_URL, "consumptionDayDemandaTiempoReal.json");
-            new File(getFilesDir(), "/" + "consumptionDayDemandaTiempoReal.json").createNewFile();
-            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDPERDAY_URL, "consumptionDayDemandaPorDia.json");
+            new File(getFilesDir(), "/" + "consumptionDayDemandRealTime.json").createNewFile();
+            requestDataWriteDataBase(CONSUMPTION_DAY_REALDEMAND_URL, "consumptionDayDemandRealTime.json");
+            new File(getFilesDir(), "/" + "consumptionDayDemand.json").createNewFile();
+            requestDataWriteDataBase(CONSUMPTION_DAY_DEMANDPERDAY_URL, "consumptionDayDemand.json");
             //MONTH
-            new File(getFilesDir(), "/" + "consumptionMonthDemanda.json").createNewFile();
-            requestDataWriteDataBase(CONSUMPTION_MONTH_DEMAND_URL, "consumptionMonthDemanda.json");
+            new File(getFilesDir(), "/" + "consumptionMonthDemand.json").createNewFile();
+            requestDataWriteDataBase(CONSUMPTION_MONTH_DEMAND_URL, "consumptionMonthDemand.json");
             new File(getFilesDir(), "/" + "consumptionMonthPrice.json").createNewFile();
             requestDataWriteDataBase(CONSUMPTION_MONTH_PRICE_URL, "consumptionMonthPrice.json");
             //YEAR
-            new File(getFilesDir(), "/" + "consumptionYearDemanda.json").createNewFile();
-            requestDataWriteDataBase(CONSUMPTION_YEAR_DEMAND_URL, "consumptionYearDemanda.json");
+            new File(getFilesDir(), "/" + "consumptionYearDemand.json").createNewFile();
+            requestDataWriteDataBase(CONSUMPTION_YEAR_DEMAND_URL, "consumptionYearDemand.json");
             new File(getFilesDir(), "/" + "consumptionYearPrice.json").createNewFile();
             requestDataWriteDataBase(CONSUMPTION_YEAR_PRICE_URL, "consumptionYearPrice.json");
             /*-----PRODUCTION-----*/
@@ -186,7 +199,15 @@ public class SplashScreen extends AppCompatActivity {
             new File(getFilesDir(), "/" + "productionDayEmissionsProportion.json").createNewFile();
             requestDataWriteDataBase(PRODUCTION_DAY_EMISSIONS_PROPORTION_URL, "productionDayEmissionsProportion.json");
             //MONTH
+            new File(getFilesDir(), "/" + "productionMonthRenewableProportion.json").createNewFile();
+            requestDataWriteDataBase(PRODUCTION_MONTH_RENEWABLE_PROPORTION_URL, "productionMonthRenewableProportion.json");
+            new File(getFilesDir(), "/" + "productionMonthEmissionsProportion.json").createNewFile();
+            requestDataWriteDataBase(PRODUCTION_MONTH_EMISSIONS_PROPORTION_URL, "productionMonthEmissionsProportion.json");
             //YEAR
+            new File(getFilesDir(), "/" + "productionYearRenewableProportion.json").createNewFile();
+            requestDataWriteDataBase(PRODUCTION_YEAR_RENEWABLE_PROPORTION_URL, "productionYearRenewableProportion.json");
+            new File(getFilesDir(), "/" + "productionYearEmissionsProportion.json").createNewFile();
+            requestDataWriteDataBase(PRODUCTION_YEAR_EMISSIONS_PROPORTION_URL, "productionYearEmissionsProportion.json");
 
         } catch (IOException e) {
             e.printStackTrace();
