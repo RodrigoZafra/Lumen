@@ -47,8 +47,10 @@ public class Consumption extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.productionMenuButton:
                         Intent intent = new Intent(getApplicationContext(), Production.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
-                        overridePendingTransition(0,R.anim.anim_right);
+                        overridePendingTransition(0, R.anim.anim_right);
                 }
                 return false;
             }

@@ -30,6 +30,8 @@ public class InfoSlides extends AppCompatActivity {
 
     public void saltar(View view) {
         Intent intent = new Intent(InfoSlides.this, Consumption.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 }
