@@ -9,6 +9,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
@@ -54,6 +55,13 @@ public class Production1 extends Fragment {
         CardView cvProductionDay2 = view.findViewById(R.id.cvProductionDay2);
         CardView cvProductionDay3 = view.findViewById(R.id.cvProductionDay3);
 
+        TextView cvAPITitleProductionDay1 = view.findViewById(R.id.cvAPITitleProductionDay1);
+        cvAPITitleProductionDay1.setText(maxValue("productionDayGenerationStructure.json"));
+        TextView cvAPITitleProductionDay2 = view.findViewById(R.id.cvAPITitleProductionDay2);
+        cvAPITitleProductionDay2.setText(maxValue("productionDayRenewableProportion.json"));
+        TextView cvAPITitleProductionDay3 = view.findViewById(R.id.cvAPITitleProductionDay3);
+        cvAPITitleProductionDay3.setText(maxValue("productionDayEmissionsProportion.json"));
+
         cvProductionDay1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +90,52 @@ public class Production1 extends Fragment {
         });
 
         return view;
+    }
+
+    private String maxValue(String file) {
+        JSONObject jsonObject = readFileAndGenerateJsonObject(file);
+        String chain = "";
+        try {
+            if (file.equals("productionDayGenerationStructure.json")) {
+                JSONArray jsonArrayOfProductionStructure = jsonObject.getJSONArray("included");
+
+                double value = 0.0;
+                double aux;
+
+                for (int i = 0; i < 16; i++) {
+                    aux = (Double.parseDouble(jsonArrayOfProductionStructure.getJSONObject(i).getJSONObject("attributes").getJSONArray("values").getJSONObject(0).getString("value")) / 1000);
+                    if (aux > value) {
+                        value = aux;
+                        chain = jsonArrayOfProductionStructure.getJSONObject(i).getString("type");
+                    }
+                }
+            } else {
+                JSONArray jsonArrayOfRenewableValues = jsonObject.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+                JSONArray jsonArrayOfNoRenewableValues = jsonObject.getJSONArray("included").getJSONObject(1).getJSONObject("attributes").getJSONArray("values");
+
+
+                double renewableMax = 0.0;
+                double renewable;
+                double noRenewable;
+                double sum;
+
+                for (int i = 0; i < 32; i++) {
+                    renewable = (Double.parseDouble(jsonArrayOfRenewableValues.getJSONObject(i).getString("value")) / 1000);
+                    noRenewable = (Double.parseDouble(jsonArrayOfNoRenewableValues.getJSONObject(i).getString("value")) / 1000);
+                    sum = renewable + noRenewable;
+                    renewable = Math.round((renewable * 100) / sum);
+
+                    if (renewable > renewableMax){
+                        renewableMax = renewable;
+                    }
+                }
+                chain = renewableMax + "";
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return chain;
     }
 
     private void cleanViewAnyChartPattern(LayoutInflater inflater, ViewGroup container) {
@@ -285,7 +339,7 @@ public class Production1 extends Fragment {
                 .yStroke((Stroke) null, null, null, (String) null, (String) null);
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
-                            .format("{%Value}{groupsSeparator: } %");
+                .format("{%Value}{groupsSeparator: } %");
 
         cartesian.title(chartTitle);
 

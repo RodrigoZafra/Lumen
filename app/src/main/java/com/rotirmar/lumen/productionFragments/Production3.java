@@ -9,6 +9,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
@@ -50,6 +51,11 @@ public class Production3 extends Fragment {
         CardView cvProductionYear1 = view.findViewById(R.id.cvProductionYear1);
         CardView cvProductionYear2 = view.findViewById(R.id.cvProductionYear2);
 
+        TextView cvAPITitleProductionYear1 = view.findViewById(R.id.cvAPITitleProductionYear1);
+        cvAPITitleProductionYear1.setText(maxValue("productionYearRenewableProportion.json"));
+        TextView cvAPITitleProductionYear2 = view.findViewById(R.id.cvAPITitleProductionYear2);
+        cvAPITitleProductionYear2.setText(maxValue("productionYearEmissionsProportion.json"));
+
         cvProductionYear1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +75,37 @@ public class Production3 extends Fragment {
         });
 
         return view;
+    }
+
+    private String maxValue(String file) {
+        JSONObject jsonObject = readFileAndGenerateJsonObject(file);
+        String chain = "";
+        try {
+            JSONArray jsonArrayOfRenewableValues = jsonObject.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
+            JSONArray jsonArrayOfNoRenewableValues = jsonObject.getJSONArray("included").getJSONObject(1).getJSONObject("attributes").getJSONArray("values");
+
+            double renewable;
+            double noRenewable;
+            double sum;
+            double renewableMax = 0.0;
+
+            for (int i = 0; i < 5; i++) {
+                renewable = Double.parseDouble(jsonArrayOfRenewableValues.getJSONObject(i).getString("value"));
+                noRenewable = Double.parseDouble(jsonArrayOfNoRenewableValues.getJSONObject(i).getString("value"));
+                sum = renewable + noRenewable;
+
+                renewable = Math.round((renewable * 100) / sum);
+
+                if (renewable > renewableMax) {
+                    renewableMax = renewable;
+                }
+            }
+            chain = renewableMax + "";
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return chain;
     }
 
     private void cleanViewAnyChartPattern(LayoutInflater inflater, ViewGroup container) {

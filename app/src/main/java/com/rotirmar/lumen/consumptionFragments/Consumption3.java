@@ -79,7 +79,7 @@ public class Consumption3 extends Fragment {
         JSONObject jsonObject = readFileAndGenerateJsonObject(file);
         double value = 1.0D;
         try {
-            JSONArray jsonArrayValues = null;
+            JSONArray jsonArrayValues;
             if (divisor == 1000)
                 jsonArrayValues = jsonObject.getJSONArray("included").getJSONObject(0).getJSONObject("attributes").getJSONArray("values");
             else
