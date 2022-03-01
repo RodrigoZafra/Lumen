@@ -74,6 +74,7 @@ public class Production extends AppCompatActivity {
                 getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
                         .putBoolean("ifConsumptionFavourite", false).commit();
             }
+            item.setIcon(R.drawable.ic_favorite_filled);
         }
 
         if (id == R.id.comoFunciona) {

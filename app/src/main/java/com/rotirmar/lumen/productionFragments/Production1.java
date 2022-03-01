@@ -119,7 +119,7 @@ public class Production1 extends Fragment {
                 double noRenewable;
                 double sum;
 
-                for (int i = 0; i < 32; i++) {
+                for (int i = 0; i < 29; i++) {
                     renewable = (Double.parseDouble(jsonArrayOfRenewableValues.getJSONObject(i).getString("value")) / 1000);
                     noRenewable = (Double.parseDouble(jsonArrayOfNoRenewableValues.getJSONObject(i).getString("value")) / 1000);
                     sum = renewable + noRenewable;
@@ -234,7 +234,7 @@ public class Production1 extends Fragment {
             double noRenewable;
             double sum;
 
-            for (int i = 0; i < 32; i++) {
+            for (int i = 0; i < 29; i++) {
                 day = jsonArrayOfNoRenewableValues.getJSONObject(i).get("datetime").toString().substring(6, 10);
                 renewable = (Double.parseDouble(jsonArrayOfRenewableValues.getJSONObject(i).getString("value")) / 1000);
                 noRenewable = (Double.parseDouble(jsonArrayOfNoRenewableValues.getJSONObject(i).getString("value")) / 1000);
@@ -269,7 +269,7 @@ public class Production1 extends Fragment {
             double noEmissions;
             double sum;
 
-            for (int i = 0; i < 32; i++) {
+            for (int i = 0; i < 29; i++) {
                 day = jsonArrayOfNoRenewableValues.getJSONObject(i).get("datetime").toString().substring(6, 10);
                 emissions = (Double.parseDouble(jsonArrayOfRenewableValues.getJSONObject(i).getString("value")) / 1000);
                 noEmissions = (Double.parseDouble(jsonArrayOfNoRenewableValues.getJSONObject(i).getString("value")) / 1000);

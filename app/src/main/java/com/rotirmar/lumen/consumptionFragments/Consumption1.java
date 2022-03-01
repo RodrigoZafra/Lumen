@@ -87,7 +87,7 @@ public class Consumption1 extends Fragment {
 
             double aux;
 
-            for (int i = 0; i < 31; i++) {
+            for (int i = 0; i < 29; i++) {
                 aux = (Double.parseDouble(jsonArrayOfDemandPerDayValues.getJSONObject(i).getString("value")) / 1000);
                 if (aux > value)
                     value = aux;
@@ -245,7 +245,7 @@ public class Consumption1 extends Fragment {
             String day;
             double value;
 
-            for (int i = 0; i < 31; i++) {
+            for (int i = 0; i < 29; i++) {
                 day = jsonArrayOfDemandPerDayValues.getJSONObject(i).get("datetime").toString().substring(5, 10);
                 value = (Double.parseDouble(jsonArrayOfDemandPerDayValues.getJSONObject(i).getString("value")) / 1000);
 

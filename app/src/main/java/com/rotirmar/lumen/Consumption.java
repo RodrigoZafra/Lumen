@@ -5,8 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
@@ -15,10 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.rotirmar.lumen.ui.main.SectionsPagerAdapter;
 import com.rotirmar.lumen.databinding.ActivityConsumptionBinding;
 import com.rotirmar.lumen.ui.main.SectionsPagerAdapterConsumption;
 
@@ -75,6 +71,7 @@ public class Consumption extends AppCompatActivity {
                 getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
                         .putBoolean("ifConsumptionFavourite", true).commit();
             }
+            item.setIcon(R.drawable.ic_favorite_filled);
         }
 
         if (id == R.id.comoFunciona) {
