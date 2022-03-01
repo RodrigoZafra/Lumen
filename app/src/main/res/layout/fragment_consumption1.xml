@@ -12,8 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_margin="20dp"
-        android:backgroundTint="@color/azul_blanquecino"
         app:cardCornerRadius="10dp"
+        android:backgroundTint="@color/azul_blanquecino"
+        style="@style/Theme.Lumen.Button.Blue"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
