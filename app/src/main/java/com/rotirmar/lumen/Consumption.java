@@ -66,7 +66,7 @@ public class Consumption extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {//Gestiona las acciones sobre los botones
         int id = item.getItemId();
         if (id == R.id.favorite) {
-            Toast toast = Toast.makeText(this, "Has elegido esta página como principal!", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, R.string.toast_favorite, Toast.LENGTH_LONG);
             toast.show();
             //Change favourite page
             final boolean ifConsumptionFavourite = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
